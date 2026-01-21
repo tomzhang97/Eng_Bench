@@ -1,0 +1,23 @@
+{
+  "doc_page": 14,
+  "spans": [
+    {
+      "page_index": 14,
+      "text": "KL Narayana, P. Kannaiah, K. Venkata Reddy",
+      "bbox": [
+        516.64501953125,
+        13.937652587890625,
+        527.14501953125,
+        198.56951904296875
+      ],
+      "origin": [
+        524.52001953125,
+        198.56951904296875
+      ],
+      "size": 10.5,
+      "font": "Calibri",
+      "flags": 0,
+      "color": 0
+    }
+  ]
+}

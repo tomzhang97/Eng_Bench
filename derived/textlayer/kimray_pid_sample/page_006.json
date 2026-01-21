@@ -1,0 +1,617 @@
+{
+  "doc_page": 6,
+  "spans": [
+    {
+      "page_index": 6,
+      "text": "SYMBOLS",
+      "bbox": [
+        36.54690170288086,
+        34.576576232910156,
+        103.2247085571289,
+        51.30657958984375
+      ],
+      "origin": [
+        36.54690170288086,
+        48.142578125
+      ],
+      "size": 14.0,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 15605806
+    },
+    {
+      "page_index": 6,
+      "text": "– LINE TYPES",
+      "bbox": [
+        104.48890686035156,
+        34.576576232910156,
+        201.33949279785156,
+        51.30657958984375
+      ],
+      "origin": [
+        104.48890686035156,
+        48.142578125
+      ],
+      "size": 14.0,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 2763306
+    },
+    {
+      "page_index": 6,
+      "text": "Piping (Major Projcess)",
+      "bbox": [
+        48.36180114746094,
+        79.086181640625,
+        138.89073181152344,
+        92.82518768310547
+      ],
+      "origin": [
+        48.36180114746094,
+        90.42718505859375
+      ],
+      "size": 11.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "Connection to Process (Minor Process)",
+      "bbox": [
+        48.36180114746094,
+        118.0811767578125,
+        201.4664764404297,
+        131.82017517089844
+      ],
+      "origin": [
+        48.36180114746094,
+        129.42218017578125
+      ],
+      "size": 11.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "Undeﬁned Signal",
+      "bbox": [
+        48.36180114746094,
+        157.076171875,
+        115.94914245605469,
+        170.81517028808594
+      ],
+      "origin": [
+        48.36180114746094,
+        168.41717529296875
+      ],
+      "size": 11.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "Pneumatic Signal",
+      "bbox": [
+        48.36180114746094,
+        196.0711669921875,
+        117.10741424560547,
+        209.81016540527344
+      ],
+      "origin": [
+        48.36180114746094,
+        207.41217041015625
+      ],
+      "size": 11.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "Electric Signal",
+      "bbox": [
+        48.36180114746094,
+        235.066162109375,
+        105.02171325683594,
+        248.80516052246094
+      ],
+      "origin": [
+        48.36180114746094,
+        246.40716552734375
+      ],
+      "size": 11.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "Hydraulic Signal",
+      "bbox": [
+        48.36180114746094,
+        274.0611572265625,
+        112.488525390625,
+        287.8001708984375
+      ],
+      "origin": [
+        48.36180114746094,
+        285.40216064453125
+      ],
+      "size": 11.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "Capillary Tube",
+      "bbox": [
+        48.36180114746094,
+        313.05615234375,
+        104.39031219482422,
+        326.795166015625
+      ],
+      "origin": [
+        48.36180114746094,
+        324.39715576171875
+      ],
+      "size": 11.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "Electromagnetic or Sonic Signal (Guided)",
+      "bbox": [
+        48.36180114746094,
+        352.0511474609375,
+        209.55804443359375,
+        365.7901611328125
+      ],
+      "origin": [
+        48.36180114746094,
+        363.39215087890625
+      ],
+      "size": 11.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "Electromagnetic or Sonic Signal (Not Guided)",
+      "bbox": [
+        48.36180114746094,
+        391.046142578125,
+        226.909423828125,
+        404.78515625
+      ],
+      "origin": [
+        48.36180114746094,
+        402.38714599609375
+      ],
+      "size": 11.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "Internal System Link (Software or Data Link)",
+      "bbox": [
+        48.36180114746094,
+        430.0411376953125,
+        224.61924743652344,
+        443.7801513671875
+      ],
+      "origin": [
+        48.36180114746094,
+        441.38214111328125
+      ],
+      "size": 11.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "Internal System Link (Software or Data Link)",
+      "bbox": [
+        48.36180114746094,
+        469.0361328125,
+        224.61924743652344,
+        482.775146484375
+      ],
+      "origin": [
+        48.36180114746094,
+        480.37713623046875
+      ],
+      "size": 11.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "Mechanical Link",
+      "bbox": [
+        48.36180114746094,
+        508.0311279296875,
+        112.81522369384766,
+        521.7701416015625
+      ],
+      "origin": [
+        48.36180114746094,
+        519.3721313476562
+      ],
+      "size": 11.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "• Functional diagram continuously variable signal.",
+      "bbox": [
+        392.99609375,
+        112.36090087890625,
+        590.6189575195312,
+        124.85089874267578
+      ],
+      "origin": [
+        392.99609375,
+        122.6708984375
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "• Electrical schematic ladder diagram signal and power rails.",
+      "bbox": [
+        392.99609375,
+        124.36090087890625,
+        633.9298706054688,
+        136.85089111328125
+      ],
+      "origin": [
+        392.99609375,
+        134.6708984375
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "• Filled thermal element capillary tube.",
+      "bbox": [
+        392.99609375,
+        307.0308837890625,
+        548.205810546875,
+        319.5208740234375
+      ],
+      "origin": [
+        392.99609375,
+        317.34088134765625
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "• Filled sensing line between pressure seal and instrument.",
+      "bbox": [
+        392.99609375,
+        319.0308837890625,
+        629.0278930664062,
+        331.5208740234375
+      ],
+      "origin": [
+        392.99609375,
+        329.34088134765625
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "• Electronic or electrical continuously variable or binary signal.",
+      "bbox": [
+        392.99609375,
+        230.57089233398438,
+        641.8419189453125,
+        243.06088256835938
+      ],
+      "origin": [
+        392.99609375,
+        240.88088989257812
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "• Functional diagram binary signal.",
+      "bbox": [
+        392.99609375,
+        242.57089233398438,
+        531.5718994140625,
+        255.06088256835938
+      ],
+      "origin": [
+        392.99609375,
+        252.88088989257812
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "• Filled thermal element capillary tube.",
+      "bbox": [
+        392.99609375,
+        191.48089599609375,
+        548.205810546875,
+        203.97088623046875
+      ],
+      "origin": [
+        392.99609375,
+        201.7908935546875
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "• Filled sensing line between pressure seal and instrument.",
+      "bbox": [
+        392.99609375,
+        203.48089599609375,
+        629.0278930664062,
+        215.97088623046875
+      ],
+      "origin": [
+        392.99609375,
+        213.7908935546875
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "• Use for Process Flow Diagrams and diagrams where type of signal is not of concern",
+      "bbox": [
+        392.99609375,
+        156.62091064453125,
+        730.9530029296875,
+        169.11090087890625
+      ],
+      "origin": [
+        392.99609375,
+        166.930908203125
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "• Hydraulic Signal",
+      "bbox": [
+        392.99609375,
+        276.1408996582031,
+        465.2909240722656,
+        288.6308898925781
+      ],
+      "origin": [
+        392.99609375,
+        286.4508972167969
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "• Mechanical Link",
+      "bbox": [
+        392.99609375,
+        509.27093505859375,
+        465.23797607421875,
+        521.7609252929688
+      ],
+      "origin": [
+        392.99609375,
+        519.5809326171875
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "• Communication link or bus connecting two or more independent microprocessor or",
+      "bbox": [
+        392.99609375,
+        465.1509094238281,
+        727.64794921875,
+        477.6408996582031
+      ],
+      "origin": [
+        392.99609375,
+        475.4609069824219
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "computer-based systems. (DCS-to-DCS, DCS-to-PLC, PLC-to-PC, DCS-to-Fieldbus, etc.)",
+      "bbox": [
+        401.99609375,
+        477.1509094238281,
+        742.6412353515625,
+        489.6408996582031
+      ],
+      "origin": [
+        401.99609375,
+        487.4609069824219
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "• Communication link and system bus, between devices and functions of a shared display,",
+      "bbox": [
+        392.99609375,
+        424.200927734375,
+        751.1209106445312,
+        436.69091796875
+      ],
+      "origin": [
+        392.99609375,
+        434.51092529296875
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "shared control system. (DCS, PLC, or PC communication link and system bus.)",
+      "bbox": [
+        401.99609375,
+        436.200927734375,
+        705.1237182617188,
+        448.69091796875
+      ],
+      "origin": [
+        401.99609375,
+        446.51092529296875
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "• Unguided electromagnetic signals, light, radiation, radio, sound, wireless, etc.",
+      "bbox": [
+        392.99609375,
+        386.13092041015625,
+        708.9971313476562,
+        398.62091064453125
+      ],
+      "origin": [
+        392.99609375,
+        396.44091796875
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "• Wireless instrumentation signal / communication link.",
+      "bbox": [
+        392.99609375,
+        398.13092041015625,
+        614.5999145507812,
+        410.62091064453125
+      ],
+      "origin": [
+        392.99609375,
+        408.44091796875
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "• Guided electromagnetic signal / sonic signal.",
+      "bbox": [
+        392.99609375,
+        346.3209228515625,
+        578.3499755859375,
+        358.8109130859375
+      ],
+      "origin": [
+        392.99609375,
+        356.63092041015625
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "• Fiber optic cable.",
+      "bbox": [
+        392.99609375,
+        358.3209228515625,
+        469.2008972167969,
+        370.8109130859375
+      ],
+      "origin": [
+        392.99609375,
+        368.63092041015625
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 6,
+      "text": "6",
+      "bbox": [
+        8.941900253295898,
+        595.0703735351562,
+        13.82590103149414,
+        608.8093872070312
+      ],
+      "origin": [
+        8.941900253295898,
+        606.411376953125
+      ],
+      "size": 11.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    }
+  ]
+}

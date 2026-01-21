@@ -1,0 +1,10 @@
+{
+  "page_index": 12,
+  "page_A": null,
+  "page_B": 12,
+  "info": {
+    "status": "added_page",
+    "reason": "no_corresponding_page_in_A"
+  },
+  "H": null
+}

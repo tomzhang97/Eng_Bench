@@ -1,0 +1,293 @@
+{
+  "doc_page": 26,
+  "spans": [
+    {
+      "page_index": 26,
+      "text": "Toradex AG  l  Ebenaustrasse 10",
+      "bbox": [
+        44.52000045776367,
+        804.8837890625,
+        162.97718811035156,
+        813.848388671875
+      ],
+      "origin": [
+        44.52000045776367,
+        812.1599731445312
+      ],
+      "size": 8.039999961853027,
+      "font": "ArialMT",
+      "flags": 0,
+      "color": 8421504
+    },
+    {
+      "page_index": 26,
+      "text": "l  6048 Horw  l  Switzerland  l  +41 41 500 48 00  l",
+      "bbox": [
+        165.25999450683594,
+        804.8837890625,
+        348.3851013183594,
+        813.848388671875
+      ],
+      "origin": [
+        165.25999450683594,
+        812.1599731445312
+      ],
+      "size": 8.039999961853027,
+      "font": "ArialMT",
+      "flags": 0,
+      "color": 8421504
+    },
+    {
+      "page_index": 26,
+      "text": "www.toradex.com",
+      "bbox": [
+        348.42999267578125,
+        804.8837890625,
+        414.1451110839844,
+        813.848388671875
+      ],
+      "origin": [
+        348.42999267578125,
+        812.1599731445312
+      ],
+      "size": 8.039999961853027,
+      "font": "ArialMT",
+      "flags": 0,
+      "color": 21128
+    },
+    {
+      "page_index": 26,
+      "text": "l",
+      "bbox": [
+        414.19000244140625,
+        804.8837890625,
+        422.54510498046875,
+        813.848388671875
+      ],
+      "origin": [
+        414.19000244140625,
+        812.1599731445312
+      ],
+      "size": 8.039999961853027,
+      "font": "ArialMT",
+      "flags": 0,
+      "color": 8421504
+    },
+    {
+      "page_index": 26,
+      "text": "support@toradex.com",
+      "bbox": [
+        422.5899963378906,
+        804.8837890625,
+        503.5751037597656,
+        813.848388671875
+      ],
+      "origin": [
+        422.5899963378906,
+        812.1599731445312
+      ],
+      "size": 8.039999961853027,
+      "font": "ArialMT",
+      "flags": 0,
+      "color": 21128
+    },
+    {
+      "page_index": 26,
+      "text": "Page | 27",
+      "bbox": [
+        527.97998046875,
+        804.5238037109375,
+        564.2951049804688,
+        813.4884033203125
+      ],
+      "origin": [
+        527.97998046875,
+        811.7999877929688
+      ],
+      "size": 8.039999961853027,
+      "font": "ArialMT",
+      "flags": 0,
+      "color": 8421504
+    },
+    {
+      "page_index": 26,
+      "text": "Viola Datasheet",
+      "bbox": [
+        367.0299987792969,
+        38.81999206542969,
+        555.0759887695312,
+        52.19999313354492
+      ],
+      "origin": [
+        367.0299987792969,
+        49.67999267578125
+      ],
+      "size": 12.0,
+      "font": "ArialMT",
+      "flags": 0,
+      "color": 21128
+    },
+    {
+      "page_index": 26,
+      "text": "7. Design Data",
+      "bbox": [
+        85.10399627685547,
+        77.13615417480469,
+        203.68687438964844,
+        94.93155670166016
+      ],
+      "origin": [
+        85.10399627685547,
+        91.5799560546875
+      ],
+      "size": 15.960000038146973,
+      "font": "Arial-BoldMT",
+      "flags": 16,
+      "color": 21128
+    },
+    {
+      "page_index": 26,
+      "text": "The design data for Toradex carrier boards are freely available in the Altium Designer format. The",
+      "bbox": [
+        85.10399627685547,
+        112.94850158691406,
+        534.7353515625,
+        124.93037414550781
+      ],
+      "origin": [
+        85.10399627685547,
+        122.53997802734375
+      ],
+      "size": 9.960000038146973,
+      "font": "FuturaBT-Medium",
+      "flags": 0,
+      "color": 0
+    },
+    {
+      "page_index": 26,
+      "text": "design data includes schematics, layout, and component libraries.",
+      "bbox": [
+        85.10399627685547,
+        124.94850158691406,
+        391.637939453125,
+        136.9303741455078
+      ],
+      "origin": [
+        85.10399627685547,
+        134.53997802734375
+      ],
+      "size": 9.960000038146973,
+      "font": "FuturaBT-Medium",
+      "flags": 0,
+      "color": 0
+    },
+    {
+      "page_index": 26,
+      "text": "To download the carrier board design data, please use the web-link below:",
+      "bbox": [
+        85.10399627685547,
+        142.94850158691406,
+        431.7179260253906,
+        154.9303741455078
+      ],
+      "origin": [
+        85.10399627685547,
+        152.53997802734375
+      ],
+      "size": 9.960000038146973,
+      "font": "FuturaBT-Medium",
+      "flags": 0,
+      "color": 0
+    },
+    {
+      "page_index": 26,
+      "text": "http://developer.toradex.com/hardware-resources/arm-family/carrier-board-design",
+      "bbox": [
+        85.10399627685547,
+        154.82850646972656,
+        468.17022705078125,
+        166.8103790283203
+      ],
+      "origin": [
+        85.10399627685547,
+        164.41998291015625
+      ],
+      "size": 9.960000038146973,
+      "font": "FuturaBT-Medium",
+      "flags": 0,
+      "color": 255
+    },
+    {
+      "page_index": 26,
+      "text": "8. Product Compliance",
+      "bbox": [
+        85.10399627685547,
+        191.37620544433594,
+        266.806884765625,
+        209.17160034179688
+      ],
+      "origin": [
+        85.10399627685547,
+        205.82000732421875
+      ],
+      "size": 15.960000038146973,
+      "font": "Arial-BoldMT",
+      "flags": 16,
+      "color": 21128
+    },
+    {
+      "page_index": 26,
+      "text": "Up-to-date information about product compliance such as RoHS, CE, UL-94, Conflict Mineral,",
+      "bbox": [
+        85.10399627685547,
+        227.30848693847656,
+        515.511962890625,
+        239.2903594970703
+      ],
+      "origin": [
+        85.10399627685547,
+        236.89996337890625
+      ],
+      "size": 9.960000038146973,
+      "font": "FuturaBT-Medium",
+      "flags": 0,
+      "color": 0
+    },
+    {
+      "page_index": 26,
+      "text": "REACH etc. can be found on our website at:",
+      "bbox": [
+        85.10399627685547,
+        239.18849182128906,
+        288.2283020019531,
+        251.1703643798828
+      ],
+      "origin": [
+        85.10399627685547,
+        248.77996826171875
+      ],
+      "size": 9.960000038146973,
+      "font": "FuturaBT-Medium",
+      "flags": 0,
+      "color": 0
+    },
+    {
+      "page_index": 26,
+      "text": "http://www.toradex.com/support/product-compliance",
+      "bbox": [
+        288.4100036621094,
+        239.18849182128906,
+        533.8214721679688,
+        251.1703643798828
+      ],
+      "origin": [
+        288.4100036621094,
+        248.77996826171875
+      ],
+      "size": 9.960000038146973,
+      "font": "FuturaBT-Medium",
+      "flags": 0,
+      "color": 255
+    }
+  ]
+}

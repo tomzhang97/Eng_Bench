@@ -1,0 +1,275 @@
+{
+  "doc_page": 27,
+  "spans": [
+    {
+      "page_index": 27,
+      "text": "Toradex AG  l  Ebenaustrasse 10",
+      "bbox": [
+        44.52000045776367,
+        804.8837890625,
+        162.97718811035156,
+        813.848388671875
+      ],
+      "origin": [
+        44.52000045776367,
+        812.1599731445312
+      ],
+      "size": 8.039999961853027,
+      "font": "ArialMT",
+      "flags": 0,
+      "color": 8421504
+    },
+    {
+      "page_index": 27,
+      "text": "l  6048 Horw  l  Switzerland  l  +41 41 500 48 00  l",
+      "bbox": [
+        165.25999450683594,
+        804.8837890625,
+        348.3851013183594,
+        813.848388671875
+      ],
+      "origin": [
+        165.25999450683594,
+        812.1599731445312
+      ],
+      "size": 8.039999961853027,
+      "font": "ArialMT",
+      "flags": 0,
+      "color": 8421504
+    },
+    {
+      "page_index": 27,
+      "text": "www.toradex.com",
+      "bbox": [
+        348.42999267578125,
+        804.8837890625,
+        414.1451110839844,
+        813.848388671875
+      ],
+      "origin": [
+        348.42999267578125,
+        812.1599731445312
+      ],
+      "size": 8.039999961853027,
+      "font": "ArialMT",
+      "flags": 0,
+      "color": 21128
+    },
+    {
+      "page_index": 27,
+      "text": "l",
+      "bbox": [
+        414.19000244140625,
+        804.8837890625,
+        422.54510498046875,
+        813.848388671875
+      ],
+      "origin": [
+        414.19000244140625,
+        812.1599731445312
+      ],
+      "size": 8.039999961853027,
+      "font": "ArialMT",
+      "flags": 0,
+      "color": 8421504
+    },
+    {
+      "page_index": 27,
+      "text": "support@toradex.com",
+      "bbox": [
+        422.5899963378906,
+        804.8837890625,
+        503.5751037597656,
+        813.848388671875
+      ],
+      "origin": [
+        422.5899963378906,
+        812.1599731445312
+      ],
+      "size": 8.039999961853027,
+      "font": "ArialMT",
+      "flags": 0,
+      "color": 21128
+    },
+    {
+      "page_index": 27,
+      "text": "Page | 28",
+      "bbox": [
+        527.97998046875,
+        804.5238037109375,
+        564.2951049804688,
+        813.4884033203125
+      ],
+      "origin": [
+        527.97998046875,
+        811.7999877929688
+      ],
+      "size": 8.039999961853027,
+      "font": "ArialMT",
+      "flags": 0,
+      "color": 8421504
+    },
+    {
+      "page_index": 27,
+      "text": "Viola Datasheet",
+      "bbox": [
+        367.0299987792969,
+        38.81999206542969,
+        555.0759887695312,
+        52.19999313354492
+      ],
+      "origin": [
+        367.0299987792969,
+        49.67999267578125
+      ],
+      "size": 12.0,
+      "font": "ArialMT",
+      "flags": 0,
+      "color": 21128
+    },
+    {
+      "page_index": 27,
+      "text": "Disclaimer",
+      "bbox": [
+        85.10399627685547,
+        640.1884765625,
+        138.11109924316406,
+        652.1703491210938
+      ],
+      "origin": [
+        85.10399627685547,
+        649.7799682617188
+      ],
+      "size": 9.960000038146973,
+      "font": "FuturaBT-Bold",
+      "flags": 16,
+      "color": 0
+    },
+    {
+      "page_index": 27,
+      "text": ":",
+      "bbox": [
+        138.13999938964844,
+        640.1884765625,
+        144.50791931152344,
+        652.1703491210938
+      ],
+      "origin": [
+        138.13999938964844,
+        649.7799682617188
+      ],
+      "size": 9.960000038146973,
+      "font": "FuturaBT-Medium",
+      "flags": 0,
+      "color": 0
+    },
+    {
+      "page_index": 27,
+      "text": "Copyright © Toradex AG. All rights are reserved. The information and content in this document are",
+      "bbox": [
+        85.10399627685547,
+        658.1884765625,
+        541.3241577148438,
+        670.1703491210938
+      ],
+      "origin": [
+        85.10399627685547,
+        667.7799682617188
+      ],
+      "size": 9.960000038146973,
+      "font": "FuturaBT-Medium",
+      "flags": 0,
+      "color": 0
+    },
+    {
+      "page_index": 27,
+      "text": "provided “as-is” with no warranties of any kind and are for informational purposes only. Data and",
+      "bbox": [
+        85.10399627685547,
+        670.1884765625,
+        541.2465209960938,
+        682.1703491210938
+      ],
+      "origin": [
+        85.10399627685547,
+        679.7799682617188
+      ],
+      "size": 9.960000038146973,
+      "font": "FuturaBT-Medium",
+      "flags": 0,
+      "color": 0
+    },
+    {
+      "page_index": 27,
+      "text": "information have been carefully checked and are believed to be accurate; however, no liability or",
+      "bbox": [
+        85.10399627685547,
+        682.1884765625,
+        541.6611938476562,
+        694.1703491210938
+      ],
+      "origin": [
+        85.10399627685547,
+        691.7799682617188
+      ],
+      "size": 9.960000038146973,
+      "font": "FuturaBT-Medium",
+      "flags": 0,
+      "color": 0
+    },
+    {
+      "page_index": 27,
+      "text": "responsibility for any errors, omissions, or inaccuracies is assumed.",
+      "bbox": [
+        85.10399627685547,
+        694.1884765625,
+        393.55792236328125,
+        706.1703491210938
+      ],
+      "origin": [
+        85.10399627685547,
+        703.7799682617188
+      ],
+      "size": 9.960000038146973,
+      "font": "FuturaBT-Medium",
+      "flags": 0,
+      "color": 0
+    },
+    {
+      "page_index": 27,
+      "text": "Brand and product names are trademarks or registered trademarks of their respective owners.",
+      "bbox": [
+        85.10399627685547,
+        712.1884765625,
+        521.14794921875,
+        724.1703491210938
+      ],
+      "origin": [
+        85.10399627685547,
+        721.7799682617188
+      ],
+      "size": 9.960000038146973,
+      "font": "FuturaBT-Medium",
+      "flags": 0,
+      "color": 0
+    },
+    {
+      "page_index": 27,
+      "text": "Specifications are subject to change without notice.",
+      "bbox": [
+        85.10399627685547,
+        730.1884765625,
+        321.55792236328125,
+        742.1703491210938
+      ],
+      "origin": [
+        85.10399627685547,
+        739.7799682617188
+      ],
+      "size": 9.960000038146973,
+      "font": "FuturaBT-Medium",
+      "flags": 0,
+      "color": 0
+    }
+  ]
+}

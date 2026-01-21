@@ -1,0 +1,4 @@
+{"question_id": "q_mt__tolerances_table_iso__iso__p0002__0000", "answer_text": "G7/h6", "evidence": {"doc_id": "tolerances_table_iso", "page": 2, "bbox": [1355, 2627, 1399, 2753], "entity_id": "mt__tolerances_table_iso__iso__p0002__0000"}}
+{"question_id": "q_mt__tolerances_table_iso__iso__p0003__0001", "answer_text": "Wrong Page Example", "evidence": {"doc_id": "tolerances_table_iso", "page": 100, "bbox": [1593, 1494, 1637, 1772]}}
+{"question_id": "q_mt__tolerances_table_iso__iso__p0002__0002", "answer_text": "Bad IoU Example", "evidence": {"doc_id": "tolerances_table_iso", "page": 2, "bbox": [0, 0, 10, 10]}}
+{"question_id": "q_mt__tolerances_table_iso__iso__p0003__0003", "answer_text": "Wrong Doc Example", "evidence": {"doc_id": "wrong_doc.pdf", "page": 3, "bbox": [1093, 1652, 1137, 1772]}}

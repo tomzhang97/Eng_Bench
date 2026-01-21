@@ -1,0 +1,1013 @@
+{
+  "doc_page": 5,
+  "spans": [
+    {
+      "page_index": 5,
+      "text": "TAG NUMBERS",
+      "bbox": [
+        36.54690170288086,
+        34.576576232910156,
+        136.89749145507812,
+        51.30657958984375
+      ],
+      "origin": [
+        36.54690170288086,
+        48.142578125
+      ],
+      "size": 14.0,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 15605806
+    },
+    {
+      "page_index": 5,
+      "text": "– LOOP NUMBER",
+      "bbox": [
+        138.15750122070312,
+        34.576576232910156,
+        255.386474609375,
+        51.30657958984375
+      ],
+      "origin": [
+        138.15750122070312,
+        48.142578125
+      ],
+      "size": 14.0,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 2763306
+    },
+    {
+      "page_index": 5,
+      "text": "TI",
+      "bbox": [
+        483.6015930175781,
+        67.59610748291016,
+        496.01959228515625,
+        84.32611083984375
+      ],
+      "origin": [
+        483.6015930175781,
+        81.162109375
+      ],
+      "size": 14.0,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 2763306
+    },
+    {
+      "page_index": 5,
+      "text": "01",
+      "bbox": [
+        482.83160400390625,
+        86.5940933227539,
+        496.8036193847656,
+        103.3240966796875
+      ],
+      "origin": [
+        482.83160400390625,
+        100.16009521484375
+      ],
+      "size": 14.0,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 2763306
+    },
+    {
+      "page_index": 5,
+      "text": "TC",
+      "bbox": [
+        543.61962890625,
+        67.59610748291016,
+        559.859619140625,
+        84.32611083984375
+      ],
+      "origin": [
+        543.61962890625,
+        81.162109375
+      ],
+      "size": 14.0,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 2763306
+    },
+    {
+      "page_index": 5,
+      "text": "01",
+      "bbox": [
+        544.7536010742188,
+        86.5940933227539,
+        558.7255859375,
+        103.3240966796875
+      ],
+      "origin": [
+        544.7536010742188,
+        100.16009521484375
+      ],
+      "size": 14.0,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 2763306
+    },
+    {
+      "page_index": 5,
+      "text": "TC",
+      "bbox": [
+        605.4575805664062,
+        67.59610748291016,
+        621.6975708007812,
+        84.32611083984375
+      ],
+      "origin": [
+        605.4575805664062,
+        81.162109375
+      ],
+      "size": 14.0,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 2763306
+    },
+    {
+      "page_index": 5,
+      "text": "02",
+      "bbox": [
+        606.4935913085938,
+        86.5940933227539,
+        620.6475830078125,
+        103.3240966796875
+      ],
+      "origin": [
+        606.4935913085938,
+        100.16009521484375
+      ],
+      "size": 14.0,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 2763306
+    },
+    {
+      "page_index": 5,
+      "text": "TAG NUMBERS",
+      "bbox": [
+        36.72460174560547,
+        185.13609313964844,
+        137.0751953125,
+        201.8660888671875
+      ],
+      "origin": [
+        36.72460174560547,
+        198.70208740234375
+      ],
+      "size": 14.0,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 15605806
+    },
+    {
+      "page_index": 5,
+      "text": "– INSTRUMENT LOCATION",
+      "bbox": [
+        138.335205078125,
+        185.13609313964844,
+        321.8514099121094,
+        201.8660888671875
+      ],
+      "origin": [
+        138.335205078125,
+        198.70208740234375
+      ],
+      "size": 14.0,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 2763306
+    },
+    {
+      "page_index": 5,
+      "text": "The number below these letters is the numerator to help identify a speciﬁc component on a project",
+      "bbox": [
+        38.54389953613281,
+        61.030269622802734,
+        430.8235778808594,
+        73.52027130126953
+      ],
+      "origin": [
+        38.54389953613281,
+        71.34027099609375
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "within the control loop. When there are multiples of the same device used in a diagram, this number",
+      "bbox": [
+        38.54389953613281,
+        73.0302734375,
+        435.9766540527344,
+        85.52027130126953
+      ],
+      "origin": [
+        38.54389953613281,
+        83.34027099609375
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "helps viewers to reference that speciﬁc instrument.",
+      "bbox": [
+        38.54389953613281,
+        85.0302734375,
+        246.85997009277344,
+        97.52027130126953
+      ],
+      "origin": [
+        38.54389953613281,
+        95.34027099609375
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "If you were looking at a list of the controls, you could look at the control loop number to ﬁnd that",
+      "bbox": [
+        38.54389953613281,
+        109.0302734375,
+        422.32659912109375,
+        121.52027130126953
+      ],
+      "origin": [
+        38.54389953613281,
+        119.34027099609375
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "speciﬁc device on the P&ID. Companies have diﬀerent protocols for where these numbers originate.",
+      "bbox": [
+        38.54389953613281,
+        121.0302734375,
+        430.95770263671875,
+        133.520263671875
+      ],
+      "origin": [
+        38.54389953613281,
+        131.34027099609375
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "TIC",
+      "bbox": [
+        396.23291015625,
+        358.86627197265625,
+        440.5826416015625,
+        393.5689392089844
+      ],
+      "origin": [
+        396.23291015625,
+        387.00592041015625
+      ],
+      "size": 29.039899826049805,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 2763306
+    },
+    {
+      "page_index": 5,
+      "text": "01",
+      "bbox": [
+        403.986572265625,
+        398.2734069824219,
+        432.82318115234375,
+        432.97607421875
+      ],
+      "origin": [
+        403.986572265625,
+        426.4130554199219
+      ],
+      "size": 29.039899826049805,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 2763306
+    },
+    {
+      "page_index": 5,
+      "text": "MEASURED OR INITIATING VARIABLE",
+      "bbox": [
+        494.5805969238281,
+        297.81878662109375,
+        751.1673583984375,
+        314.5487976074219
+      ],
+      "origin": [
+        494.5805969238281,
+        311.3847961425781
+      ],
+      "size": 14.0,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 2763306
+    },
+    {
+      "page_index": 5,
+      "text": "MODIFIER",
+      "bbox": [
+        495.42059326171875,
+        336.27679443359375,
+        562.3756103515625,
+        353.0068054199219
+      ],
+      "origin": [
+        495.42059326171875,
+        349.8428039550781
+      ],
+      "size": 14.0,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 2763306
+    },
+    {
+      "page_index": 5,
+      "text": "MODIFIER",
+      "bbox": [
+        495.42059326171875,
+        374.73480224609375,
+        562.3756103515625,
+        391.4648132324219
+      ],
+      "origin": [
+        495.42059326171875,
+        388.3008117675781
+      ],
+      "size": 14.0,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 2763306
+    },
+    {
+      "page_index": 5,
+      "text": "READOUT/PASSIVE FUNCTION, OUTPUT FUNCTION, MODIFIER",
+      "bbox": [
+        495.4198913574219,
+        389.98590087890625,
+        759.9243774414062,
+        402.47589111328125
+      ],
+      "origin": [
+        495.4198913574219,
+        400.2958984375
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 2763306
+    },
+    {
+      "page_index": 5,
+      "text": "LOCATION INDICATOR",
+      "bbox": [
+        495.4198913574219,
+        413.18499755859375,
+        645.54443359375,
+        429.9150085449219
+      ],
+      "origin": [
+        495.4198913574219,
+        426.7510070800781
+      ],
+      "size": 14.0,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 2763306
+    },
+    {
+      "page_index": 5,
+      "text": "FIELD MOUNTED, PRIMARY LOCATION, AUXILIARY LOCATION",
+      "bbox": [
+        495.4198913574219,
+        428.4410095214844,
+        756.6950073242188,
+        440.9309997558594
+      ],
+      "origin": [
+        495.4198913574219,
+        438.7510070800781
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 2763306
+    },
+    {
+      "page_index": 5,
+      "text": "IDENTIFYING NUMBER",
+      "bbox": [
+        495.4198913574219,
+        451.6401062011719,
+        650.281005859375,
+        468.3701171875
+      ],
+      "origin": [
+        495.4198913574219,
+        465.20611572265625
+      ],
+      "size": 14.0,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 2763306
+    },
+    {
+      "page_index": 5,
+      "text": "NUMERATOR IDENTIFICATION WITHIN THE CONTROL LOOP",
+      "bbox": [
+        495.4198913574219,
+        466.8961181640625,
+        746.603271484375,
+        479.3861083984375
+      ],
+      "origin": [
+        495.4198913574219,
+        477.20611572265625
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 2763306
+    },
+    {
+      "page_index": 5,
+      "text": "• Located in or on front of central or main panel or console",
+      "bbox": [
+        100.639892578125,
+        283.21612548828125,
+        333.67083740234375,
+        295.70611572265625
+      ],
+      "origin": [
+        100.639892578125,
+        293.526123046875
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "• Visible on front of panel or on video display",
+      "bbox": [
+        100.639892578125,
+        295.21612548828125,
+        280.1859436035156,
+        307.70611572265625
+      ],
+      "origin": [
+        100.639892578125,
+        305.526123046875
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "• Normally operator accessible at panel front or console",
+      "bbox": [
+        100.639892578125,
+        307.21612548828125,
+        323.5498352050781,
+        319.70611572265625
+      ],
+      "origin": [
+        100.639892578125,
+        317.526123046875
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "• Located in ﬁeld",
+      "bbox": [
+        100.639892578125,
+        212.61611938476562,
+        169.3729248046875,
+        225.10610961914062
+      ],
+      "origin": [
+        100.639892578125,
+        222.92611694335938
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "• Not panel, cabinet, or console mounted",
+      "bbox": [
+        100.639892578125,
+        224.61611938476562,
+        264.1199951171875,
+        237.10610961914062
+      ],
+      "origin": [
+        100.639892578125,
+        234.92611694335938
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "• Visible at ﬁeld location",
+      "bbox": [
+        100.639892578125,
+        236.61611938476562,
+        199.57496643066406,
+        249.10610961914062
+      ],
+      "origin": [
+        100.639892578125,
+        246.92611694335938
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "• Normally operator accessible",
+      "bbox": [
+        100.639892578125,
+        248.61611938476562,
+        224.26588439941406,
+        261.1061096191406
+      ],
+      "origin": [
+        100.639892578125,
+        258.9261169433594
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "• Located in rear of central or main panel",
+      "bbox": [
+        100.639892578125,
+        341.506103515625,
+        264.9549865722656,
+        353.99609375
+      ],
+      "origin": [
+        100.639892578125,
+        351.81610107421875
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "• Located in cabinet behind panel",
+      "bbox": [
+        100.639892578125,
+        353.506103515625,
+        234.5860137939453,
+        365.99609375
+      ],
+      "origin": [
+        100.639892578125,
+        363.81610107421875
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "• Not visible on front of panel or on video display",
+      "bbox": [
+        100.639892578125,
+        365.506103515625,
+        295.9208984375,
+        377.99609375
+      ],
+      "origin": [
+        100.639892578125,
+        375.81610107421875
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "• Not normally operator accessible at panel or console",
+      "bbox": [
+        100.639892578125,
+        377.506103515625,
+        317.15087890625,
+        389.99609375
+      ],
+      "origin": [
+        100.639892578125,
+        387.81610107421875
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "• Located in or on front of secondary or local panel or console",
+      "bbox": [
+        100.639892578125,
+        412.9161071777344,
+        346.4148254394531,
+        425.4060974121094
+      ],
+      "origin": [
+        100.639892578125,
+        423.2261047363281
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "• Visible on front of panel or on video display",
+      "bbox": [
+        100.639892578125,
+        424.9161071777344,
+        280.1859436035156,
+        437.4060974121094
+      ],
+      "origin": [
+        100.639892578125,
+        435.2261047363281
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "• Normally operator accessible at panel front or console",
+      "bbox": [
+        100.639892578125,
+        436.9161071777344,
+        323.5498352050781,
+        449.4060974121094
+      ],
+      "origin": [
+        100.639892578125,
+        447.2261047363281
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "• Located in rear of secondary or local panel",
+      "bbox": [
+        100.639892578125,
+        470.80609130859375,
+        277.6959533691406,
+        483.29608154296875
+      ],
+      "origin": [
+        100.639892578125,
+        481.1160888671875
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "• Located in ﬁeld cabinet",
+      "bbox": [
+        100.639892578125,
+        482.80609130859375,
+        200.87594604492188,
+        495.29608154296875
+      ],
+      "origin": [
+        100.639892578125,
+        493.1160888671875
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "• Not visible on front of panel or on video display",
+      "bbox": [
+        100.639892578125,
+        494.80609130859375,
+        295.9208984375,
+        507.29608154296875
+      ],
+      "origin": [
+        100.639892578125,
+        505.1160888671875
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "• Not normally operator accessible at panel or console",
+      "bbox": [
+        100.639892578125,
+        506.80609130859375,
+        317.15087890625,
+        519.2960815429688
+      ],
+      "origin": [
+        100.639892578125,
+        517.1160888671875
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "These symbols may be supplemented with information on the",
+      "bbox": [
+        100.97988891601562,
+        539.76611328125,
+        342.0127258300781,
+        552.2861328125
+      ],
+      "origin": [
+        100.97988891601562,
+        550.0761108398438
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCondOb",
+      "flags": 6,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "name of the local control room or the local control panel, just",
+      "bbox": [
+        100.97988891601562,
+        551.76611328125,
+        342.3739013671875,
+        564.2861328125
+      ],
+      "origin": [
+        100.97988891601562,
+        562.0761108398438
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCondOb",
+      "flags": 6,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "outside the symbols, for example, COMPRESSOR, i.e., the local",
+      "bbox": [
+        100.97988891601562,
+        563.76611328125,
+        348.9367980957031,
+        576.2861328125
+      ],
+      "origin": [
+        100.97988891601562,
+        574.0761108398438
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCondOb",
+      "flags": 6,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "control room or local control panel for a compressor.",
+      "bbox": [
+        100.97988891601562,
+        575.76611328125,
+        307.77496337890625,
+        588.2861328125
+      ],
+      "origin": [
+        100.97988891601562,
+        586.0761108398438
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCondOb",
+      "flags": 6,
+      "color": 0
+    },
+    {
+      "page_index": 5,
+      "text": "INSTRUMENT SYMBOL",
+      "bbox": [
+        495.4198913574219,
+        489.7991943359375,
+        650.1829833984375,
+        506.5292053222656
+      ],
+      "origin": [
+        495.4198913574219,
+        503.3652038574219
+      ],
+      "size": 14.0,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 2763306
+    },
+    {
+      "page_index": 5,
+      "text": "DISCRETE INSTRUMENTS, SHARED DISPLAY/CONTROL, ETC.",
+      "bbox": [
+        495.4198913574219,
+        505.05517578125,
+        753.1503295898438,
+        517.545166015625
+      ],
+      "origin": [
+        495.4198913574219,
+        515.3651733398438
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 2763306
+    },
+    {
+      "page_index": 5,
+      "text": "FIRST TEMP. INDICATOR",
+      "bbox": [
+        504.2616882324219,
+        191.31790161132812,
+        609.3966064453125,
+        203.80789184570312
+      ],
+      "origin": [
+        504.2616882324219,
+        201.62789916992188
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 2763306
+    },
+    {
+      "page_index": 5,
+      "text": "IN THE CONTROL LOOP",
+      "bbox": [
+        504.2616882324219,
+        203.31790161132812,
+        601.0894165039062,
+        215.80789184570312
+      ],
+      "origin": [
+        504.2616882324219,
+        213.62789916992188
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 2763306
+    },
+    {
+      "page_index": 5,
+      "text": "FIRST TEMP. CONTROLLER",
+      "bbox": [
+        566.3809204101562,
+        155.31790161132812,
+        680.7025756835938,
+        167.80789184570312
+      ],
+      "origin": [
+        566.3809204101562,
+        165.62789916992188
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 2763306
+    },
+    {
+      "page_index": 5,
+      "text": "IN THE CONTROL LOOP",
+      "bbox": [
+        566.3809204101562,
+        167.31790161132812,
+        663.2086791992188,
+        179.80789184570312
+      ],
+      "origin": [
+        566.3809204101562,
+        177.62789916992188
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 2763306
+    },
+    {
+      "page_index": 5,
+      "text": "SECOND TEMP. CONTROLLER",
+      "bbox": [
+        628.3018188476562,
+        119.31790161132812,
+        754.2064208984375,
+        131.80789184570312
+      ],
+      "origin": [
+        628.3018188476562,
+        129.62789916992188
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 2763306
+    },
+    {
+      "page_index": 5,
+      "text": "IN THE CONTROL LOOP",
+      "bbox": [
+        628.3018188476562,
+        131.31790161132812,
+        725.1295776367188,
+        143.80789184570312
+      ],
+      "origin": [
+        628.3018188476562,
+        141.62789916992188
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 2763306
+    },
+    {
+      "page_index": 5,
+      "text": "5",
+      "bbox": [
+        8.941900253295898,
+        595.070068359375,
+        13.82590103149414,
+        608.80908203125
+      ],
+      "origin": [
+        8.941900253295898,
+        606.4110717773438
+      ],
+      "size": 11.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    }
+  ]
+}

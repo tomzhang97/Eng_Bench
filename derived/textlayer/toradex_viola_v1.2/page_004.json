@@ -1,0 +1,473 @@
+{
+  "doc_page": 4,
+  "spans": [
+    {
+      "page_index": 4,
+      "text": "Viola Datasheet",
+      "bbox": [
+        367.0299987792969,
+        38.81999206542969,
+        555.0759887695312,
+        52.19999313354492
+      ],
+      "origin": [
+        367.0299987792969,
+        49.67999267578125
+      ],
+      "size": 12.0,
+      "font": "ArialMT",
+      "flags": 0,
+      "color": 21128
+    },
+    {
+      "page_index": 4,
+      "text": "Toradex AG  l  Ebenaustrasse 10",
+      "bbox": [
+        44.52000045776367,
+        804.8837890625,
+        162.97718811035156,
+        813.848388671875
+      ],
+      "origin": [
+        44.52000045776367,
+        812.1599731445312
+      ],
+      "size": 8.039999961853027,
+      "font": "ArialMT",
+      "flags": 0,
+      "color": 8421504
+    },
+    {
+      "page_index": 4,
+      "text": "l  6048 Horw  l  Switzerland  l  +41 41 500 48 00  l",
+      "bbox": [
+        165.25999450683594,
+        804.8837890625,
+        348.3851013183594,
+        813.848388671875
+      ],
+      "origin": [
+        165.25999450683594,
+        812.1599731445312
+      ],
+      "size": 8.039999961853027,
+      "font": "ArialMT",
+      "flags": 0,
+      "color": 8421504
+    },
+    {
+      "page_index": 4,
+      "text": "www.toradex.com",
+      "bbox": [
+        348.42999267578125,
+        804.8837890625,
+        414.1451110839844,
+        813.848388671875
+      ],
+      "origin": [
+        348.42999267578125,
+        812.1599731445312
+      ],
+      "size": 8.039999961853027,
+      "font": "ArialMT",
+      "flags": 0,
+      "color": 21128
+    },
+    {
+      "page_index": 4,
+      "text": "l",
+      "bbox": [
+        414.19000244140625,
+        804.8837890625,
+        422.54510498046875,
+        813.848388671875
+      ],
+      "origin": [
+        414.19000244140625,
+        812.1599731445312
+      ],
+      "size": 8.039999961853027,
+      "font": "ArialMT",
+      "flags": 0,
+      "color": 8421504
+    },
+    {
+      "page_index": 4,
+      "text": "support@toradex.com",
+      "bbox": [
+        422.5899963378906,
+        804.8837890625,
+        503.5751037597656,
+        813.848388671875
+      ],
+      "origin": [
+        422.5899963378906,
+        812.1599731445312
+      ],
+      "size": 8.039999961853027,
+      "font": "ArialMT",
+      "flags": 0,
+      "color": 21128
+    },
+    {
+      "page_index": 4,
+      "text": "Page | 5",
+      "bbox": [
+        532.4199829101562,
+        804.5238037109375,
+        564.2951049804688,
+        813.4884033203125
+      ],
+      "origin": [
+        532.4199829101562,
+        811.7999877929688
+      ],
+      "size": 8.039999961853027,
+      "font": "ArialMT",
+      "flags": 0,
+      "color": 8421504
+    },
+    {
+      "page_index": 4,
+      "text": "1. Introduction",
+      "bbox": [
+        85.10399627685547,
+        82.17619323730469,
+        204.52687072753906,
+        99.97159576416016
+      ],
+      "origin": [
+        85.10399627685547,
+        96.6199951171875
+      ],
+      "size": 15.960000038146973,
+      "font": "Arial-BoldMT",
+      "flags": 16,
+      "color": 21128
+    },
+    {
+      "page_index": 4,
+      "text": "The Viola carrier board is compatible with the entire family of the Colibri computer-on-modules. It",
+      "bbox": [
+        85.10399627685547,
+        118.10853576660156,
+        535.8851928710938,
+        130.0904083251953
+      ],
+      "origin": [
+        85.10399627685547,
+        127.70001220703125
+      ],
+      "size": 9.960000038146973,
+      "font": "FuturaBT-Medium",
+      "flags": 0,
+      "color": 0
+    },
+    {
+      "page_index": 4,
+      "text": "has the smallest form factor among the Colibri carrier boards. Its optimized price v/s features",
+      "bbox": [
+        85.10399627685547,
+        130.10853576660156,
+        513.2279052734375,
+        142.0904083251953
+      ],
+      "origin": [
+        85.10399627685547,
+        139.70001220703125
+      ],
+      "size": 9.960000038146973,
+      "font": "FuturaBT-Medium",
+      "flags": 0,
+      "color": 0
+    },
+    {
+      "page_index": 4,
+      "text": "trade-off makes it ideal for designing end-products for emerging markets.",
+      "bbox": [
+        85.10399627685547,
+        141.9884796142578,
+        425.7179260253906,
+        153.97035217285156
+      ],
+      "origin": [
+        85.10399627685547,
+        151.5799560546875
+      ],
+      "size": 9.960000038146973,
+      "font": "FuturaBT-Medium",
+      "flags": 0,
+      "color": 0
+    },
+    {
+      "page_index": 4,
+      "text": "1.1",
+      "bbox": [
+        85.10399627685547,
+        166.40000915527344,
+        104.99600219726562,
+        179.78001403808594
+      ],
+      "origin": [
+        85.10399627685547,
+        177.260009765625
+      ],
+      "size": 12.0,
+      "font": "Arial-BoldMT",
+      "flags": 16,
+      "color": 1518413
+    },
+    {
+      "page_index": 4,
+      "text": "Purpose of the Datasheet",
+      "bbox": [
+        113.9000015258789,
+        166.40000915527344,
+        258.5839538574219,
+        179.78001403808594
+      ],
+      "origin": [
+        113.9000015258789,
+        177.260009765625
+      ],
+      "size": 12.0,
+      "font": "Arial-BoldMT",
+      "flags": 16,
+      "color": 0
+    },
+    {
+      "page_index": 4,
+      "text": "The datasheet represents the hardware capabilities of the Viola carrier board. For information on",
+      "bbox": [
+        85.10399627685547,
+        185.7885284423828,
+        531.0850830078125,
+        197.77040100097656
+      ],
+      "origin": [
+        85.10399627685547,
+        195.3800048828125
+      ],
+      "size": 9.960000038146973,
+      "font": "FuturaBT-Medium",
+      "flags": 0,
+      "color": 0
+    },
+    {
+      "page_index": 4,
+      "text": "the current features supported by software, please refer to the relevant SoM product page on the",
+      "bbox": [
+        85.10399627685547,
+        197.7885284423828,
+        530.12451171875,
+        209.77040100097656
+      ],
+      "origin": [
+        85.10399627685547,
+        207.3800048828125
+      ],
+      "size": 9.960000038146973,
+      "font": "FuturaBT-Medium",
+      "flags": 0,
+      "color": 0
+    },
+    {
+      "page_index": 4,
+      "text": "Toradex website.",
+      "bbox": [
+        85.10399627685547,
+        209.7885284423828,
+        164.9079132080078,
+        221.77040100097656
+      ],
+      "origin": [
+        85.10399627685547,
+        219.3800048828125
+      ],
+      "size": 9.960000038146973,
+      "font": "FuturaBT-Medium",
+      "flags": 0,
+      "color": 0
+    },
+    {
+      "page_index": 4,
+      "text": "1.2 Reference Documents",
+      "bbox": [
+        85.10399627685547,
+        234.1999969482422,
+        243.98599243164062,
+        247.5800018310547
+      ],
+      "origin": [
+        85.10399627685547,
+        245.05999755859375
+      ],
+      "size": 12.0,
+      "font": "Arial-BoldMT",
+      "flags": 16,
+      "color": 0
+    },
+    {
+      "page_index": 4,
+      "text": "For detailed technical information about the suitable computer modules, please refer to the",
+      "bbox": [
+        85.10399627685547,
+        253.6184844970703,
+        505.2268371582031,
+        265.6003723144531
+      ],
+      "origin": [
+        85.10399627685547,
+        263.2099609375
+      ],
+      "size": 9.960000038146973,
+      "font": "FuturaBT-Medium",
+      "flags": 0,
+      "color": 0
+    },
+    {
+      "page_index": 4,
+      "text": "sections below:",
+      "bbox": [
+        85.10399627685547,
+        265.61846923828125,
+        157.8279266357422,
+        277.6003723144531
+      ],
+      "origin": [
+        85.10399627685547,
+        275.2099609375
+      ],
+      "size": 9.960000038146973,
+      "font": "FuturaBT-Medium",
+      "flags": 0,
+      "color": 0
+    },
+    {
+      "page_index": 4,
+      "text": "1.2.1 Colibri Computer Modules",
+      "bbox": [
+        85.10399627685547,
+        289.93878173828125,
+        261.59912109375,
+        302.2483825683594
+      ],
+      "origin": [
+        85.10399627685547,
+        299.92999267578125
+      ],
+      "size": 11.039999961853027,
+      "font": "Arial-BoldMT",
+      "flags": 16,
+      "color": 0
+    },
+    {
+      "page_index": 4,
+      "text": "An overview of the Colibri product family:",
+      "bbox": [
+        85.10399627685547,
+        308.218505859375,
+        278.3379211425781,
+        320.2004089355469
+      ],
+      "origin": [
+        85.10399627685547,
+        317.80999755859375
+      ],
+      "size": 9.960000038146973,
+      "font": "FuturaBT-Medium",
+      "flags": 0,
+      "color": 0
+    },
+    {
+      "page_index": 4,
+      "text": "http://www.toradex.com/products/colibri-arm-modules",
+      "bbox": [
+        85.10399627685547,
+        332.5561828613281,
+        324.0788879394531,
+        343.6615905761719
+      ],
+      "origin": [
+        85.10399627685547,
+        341.5699768066406
+      ],
+      "size": 9.960000038146973,
+      "font": "ArialMT",
+      "flags": 0,
+      "color": 255
+    },
+    {
+      "page_index": 4,
+      "text": "1.2.2 Synchronous DC/DC Buck Converter",
+      "bbox": [
+        85.10399627685547,
+        356.05877685546875,
+        317.29913330078125,
+        368.3683776855469
+      ],
+      "origin": [
+        85.10399627685547,
+        366.04998779296875
+      ],
+      "size": 11.039999961853027,
+      "font": "Arial-BoldMT",
+      "flags": 16,
+      "color": 0
+    },
+    {
+      "page_index": 4,
+      "text": "http://diodes.com/datasheets/AP6503.pdf",
+      "bbox": [
+        85.10399627685547,
+        380.6761779785156,
+        267.90142822265625,
+        391.7815856933594
+      ],
+      "origin": [
+        85.10399627685547,
+        389.6899719238281
+      ],
+      "size": 9.960000038146973,
+      "font": "ArialMT",
+      "flags": 0,
+      "color": 255
+    },
+    {
+      "page_index": 4,
+      "text": "1.2.3 USB, Current Limiter, Power Distribution Switches",
+      "bbox": [
+        85.10399627685547,
+        404.17877197265625,
+        387.7391357421875,
+        416.4883728027344
+      ],
+      "origin": [
+        85.10399627685547,
+        414.16998291015625
+      ],
+      "size": 11.039999961853027,
+      "font": "Arial-BoldMT",
+      "flags": 16,
+      "color": 0
+    },
+    {
+      "page_index": 4,
+      "text": "http://www.ti.com/product/tps2042b",
+      "bbox": [
+        85.10399627685547,
+        428.79620361328125,
+        244.1388702392578,
+        439.901611328125
+      ],
+      "origin": [
+        85.10399627685547,
+        437.80999755859375
+      ],
+      "size": 9.960000038146973,
+      "font": "ArialMT",
+      "flags": 0,
+      "color": 255
+    }
+  ]
+}

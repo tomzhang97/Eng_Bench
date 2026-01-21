@@ -1,0 +1,707 @@
+{
+  "doc_page": 11,
+  "spans": [
+    {
+      "page_index": 11,
+      "text": "STEAM TURBINE",
+      "bbox": [
+        222.24169921875,
+        466.4132995605469,
+        316.00128173828125,
+        479.55828857421875
+      ],
+      "origin": [
+        222.24169921875,
+        477.0722961425781
+      ],
+      "size": 11.0,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 15605806
+    },
+    {
+      "page_index": 11,
+      "text": "Doubleﬂow Turbine",
+      "bbox": [
+        322.8446960449219,
+        552.68408203125,
+        392.9337463378906,
+        565.174072265625
+      ],
+      "origin": [
+        322.8446960449219,
+        562.9940795898438
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "Rotary Compressor",
+      "bbox": [
+        322.8346862792969,
+        257.8741149902344,
+        392.750732421875,
+        270.3641052246094
+      ],
+      "origin": [
+        322.8346862792969,
+        268.1841125488281
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "Reciprocating Compressor",
+      "bbox": [
+        322.8346862792969,
+        97.8441162109375,
+        418.73284912109375,
+        110.33411407470703
+      ],
+      "origin": [
+        322.8346862792969,
+        108.15411376953125
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "Rotory Compressor & Silencers",
+      "bbox": [
+        322.8346862792969,
+        310.92413330078125,
+        436.7427673339844,
+        323.41412353515625
+      ],
+      "origin": [
+        322.8346862792969,
+        321.234130859375
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "Centrifugal Compressor",
+      "bbox": [
+        109.4346923828125,
+        97.8441162109375,
+        195.9697265625,
+        110.33411407470703
+      ],
+      "origin": [
+        109.4346923828125,
+        108.15411376953125
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "Centrifugal Compressor",
+      "bbox": [
+        109.4346923828125,
+        144.9541015625,
+        195.9697265625,
+        157.444091796875
+      ],
+      "origin": [
+        109.4346923828125,
+        155.26409912109375
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "(Turbine Driven)",
+      "bbox": [
+        109.4346923828125,
+        156.9541015625,
+        166.32469177246094,
+        169.444091796875
+      ],
+      "origin": [
+        109.4346923828125,
+        167.26409912109375
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "PD COMPRESSORS",
+      "bbox": [
+        221.43020629882812,
+        65.33221435546875,
+        321.9536437988281,
+        78.47721099853516
+      ],
+      "origin": [
+        221.43020629882812,
+        75.9912109375
+      ],
+      "size": 11.0,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 15605806
+    },
+    {
+      "page_index": 11,
+      "text": "Rotary Screw Compressor",
+      "bbox": [
+        322.84521484375,
+        363.96441650390625,
+        418.1512756347656,
+        376.45440673828125
+      ],
+      "origin": [
+        322.84521484375,
+        374.2744140625
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "Positive Displacement Blower",
+      "bbox": [
+        322.8446960449219,
+        417.0084228515625,
+        431.4545593261719,
+        429.4984130859375
+      ],
+      "origin": [
+        322.8446960449219,
+        427.31842041015625
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "Liquid Ring Vacuum",
+      "bbox": [
+        322.8446960449219,
+        151.1083984375,
+        393.7937927246094,
+        163.598388671875
+      ],
+      "origin": [
+        322.8446960449219,
+        161.41839599609375
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "Centrifugal Blower",
+      "bbox": [
+        109.44290161132812,
+        310.29791259765625,
+        178.14492797851562,
+        322.78790283203125
+      ],
+      "origin": [
+        109.44290161132812,
+        320.60791015625
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "Centrifugal Compressor",
+      "bbox": [
+        109.44290161132812,
+        204.07089233398438,
+        195.97694396972656,
+        216.56088256835938
+      ],
+      "origin": [
+        109.44290161132812,
+        214.38088989257812
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "Reciprocating Compressor",
+      "bbox": [
+        322.8428955078125,
+        204.83090209960938,
+        418.74005126953125,
+        217.32089233398438
+      ],
+      "origin": [
+        322.8428955078125,
+        215.14089965820312
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "Motor",
+      "bbox": [
+        109.44290161132812,
+        395.7213134765625,
+        131.99490356445312,
+        408.2113037109375
+      ],
+      "origin": [
+        109.44290161132812,
+        406.03131103515625
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "MOTORS",
+      "bbox": [
+        22.26759910583496,
+        361.026123046875,
+        68.29159545898438,
+        374.1711120605469
+      ],
+      "origin": [
+        22.26759910583496,
+        371.68511962890625
+      ],
+      "size": 11.0,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 15605806
+    },
+    {
+      "page_index": 11,
+      "text": "Turbine Driver",
+      "bbox": [
+        322.8446960449219,
+        498.78179931640625,
+        373.7538146972656,
+        511.27178955078125
+      ],
+      "origin": [
+        322.8446960449219,
+        509.091796875
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "Diesel Motor",
+      "bbox": [
+        109.44239807128906,
+        448.90478515625,
+        157.00039672851562,
+        461.394775390625
+      ],
+      "origin": [
+        109.44239807128906,
+        459.21478271484375
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "Agitator or Mixer",
+      "bbox": [
+        109.44290161132812,
+        501.69677734375,
+        172.31187438964844,
+        514.186767578125
+      ],
+      "origin": [
+        109.44290161132812,
+        512.0067749023438
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "Axial Compressor",
+      "bbox": [
+        109.44290161132812,
+        257.1867980957031,
+        173.99789428710938,
+        269.6767883300781
+      ],
+      "origin": [
+        109.44290161132812,
+        267.4967956542969
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "T",
+      "bbox": [
+        43.997100830078125,
+        149.8535919189453,
+        47.997100830078125,
+        159.5655975341797
+      ],
+      "origin": [
+        43.997100830078125,
+        157.76559448242188
+      ],
+      "size": 8.0,
+      "font": "UniversLTPro-Condensed",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "CENTRIFUGAL COMPRESSORS",
+      "bbox": [
+        22.26810073852539,
+        65.3311767578125,
+        184.1418914794922,
+        78.4761734008789
+      ],
+      "origin": [
+        22.26810073852539,
+        75.99017333984375
+      ],
+      "size": 11.0,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 15605806
+    },
+    {
+      "page_index": 11,
+      "text": "SYMBOLS",
+      "bbox": [
+        22.26759910583496,
+        34.576576232910156,
+        88.94540405273438,
+        51.30657958984375
+      ],
+      "origin": [
+        22.26759910583496,
+        48.142578125
+      ],
+      "size": 14.0,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 15605806
+    },
+    {
+      "page_index": 11,
+      "text": "– EQUIPMENT",
+      "bbox": [
+        90.20960235595703,
+        34.576576232910156,
+        188.88023376464844,
+        51.30657958984375
+      ],
+      "origin": [
+        90.20960235595703,
+        48.142578125
+      ],
+      "size": 14.0,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 2763306
+    },
+    {
+      "page_index": 11,
+      "text": "Hydrocracking",
+      "bbox": [
+        482.0683898925781,
+        184.5587158203125,
+        534.1273803710938,
+        197.0487060546875
+      ],
+      "origin": [
+        482.0683898925781,
+        194.86871337890625
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "Hydrodesulfurization",
+      "bbox": [
+        470.2684020996094,
+        306.938720703125,
+        545.9176635742188,
+        319.4287109375
+      ],
+      "origin": [
+        470.2684020996094,
+        317.24871826171875
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "Reformer",
+      "bbox": [
+        686.1784057617188,
+        184.5587158203125,
+        720.0623779296875,
+        197.0487060546875
+      ],
+      "origin": [
+        686.1784057617188,
+        194.86871337890625
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "Fluid Catalytic Cracking",
+      "bbox": [
+        465.2084045410156,
+        432.62872314453125,
+        550.9754028320312,
+        445.11871337890625
+      ],
+      "origin": [
+        465.2084045410156,
+        442.938720703125
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "Fluid Coking",
+      "bbox": [
+        583.0184326171875,
+        184.5587158203125,
+        627.1354370117188,
+        197.0487060546875
+      ],
+      "origin": [
+        583.0184326171875,
+        194.86871337890625
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "Tubular Reactor",
+      "bbox": [
+        576.4984130859375,
+        306.938720703125,
+        633.6525268554688,
+        319.4287109375
+      ],
+      "origin": [
+        576.4984130859375,
+        317.24871826171875
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "Fluidized Reactor",
+      "bbox": [
+        671.9884033203125,
+        306.938720703125,
+        734.2435302734375,
+        319.4287109375
+      ],
+      "origin": [
+        671.9884033203125,
+        317.24871826171875
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "Mixing Reactor",
+      "bbox": [
+        675.2684326171875,
+        432.62872314453125,
+        730.9734497070312,
+        445.11871337890625
+      ],
+      "origin": [
+        675.2684326171875,
+        442.938720703125
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "Alkylation",
+      "bbox": [
+        586.6884155273438,
+        432.62872314453125,
+        623.4763793945312,
+        445.11871337890625
+      ],
+      "origin": [
+        586.6884155273438,
+        442.938720703125
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "REACTOR SYMBOLS",
+      "bbox": [
+        458.400390625,
+        65.33172607421875,
+        565.48876953125,
+        78.47672271728516
+      ],
+      "origin": [
+        458.400390625,
+        75.99072265625
+      ],
+      "size": 11.0,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 15605806
+    },
+    {
+      "page_index": 11,
+      "text": "Furnace",
+      "bbox": [
+        561.33447265625,
+        526.4166259765625,
+        590.1924438476562,
+        538.9066162109375
+      ],
+      "origin": [
+        561.33447265625,
+        536.7266235351562
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "FURNACE AND BOILER",
+      "bbox": [
+        456.9814147949219,
+        466.41278076171875,
+        577.7592163085938,
+        479.5577697753906
+      ],
+      "origin": [
+        456.9814147949219,
+        477.07177734375
+      ],
+      "size": 11.0,
+      "font": "UniversLTPro-BoldCond",
+      "flags": 20,
+      "color": 15605806
+    },
+    {
+      "page_index": 11,
+      "text": "Boiler",
+      "bbox": [
+        720.5604858398438,
+        526.4171142578125,
+        741.5555419921875,
+        538.9071044921875
+      ],
+      "origin": [
+        720.5604858398438,
+        536.7271118164062
+      ],
+      "size": 10.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    },
+    {
+      "page_index": 11,
+      "text": "11",
+      "bbox": [
+        6.444799900054932,
+        595.0698852539062,
+        16.32280158996582,
+        608.8088989257812
+      ],
+      "origin": [
+        6.444799900054932,
+        606.410888671875
+      ],
+      "size": 11.0,
+      "font": "UniversLTPro-LightCond",
+      "flags": 4,
+      "color": 0
+    }
+  ]
+}
