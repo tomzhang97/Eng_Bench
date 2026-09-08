@@ -56,6 +56,29 @@ class PreparePairedActiveGoldAuditorRoundTests(unittest.TestCase):
         self.assertEqual("3", normalized["display_index"])
         self.assertEqual("paired_active_gold_release_recheck", normalized["assignment_origin"])
 
+    def test_tentative_visualdiff_rows_are_excluded_from_new_rounds(self) -> None:
+        rows = [
+            {
+                "task": "visualdiff",
+                "record_id": "vd_tentative",
+                "change_description": 'Localized text may have been added: "FIXTURE_R23".',
+            },
+            {
+                "task": "visualdiff",
+                "record_id": "vd_final",
+                "change_description": 'The engineering text "FIXTURE_R23" was added.',
+            },
+            {
+                "task": "microtext",
+                "record_id": "mt_same_words",
+                "change_description": 'Localized text may have been added: "FIXTURE_R23".',
+            },
+        ]
+        self.assertEqual(
+            {"vd_tentative"},
+            active.tentative_visualdiff_ids(rows),
+        )
+
     def test_render_evidence_creates_microtext_and_visualdiff_panels(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

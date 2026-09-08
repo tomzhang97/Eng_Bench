@@ -7,6 +7,9 @@ param(
 
     [string]$PreviewDir,
 
+    [ValidateSet(12, 24)]
+    [int]$RowsPerWorkbook = 12,
+
     [switch]$ReadOnly
 )
 
@@ -36,7 +39,7 @@ try {
     $excel.DisplayAlerts = $false
     $excel.AskToUpdateLinks = $false
 
-    $workbooks = @(Get-ChildItem -LiteralPath $resolvedWorkbookDir -Filter "AUDITOR_*_REVIEW_12.xlsx" -File | Sort-Object Name)
+    $workbooks = @(Get-ChildItem -LiteralPath $resolvedWorkbookDir -Filter "AUDITOR_*_REVIEW_$RowsPerWorkbook.xlsx" -File | Sort-Object Name)
     if ($workbooks.Count -eq 0) {
         throw "No auditor workbooks found in $resolvedWorkbookDir"
     }
@@ -79,18 +82,19 @@ try {
                     $pictureCount += 1
                 }
             }
-            if ($pictureCount -ne 12) {
-                $workbookIssues += "expected 12 embedded pictures, found $pictureCount"
+            if ($pictureCount -ne $RowsPerWorkbook) {
+                $workbookIssues += "expected $RowsPerWorkbook embedded pictures, found $pictureCount"
             }
 
-            foreach ($row in 7..18) {
+            $lastReviewRow = 6 + $RowsPerWorkbook
+            foreach ($row in 7..$lastReviewRow) {
                 $value = $reviewSheet.Cells.Item($row, 4).Value2
                 if ($null -eq $value -or [string]::IsNullOrWhiteSpace([string]$value)) {
                     $blankDecisionCells += 1
                 }
             }
-            if ($blankDecisionCells -ne 12) {
-                $workbookIssues += "expected 12 blank decision cells, found $blankDecisionCells"
+            if ($blankDecisionCells -ne $RowsPerWorkbook) {
+                $workbookIssues += "expected $RowsPerWorkbook blank decision cells, found $blankDecisionCells"
             }
 
             if (-not $ReadOnly) {
@@ -99,8 +103,9 @@ try {
                 $reviewSheet.Range("E5").Calculate()
             }
             $completionText = [string]$reviewSheet.Range("E5").Text
-            if ($completionText -ne "0 / 12") {
-                $workbookIssues += "expected completion text '0 / 12', found '$completionText'"
+            $expectedCompletionText = "0 / $RowsPerWorkbook"
+            if ($completionText -ne $expectedCompletionText) {
+                $workbookIssues += "expected completion text '$expectedCompletionText', found '$completionText'"
             }
 
             $reviewSheet.Activate()
@@ -108,7 +113,7 @@ try {
             $reviewSheet.Range("D7").Select() | Out-Null
 
             if ($resolvedPreviewDir) {
-                $range = $reviewSheet.Range("A1:E18")
+                $range = $reviewSheet.Range("A1:E$lastReviewRow")
                 $range.CopyPicture(1, 2)
                 $chartObject = $reviewSheet.ChartObjects().Add(0, 0, $range.Width, $range.Height)
                 $chart = $chartObject.Chart
@@ -171,6 +176,7 @@ $report = [ordered]@{
     workbook_dir = $resolvedWorkbookDir
     workbook_count = $reports.Count
     expected_workbooks = $reports.Count
+    rows_per_workbook = $RowsPerWorkbook
     reports = $reports
     issues = $issues
     gold_rows_modified = 0

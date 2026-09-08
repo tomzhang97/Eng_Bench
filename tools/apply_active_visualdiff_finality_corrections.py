@@ -47,6 +47,11 @@ from visualdiff_replacement_finality import (
     replacement_description,
     same_slot_matches,
 )
+from visualdiff_multispan_finality import (
+    POLICY_VERSION as MULTISPAN_POLICY_VERSION,
+    normalized_text as normalized_multispan_text,
+    validate_qualifying_cluster,
+)
 
 
 TEXTLAYER_POLICY_VERSION = "active_visualdiff_textlayer_finality_v1"
@@ -56,16 +61,19 @@ SUPPORTED_PREVIEW_MODES = {
     TEXTLAYER_POLICY_VERSION: "read_only_active_visualdiff_finality_correction_preview",
     RELOCATION_POLICY_VERSION: "read_only_active_visualdiff_relocation_correction_preview",
     REPLACEMENT_POLICY_VERSION: "read_only_active_visualdiff_replacement_correction_preview",
+    MULTISPAN_POLICY_VERSION: "read_only_active_visualdiff_multispan_correction_preview",
 }
 DESC_SOURCE_BY_POLICY = {
     TEXTLAYER_POLICY_VERSION: DESC_SOURCE,
     RELOCATION_POLICY_VERSION: "human_reviewed_machine_unique_text_relocation",
     REPLACEMENT_POLICY_VERSION: "human_reviewed_machine_same_slot_text_replacement",
+    MULTISPAN_POLICY_VERSION: "human_reviewed_machine_exact_multispan_finalized",
 }
 METHOD_BY_POLICY = {
     TEXTLAYER_POLICY_VERSION: "human_semantics_machine_textlayer_finalization",
     RELOCATION_POLICY_VERSION: "machine_unique_textlayer_relocation_of_human_reviewed_gap",
     REPLACEMENT_POLICY_VERSION: "machine_same_slot_textlayer_replacement_of_human_reviewed_gap",
+    MULTISPAN_POLICY_VERSION: "machine_exact_multispan_textlayer_finalization_of_human_reviewed_gap",
 }
 MUTABLE_PATHS = (
     "visualdiff/annotations/visualdiff_pairs.jsonl",
@@ -174,6 +182,27 @@ def deterministic_final_description(
 ) -> str:
     policy_version = str(correction.get("policy_version") or "")
     if policy_version == TEXTLAYER_POLICY_VERSION:
+        return definitive_description(details)
+    if policy_version == MULTISPAN_POLICY_VERSION:
+        target = str(correction.get("target") or "")
+        if target != str(details.get("target") or ""):
+            raise ValueError("multispan_target_mismatch")
+        if str(correction.get("kind") or "") != str(details.get("kind") or ""):
+            raise ValueError("multispan_kind_mismatch")
+        expected_side = "new" if details.get("kind") == "text_added" else "old"
+        if str(correction.get("expected_side") or "") != expected_side:
+            raise ValueError("multispan_expected_side_mismatch")
+        expected = correction.get("expected_cluster") or {}
+        opposite = correction.get("opposite_cluster") or {}
+        if str(expected.get("target") or "") != target:
+            raise ValueError("multispan_cluster_target_mismatch")
+        if str(expected.get("normalized_target") or "") != normalized_multispan_text(target):
+            raise ValueError("multispan_normalized_target_mismatch")
+        validate_qualifying_cluster(expected)
+        if opposite.get("status") != "observed":
+            raise ValueError("multispan_opposite_probe_not_observed")
+        if int(opposite.get("span_count_in_box") or 0) != 0:
+            raise ValueError("multispan_opposite_box_contains_text")
         return definitive_description(details)
     if policy_version == REPLACEMENT_POLICY_VERSION:
         old_text = str(correction.get("old_text") or "")
@@ -298,6 +327,12 @@ def apply_corrections_to_rows(
                 "expected_side": correction["expected_side"],
                 "expected_probe": correction["expected_probe"],
                 "opposite_probe": correction["opposite_probe"],
+            })
+        elif policy_version == MULTISPAN_POLICY_VERSION:
+            certification.update({
+                "expected_side": correction["expected_side"],
+                "expected_cluster": correction["expected_cluster"],
+                "opposite_cluster": correction["opposite_cluster"],
             })
         elif policy_version == RELOCATION_POLICY_VERSION:
             certification.update({

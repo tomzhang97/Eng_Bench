@@ -20,9 +20,11 @@ from PIL import Image, ImageDraw, ImageFont
 try:
     from . import prepare_fresh_auditor_round as fresh
     from . import prepare_paired_auditor_round as paired
+    from . import visualdiff_description_finality as finality
 except ImportError:  # Direct script execution from tools/.
     import prepare_fresh_auditor_round as fresh
     import prepare_paired_auditor_round as paired
+    import visualdiff_description_finality as finality
 
 
 UNIQUE_ROWS = paired.UNIQUE_ROWS
@@ -132,15 +134,31 @@ def benchmark_rows(root: Path) -> list[dict[str, Any]]:
     return rows
 
 
+def tentative_visualdiff_ids(rows: list[dict[str, Any]]) -> set[str]:
+    return {
+        str(row.get("record_id") or "").strip()
+        for row in rows
+        if row.get("task") == "visualdiff"
+        and finality.tentative_description_details(
+            str(row.get("change_description") or "")
+        )
+        and str(row.get("record_id") or "").strip()
+    }
+
+
 def eligible_rows(root: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     assigned_ids, _, assignment_files = fresh.historical_assignments(root)
     completed_ids, decision_files = fresh.completed_assignments(root)
     agreement_ids = fresh.agreement_ids(root)
     recheck_ids = current_recheck_ids(root)
-    excluded_ids = assigned_ids | completed_ids | agreement_ids | recheck_ids
+    active_rows = benchmark_rows(root)
+    tentative_ids = tentative_visualdiff_ids(active_rows)
+    excluded_ids = (
+        assigned_ids | completed_ids | agreement_ids | recheck_ids | tentative_ids
+    )
     eligible = [
         row
-        for row in benchmark_rows(root)
+        for row in active_rows
         if not (set(row["source_aliases"]) & excluded_ids)
     ]
     context = {
@@ -148,6 +166,7 @@ def eligible_rows(root: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
         "completed_decision_ids": len(completed_ids),
         "formal_agreement_ids": len(agreement_ids),
         "active_audit_recheck_ids": len(recheck_ids),
+        "tentative_visualdiff_ids": len(tentative_ids),
         "historical_payloads": assignment_files,
         "completed_decision_files": decision_files,
     }
@@ -351,6 +370,7 @@ def build(
         "completed_decision_overlap": 0,
         "formal_agreement_overlap": 0,
         "active_audit_recheck_overlap": 0,
+        "tentative_visualdiff_overlap": 0,
         "intentional_cross_auditor_replication": paired.REVIEWERS_PER_ROW,
         "prefilled_answers": 0,
         "safe_to_merge_gold": False,
