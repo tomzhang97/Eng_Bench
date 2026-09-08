@@ -221,13 +221,15 @@ function writeInstructions(workbook, payload) {
     verticalAlignment: "center",
   };
 
-  sheet.getRange("A:A").format.columnWidthPx = 48;
+  sheet.getRange("A:A").format.columnWidthPx = 64;
   sheet.getRange("B:B").format.columnWidthPx = 180;
-  sheet.getRange("C:C").format.columnWidthPx = 620;
-  sheet.getRange("D:D").format.columnWidthPx = 28;
+  sheet.getRange("C:C").format.columnWidthPx = 540;
+  sheet.getRange("D:D").format.columnWidthPx = 90;
   sheet.getRange("E:E").format.columnWidthPx = 210;
   sheet.getRange("F:F").format.columnWidthPx = 360;
-  sheet.getRange("G:J").format.columnWidthPx = 120;
+  sheet.getRange("G:H").format.columnWidthPx = 150;
+  sheet.getRange("I:I").format.columnWidthPx = 165;
+  sheet.getRange("J:J").format.columnWidthPx = 100;
   sheet.getRange("A2:J22").format.verticalAlignment = "center";
   sheet.tabColor = COLORS.teal;
 }
