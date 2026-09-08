@@ -29,6 +29,41 @@ def write_json(path: Path, payload: dict[str, object]) -> None:
 
 
 class CandidatePrefixLineageTests(unittest.TestCase):
+    def test_machine_held_reviewed_sibling_is_not_reported_as_fresh(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            tmp_path = Path(temp_dir)
+            annotation_dir = tmp_path / "microtext" / "annotations"
+            annotation_dir.mkdir(parents=True)
+            open_row = {
+                "candidate_id": "machine-held-candidate",
+                "doc_id": "demo",
+                "review_status": "needs_review",
+            }
+            held_row = {
+                **open_row,
+                "review_status": "machine_held",
+                "machine_hold_reason": "duplicate_of_packeted_target",
+            }
+            (annotation_dir / "microtext_review_demo.jsonl").write_text(
+                json.dumps(open_row) + "\n",
+                encoding="utf-8",
+            )
+            (annotation_dir / "microtext_review_demo_machine_held.jsonl").write_text(
+                json.dumps(held_row) + "\n",
+                encoding="utf-8",
+            )
+
+            resolved = audit_source_conversion_readiness.terminal_reviewed_row_keys(tmp_path)
+            by_doc, _by_candidate = audit_source_conversion_readiness.collect_review_stats(
+                tmp_path,
+                resolved_row_keys=resolved,
+            )
+
+            self.assertEqual(resolved, {"machine-held-candidate"})
+            self.assertEqual(by_doc["demo"]["unique_open_rows"], 1)
+            self.assertEqual(by_doc["demo"]["unique_fresh_open_rows"], 0)
+            self.assertEqual(by_doc["demo"]["unique_stale_open_rows"], 1)
+
     def test_hold_disposition_is_not_counted_as_open_review_work(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             tmp_path = Path(temp_dir)

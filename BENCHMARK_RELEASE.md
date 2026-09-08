@@ -13,7 +13,7 @@ provenance (298/307 paper-ready documents) remain OPEN. Six MicroText category
 floors, 336 machine-detectable nonfinal VisualDiff descriptions, 526 BBB rows
 with corrected geometry but unverified semantics, and 49 unresolved active audit
 flags also block release. Current gate:
-`results/health/v2_0_gate_audit_2026-09-09-wave2324-nasa-engineering-systems.json`.
+`results/health/v2_0_gate_audit_2026-09-09-wave2356-actionable-source-ledger.json`.
 The 29 counted baseline reports remain bound to the existing 1,600-row frozen
 challenge. Active test now contains 1,784 rows, so the 184 rows outside that
 freeze are not yet part of the public/private challenge or its baseline scores.
@@ -64,6 +64,14 @@ and only 9 VisualDiff rows and must not be reported as a balanced Gold benchmark
 Keep `*_labels_private.jsonl` on the scoring side, never in model inputs. The
 original release and all human votes remain unchanged. See
 `AUDITOR_RETURN_STATUS.md` for current machine work and human actions.
+
+The current source-conversion ledger is also fail-closed. A status-aware audit
+now recognizes machine holds, duplicate holds, superseded representations, and
+explicit exclusion reasons across all review JSONL ledgers. This reduced the
+apparent fresh local queue from 61,309 to 22,108 without deleting candidates or
+changing Gold. The removed 39,201 entries were already resolved, obsolete, or
+stale representations, not lost benchmark capacity. See
+`derived/quality/source_conversion_readiness_2026-09-09-wave2355-actionable-source-ledger-current.json`.
 
 ## 1. Overview And Earlier Checkpoints
 Eng_Bench is a benchmark for engineering diagram understanding, focusing on **Visual Diff** (detecting changes between revisions) and **Microtext** (reading dense technical text). See [DATACARD.md](DATACARD.md) for full details. 
@@ -608,3 +616,19 @@ the all-staged upper bound is 5,731. Wave2324 remains **5/9 Gold v2.0 Global
 gates PASS**. The release-safe inventory rises to 555 unique documents, while
 row scale, frozen challenge scale, formal agreement, and complete active
 provenance remain OPEN.
+
+NASA NTRS record `19790015337` was then added as a fourth source. Six connected
+silicon-process P&ID sheets were rendered from report pages 35 through 40. OCR
+produced 170 detections; a complete authoritative-bbox visual pass retained 47
+readable targets and held 123 title-block strings, stamps, captions, truncated
+or overlapping detections, and uncertain text. The retained mix is 34
+`equipment_tag` and 13 `process_label` rows. Answers were limited to text
+actually visible inside the benchmark crop, including removal of nearby tags
+that sat outside the red box.
+
+The 47 rows pass active-Gold, 2,231-file assignment/history, payload-alias,
+near-region, and evidence gates. Combined with the earlier 37 rows, NASA
+engineering-system future capacity is 84 rows across four distinct payloads.
+Current Gold remains 5,694; the all-staged upper bound is 5,778. Wave2339 remains
+**5/9 Gold v2.0 Global gates PASS**. Release-safe inventory is now 556 unique
+documents. No unreviewed row was promoted.

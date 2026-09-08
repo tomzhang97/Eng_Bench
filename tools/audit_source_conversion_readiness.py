@@ -42,6 +42,9 @@ TERMINAL_REVIEW_STATUSES = {
     "edit",
     "edited",
     "invalid",
+    "machine_held",
+    "machine_superseded",
+    "qa_duplicate_hold",
     "reject",
     "rejected",
     "valid",
@@ -805,13 +808,23 @@ def visualdiff_source_doc_ids(
 
 
 def terminal_reviewed_row_keys(root: Path) -> set[str]:
+    """Return review identities that downstream queue builders must not recycle.
+
+    Human-reviewed terminal rows and machine/non-actionable holds are both
+    terminal for source-conversion readiness. The queue builder already applies
+    the same veto across every review file, so limiting this index to filenames
+    ending in ``_reviewed.jsonl`` overstates fresh actionable capacity.
+    """
     keys: set[str] = set()
-    files = list((root / "microtext" / "annotations").glob("*_reviewed.jsonl"))
-    files.extend((root / "visualdiff" / "annotations").glob("*_reviewed.jsonl"))
+    files = list((root / "microtext" / "annotations").glob("microtext_review*.jsonl"))
+    files.extend((root / "visualdiff" / "annotations").glob("visualdiff_review*.jsonl"))
     for path in sorted(files):
         kind = "visualdiff" if "visualdiff" in path.name else "microtext"
         for row in read_jsonl(path):
-            if status_for(row) not in TERMINAL_REVIEW_STATUSES:
+            if (
+                status_for(row) not in TERMINAL_REVIEW_STATUSES
+                and not review_exclusion_reason(row)
+            ):
                 continue
             key = row_identity(row, kind)
             if key:
