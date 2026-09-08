@@ -175,7 +175,7 @@ function writeInstructions(workbook, counts) {
     "MicroText", counts.microtext,
     "VisualDiff", counts.visualdiff,
     "工程知识动作", counts.engineering_actions_total || counts.engineering_total,
-    "当前正式门禁", "3 / 9",
+    "当前正式门禁", `${counts.formal_gate_pass ?? 5} / ${counts.formal_gate_total ?? 9}`,
   ]];
   styleHeader(sheet.getRange("A4:J4"));
   sheet.getRange("B4:D4").format.fill = COLORS.tealLight;
