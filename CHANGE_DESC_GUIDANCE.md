@@ -25,6 +25,18 @@ Manual editing of `visualdiff_pairs.jsonl`:
 
 ## Writing Guidelines
 
+Gold v2.0 descriptions are concise English prose. When the drawing contains a
+non-English label, quote that label verbatim inside an English sentence. A
+non-English review description must be human-localized and rechecked against
+both crops before promotion; machine translation alone is not a Gold label.
+
+### Before Writing
+
+Only write a gold description when the marked old/new crop shows a real visible
+change inside the region. Reject rows where old/new are identical. Reject rows
+where the only difference is a whole-crop/page alignment shift. Use `layout`
+only when a specific drawing object moved relative to surrounding content.
+
 ### Good Examples
 ✅ "The value of R47 changed from 10kΩ to 4.7kΩ."
 ✅ "Connector J5 was relocated from top-left to bottom-right quadrant."

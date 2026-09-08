@@ -1,0 +1,138 @@
+{
+  "bootstrap_samples": 200,
+  "completed_count": 7,
+  "failed_count": 0,
+  "groups": [
+    "pixel"
+  ],
+  "passed_count": 7,
+  "results": [
+    {
+      "generator_args": [
+        "--mode",
+        "absolute",
+        "--split",
+        "all"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 92.408,
+      "group": "pixel",
+      "name": "simple_diff_visualdiff_all",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 20.363,
+      "script": "baselines/simple_diff_baseline.py",
+      "split": "all",
+      "task": "visualdiff"
+    },
+    {
+      "generator_args": [
+        "--mode",
+        "edge",
+        "--split",
+        "test"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 60.04,
+      "group": "pixel",
+      "name": "edge_diff_visualdiff_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 12.958,
+      "script": "baselines/simple_diff_baseline.py",
+      "split": "test",
+      "task": "visualdiff"
+    },
+    {
+      "generator_args": [
+        "--mode",
+        "ssim",
+        "--split",
+        "test"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 120.145,
+      "group": "pixel",
+      "name": "ssim_diff_visualdiff_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 13.234,
+      "script": "baselines/simple_diff_baseline.py",
+      "split": "test",
+      "task": "visualdiff"
+    },
+    {
+      "generator_args": [
+        "--mode",
+        "phase",
+        "--split",
+        "test"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 76.843,
+      "group": "pixel",
+      "name": "phase_diff_visualdiff_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 12.909,
+      "script": "baselines/simple_diff_baseline.py",
+      "split": "test",
+      "task": "visualdiff"
+    },
+    {
+      "generator_args": [
+        "--mode",
+        "orb_residual",
+        "--split",
+        "test"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 162.347,
+      "group": "pixel",
+      "name": "orb_residual_diff_visualdiff_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 13.137,
+      "script": "baselines/simple_diff_baseline.py",
+      "split": "test",
+      "task": "visualdiff"
+    },
+    {
+      "generator_args": [
+        "--mode",
+        "largest_cc",
+        "--split",
+        "test"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 59.245,
+      "group": "pixel",
+      "name": "largest_cc_diff_visualdiff_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 12.807,
+      "script": "baselines/simple_diff_baseline.py",
+      "split": "test",
+      "task": "visualdiff"
+    },
+    {
+      "generator_args": [
+        "--mode",
+        "tile_zncc",
+        "--split",
+        "test"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 69.615,
+      "group": "pixel",
+      "name": "tile_zncc_diff_visualdiff_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 13.309,
+      "script": "baselines/simple_diff_baseline.py",
+      "split": "test",
+      "task": "visualdiff"
+    }
+  ],
+  "selected_count": 7
+}

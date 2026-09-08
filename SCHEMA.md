@@ -55,6 +55,18 @@ Each item is one tiny text/tolerance region with ground-truth bbox + text.
 **Optional fields:**
 - `board_id`, `object_id`
 - `font_height_px`, `dimension_name`, `notes`
+- Human review provenance: `review_status`, `review_source`, `reviewed_at`
+- Machine certification provenance: `human_reviewed`, `certification_method`,
+  `certification_tier`, `certification_policy_version`, `certification_date`,
+  `certification_eligibility_report_sha256`,
+  `certification_calibration_attestation_sha256`, and
+  `machine_certification_evidence_sha256`
+
+Machine certification is valid only for MicroText `train`. The required values
+are `human_reviewed=false`, `review_source=machine_certification_policy`,
+`certification_method=machine_verified`, `certification_tier=auto_gold_train`,
+and `certification_policy_version=1.0`. Strict validation rejects incomplete
+machine certification or any machine-certified dev/test row.
 
 ## 4. microtext_questions.jsonl
 

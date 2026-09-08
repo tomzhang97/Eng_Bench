@@ -1,0 +1,100 @@
+{
+  "bootstrap_samples": 200,
+  "completed_count": 5,
+  "failed_count": 0,
+  "groups": [
+    "textlayer"
+  ],
+  "passed_count": 5,
+  "results": [
+    {
+      "generator_args": [
+        "--mode",
+        "category_heuristic",
+        "--split",
+        "test"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 5.515,
+      "group": "textlayer",
+      "name": "textlayer_heuristic_microtext_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 1.371,
+      "script": "baselines/textlayer_microtext_baseline.py",
+      "split": "test",
+      "task": "microtext"
+    },
+    {
+      "generator_args": [
+        "--mode",
+        "smallest_span",
+        "--split",
+        "test"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 5.144,
+      "group": "textlayer",
+      "name": "textlayer_smallest_span_microtext_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 1.171,
+      "script": "baselines/textlayer_microtext_baseline.py",
+      "split": "test",
+      "task": "microtext"
+    },
+    {
+      "generator_args": [
+        "--mode",
+        "center_span",
+        "--split",
+        "test"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 5.062,
+      "group": "textlayer",
+      "name": "textlayer_center_span_microtext_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 1.407,
+      "script": "baselines/textlayer_microtext_baseline.py",
+      "split": "test",
+      "task": "microtext"
+    },
+    {
+      "generator_args": [
+        "--mode",
+        "page_frequency",
+        "--split",
+        "test"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 5.022,
+      "group": "textlayer",
+      "name": "textlayer_page_frequency_microtext_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 1.299,
+      "script": "baselines/textlayer_microtext_baseline.py",
+      "split": "test",
+      "task": "microtext"
+    },
+    {
+      "generator_args": [
+        "--split",
+        "test"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 9.22,
+      "group": "textlayer",
+      "name": "textlayer_diff_visualdiff_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 17.101,
+      "script": "baselines/textlayer_diff_visualdiff_baseline.py",
+      "split": "test",
+      "task": "visualdiff"
+    }
+  ],
+  "selected_count": 5
+}

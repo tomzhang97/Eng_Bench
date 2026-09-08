@@ -1,0 +1,3 @@
+alias_candidate_id,canonical_candidate_id,doc_id,reason
+pcb_016,pcb_047,adafruit_feather_m0_adalogger_sch,Exact duplicate GitHub repository URL; canonical import is candidate pcb_047 at pinned commit 0147a7204c11.
+pcb_016,pcb_047,adafruit_feather_m0_adalogger_pinout,Exact duplicate GitHub repository URL; canonical import is candidate pcb_047 at pinned commit 0147a7204c11.

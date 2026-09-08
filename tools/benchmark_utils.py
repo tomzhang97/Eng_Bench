@@ -126,7 +126,8 @@ def dedup_key(item: Dict[str, Any]) -> Tuple:
     Generate stable dedup key:
     (pair_id, split, qtype, page, anchor_kind, anchor_id, bbox, entity, question, coord_frame)
     """
-    pair_id = item.get("pair_id", "")
+    meta = item.get("metadata") if isinstance(item.get("metadata"), dict) else {}
+    pair_id = item.get("pair_id") or meta.get("pair_id", "")
     split = item.get("split", "")
     qtype = item.get("question_type", "")
 

@@ -1,1 +1,9 @@
 vdiff__bbb__C__to__C3
+# Reviewed 2026-07 return: keep all OLIMEX ESP32-EVB revisions together.
+vdiff__olimex_esp32_evb__rev_i__to__rev_j
+vdiff__olimex_esp32_evb__rev_k__to__rev_l
+vdiff__olimex_esp32_evb__rev_j__to__rev_k
+vdiff__pixhawk_fmuv1__1_7__to__1_7_1
+vdiff__pixhawk_fmuv2__2_4_5__to__2_4_6
+vdiff__pixhawk_fmuv2__2_4_3__to__2_4_5
+vdiff__voron_0_mid_panel__v0_0r1__to__v0_1

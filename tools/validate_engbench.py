@@ -177,7 +177,7 @@ def main():
         all_errors.extend(errors)
         
         if not errors:
-            print(f"    ✓ {len(pairs)} pairs valid")
+            print(f"    [OK] {len(pairs)} pairs valid")
         
         # Validate questions if provided
         if args.visualdiff_questions:
@@ -188,7 +188,7 @@ def main():
             all_errors.extend(errors)
             
             if not errors:
-                print(f"    ✓ {len(questions)} questions valid")
+                print(f"    [OK] {len(questions)} questions valid")
     
     # Validate microtext
     if args.microtext_items:
@@ -198,7 +198,7 @@ def main():
         all_errors.extend(errors)
         
         if not errors:
-            print(f"    ✓ {len(items)} items valid")
+            print(f"    [OK] {len(items)} items valid")
         
         # Validate questions if provided
         if args.microtext_questions:
@@ -209,7 +209,7 @@ def main():
             all_errors.extend(errors)
             
             if not errors:
-                print(f"    ✓ {len(questions)} questions valid")
+                print(f"    [OK] {len(questions)} questions valid")
     
     # Report results
     if all_errors:
@@ -218,7 +218,7 @@ def main():
             print(f"    - {error}")
         return 1
     else:
-        print("\n[✓] All validations passed!")
+        print("\n[OK] All validations passed!")
         return 0
 
 

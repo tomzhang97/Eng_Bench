@@ -1,0 +1,380 @@
+{
+  "bootstrap_samples": 200,
+  "completed_count": 17,
+  "failed_count": 0,
+  "groups": [
+    "quick"
+  ],
+  "passed_count": 17,
+  "results": [
+    {
+      "generator_args": [
+        "--mode",
+        "center",
+        "--split",
+        "test",
+        "--task",
+        "all"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 0.228,
+      "group": "quick",
+      "name": "weak_center_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 15.688,
+      "script": "baselines/weak_heuristic_baselines.py",
+      "split": "test",
+      "task": "all"
+    },
+    {
+      "generator_args": [
+        "--mode",
+        "full_page",
+        "--split",
+        "test",
+        "--task",
+        "all"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 0.229,
+      "group": "quick",
+      "name": "weak_full_page_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 15.9,
+      "script": "baselines/weak_heuristic_baselines.py",
+      "split": "test",
+      "task": "all"
+    },
+    {
+      "generator_args": [
+        "--mode",
+        "metadata_template",
+        "--split",
+        "test",
+        "--task",
+        "all"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 0.228,
+      "group": "quick",
+      "name": "metadata_template_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 15.507,
+      "script": "baselines/weak_heuristic_baselines.py",
+      "split": "test",
+      "task": "all"
+    },
+    {
+      "generator_args": [
+        "--mode",
+        "label_prior",
+        "--split",
+        "test",
+        "--task",
+        "microtext",
+        "--calibration-splits",
+        "train"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 0.171,
+      "group": "quick",
+      "name": "train_prior_microtext_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 1.592,
+      "script": "baselines/weak_heuristic_baselines.py",
+      "split": "test",
+      "task": "microtext"
+    },
+    {
+      "generator_args": [
+        "--mode",
+        "label_prior",
+        "--split",
+        "test",
+        "--task",
+        "visualdiff",
+        "--calibration-splits",
+        "dev"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 0.198,
+      "group": "quick",
+      "name": "dev_prior_visualdiff_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 13.668,
+      "script": "baselines/weak_heuristic_baselines.py",
+      "split": "test",
+      "task": "visualdiff"
+    },
+    {
+      "generator_args": [
+        "--mode",
+        "label_prior",
+        "--split",
+        "test",
+        "--task",
+        "all",
+        "--calibration-splits",
+        "train"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 0.224,
+      "group": "quick",
+      "name": "train_prior_all_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 12.994,
+      "script": "baselines/weak_heuristic_baselines.py",
+      "split": "test",
+      "task": "all"
+    },
+    {
+      "generator_args": [
+        "--mode",
+        "label_prior",
+        "--split",
+        "test",
+        "--task",
+        "all",
+        "--calibration-splits",
+        "dev"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 0.221,
+      "group": "quick",
+      "name": "dev_prior_all_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 14.711,
+      "script": "baselines/weak_heuristic_baselines.py",
+      "split": "test",
+      "task": "all"
+    },
+    {
+      "generator_args": [
+        "--mode",
+        "label_prior",
+        "--split",
+        "test",
+        "--task",
+        "all",
+        "--calibration-splits",
+        "train,dev"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 0.224,
+      "group": "quick",
+      "name": "train_dev_prior_all_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 13.738,
+      "script": "baselines/weak_heuristic_baselines.py",
+      "split": "test",
+      "task": "all"
+    },
+    {
+      "generator_args": [
+        "--mode",
+        "grid",
+        "--split",
+        "test",
+        "--task",
+        "all",
+        "--grid-cell",
+        "0"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 0.224,
+      "group": "quick",
+      "name": "weak_grid_cell_0_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 14.9,
+      "script": "baselines/weak_heuristic_baselines.py",
+      "split": "test",
+      "task": "all"
+    },
+    {
+      "generator_args": [
+        "--mode",
+        "grid",
+        "--split",
+        "test",
+        "--task",
+        "all",
+        "--grid-cell",
+        "1"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 0.225,
+      "group": "quick",
+      "name": "weak_grid_cell_1_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 15.205,
+      "script": "baselines/weak_heuristic_baselines.py",
+      "split": "test",
+      "task": "all"
+    },
+    {
+      "generator_args": [
+        "--mode",
+        "grid",
+        "--split",
+        "test",
+        "--task",
+        "all",
+        "--grid-cell",
+        "2"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 0.222,
+      "group": "quick",
+      "name": "weak_grid_cell_2_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 15.413,
+      "script": "baselines/weak_heuristic_baselines.py",
+      "split": "test",
+      "task": "all"
+    },
+    {
+      "generator_args": [
+        "--mode",
+        "grid",
+        "--split",
+        "test",
+        "--task",
+        "all",
+        "--grid-cell",
+        "3"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 0.22,
+      "group": "quick",
+      "name": "weak_grid_cell_3_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 15.169,
+      "script": "baselines/weak_heuristic_baselines.py",
+      "split": "test",
+      "task": "all"
+    },
+    {
+      "generator_args": [
+        "--mode",
+        "grid",
+        "--split",
+        "test",
+        "--task",
+        "all",
+        "--grid-cell",
+        "4"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 0.218,
+      "group": "quick",
+      "name": "weak_grid_cell_4_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 15.362,
+      "script": "baselines/weak_heuristic_baselines.py",
+      "split": "test",
+      "task": "all"
+    },
+    {
+      "generator_args": [
+        "--mode",
+        "grid",
+        "--split",
+        "test",
+        "--task",
+        "all",
+        "--grid-cell",
+        "5"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 0.221,
+      "group": "quick",
+      "name": "weak_grid_cell_5_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 15.224,
+      "script": "baselines/weak_heuristic_baselines.py",
+      "split": "test",
+      "task": "all"
+    },
+    {
+      "generator_args": [
+        "--mode",
+        "grid",
+        "--split",
+        "test",
+        "--task",
+        "all",
+        "--grid-cell",
+        "6"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 0.216,
+      "group": "quick",
+      "name": "weak_grid_cell_6_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 15.024,
+      "script": "baselines/weak_heuristic_baselines.py",
+      "split": "test",
+      "task": "all"
+    },
+    {
+      "generator_args": [
+        "--mode",
+        "grid",
+        "--split",
+        "test",
+        "--task",
+        "all",
+        "--grid-cell",
+        "7"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 0.222,
+      "group": "quick",
+      "name": "weak_grid_cell_7_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 15.218,
+      "script": "baselines/weak_heuristic_baselines.py",
+      "split": "test",
+      "task": "all"
+    },
+    {
+      "generator_args": [
+        "--mode",
+        "grid",
+        "--split",
+        "test",
+        "--task",
+        "all",
+        "--grid-cell",
+        "8"
+      ],
+      "generator_returncode": 0,
+      "generator_seconds": 0.22,
+      "group": "quick",
+      "name": "weak_grid_cell_8_test",
+      "passed": true,
+      "scorer_returncode": 0,
+      "scorer_seconds": 15.201,
+      "script": "baselines/weak_heuristic_baselines.py",
+      "split": "test",
+      "task": "all"
+    }
+  ],
+  "selected_count": 17
+}

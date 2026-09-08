@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "engbench"
+version = "0.95.0"
+description = "Loader and evaluation helpers for the provisional Eng_Bench engineering-document benchmark."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+  {name = "Eng_Bench maintainers"}
+]
+dependencies = [
+  "numpy>=1.21.0",
+  "Pillow>=9.0.0",
+  "opencv-python-headless>=4.8.0",
+  "datasets>=2.14.0",
+  "scikit-learn>=1.0.0",
+  "tqdm>=4.65.0",
+]
+
+[project.optional-dependencies]
+annotation = [
+  "openai>=1.0.0",
+  "anthropic>=0.18.0",
+]
+semantic = [
+  "sentence-transformers>=2.2.0",
+]
+dev = [
+  "pytest>=8.0.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["engbench*"]

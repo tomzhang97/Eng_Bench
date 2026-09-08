@@ -9,15 +9,17 @@ Each JSON contains a list of spans with:
 import argparse, json
 from pathlib import Path
 import fitz
+from page_ranges import parse_page_selection
 
 fitz.TOOLS.mupdf_display_errors(False)
 fitz.TOOLS.mupdf_display_warnings(False)
 
 
-def extract(pdf_path: Path, out_dir: Path):
+def extract(pdf_path: Path, out_dir: Path, pages: str | None = None):
     out_dir.mkdir(parents=True, exist_ok=True)
     doc = fitz.open(pdf_path)
-    for i in range(doc.page_count):
+    selected_pages = parse_page_selection(pages, doc.page_count)
+    for i in selected_pages:
         page = doc[i]
         d = page.get_text("dict")
         spans = []
@@ -40,18 +42,29 @@ def extract(pdf_path: Path, out_dir: Path):
         out_path = out_dir / f"page_{i:03d}.json"
         out_path.write_text(json.dumps({"doc_page": i, "spans": spans}, ensure_ascii=False, indent=2), encoding="utf-8")
     doc.close()
+    return len(selected_pages), selected_pages
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", type=str, default=".")
     ap.add_argument("--doc_id", type=str, required=True)
     ap.add_argument("--pdf_relpath", type=str, required=True)
+    ap.add_argument(
+        "--pages",
+        type=str,
+        default="all",
+        help="1-based page selection such as '1,3-5'. Default: all.",
+    )
     args = ap.parse_args()
     root = Path(args.root)
     pdf_path = root / args.pdf_relpath
     out_dir = root / "derived" / "textlayer" / args.doc_id
-    extract(pdf_path, out_dir)
-    print(f"[OK] Extracted textlayer {pdf_path} -> {out_dir}")
+    extracted, selected_pages = extract(pdf_path, out_dir, pages=args.pages)
+    if args.pages.strip().lower() == "all":
+        page_note = "all pages"
+    else:
+        page_note = f"{extracted} selected pages"
+    print(f"[OK] Extracted textlayer for {page_note} from {pdf_path} -> {out_dir}")
 
 if __name__ == "__main__":
     main()

@@ -1,0 +1,52 @@
+{
+  "baseline_prediction_file_count": 10,
+  "baseline_prediction_files": [
+    "results\\baselines\\dev_prior_all_test_predictions.jsonl",
+    "results\\baselines\\dev_prior_visualdiff_test_predictions.jsonl",
+    "results\\baselines\\metadata_template_test_predictions.jsonl",
+    "results\\baselines\\simple_diff_visualdiff_all_predictions.jsonl",
+    "results\\baselines\\textlayer_heuristic_microtext_test_predictions.jsonl",
+    "results\\baselines\\train_dev_prior_all_test_predictions.jsonl",
+    "results\\baselines\\train_prior_all_test_predictions.jsonl",
+    "results\\baselines\\train_prior_microtext_test_predictions.jsonl",
+    "results\\baselines\\weak_center_test_predictions.jsonl",
+    "results\\baselines\\weak_full_page_test_predictions.jsonl"
+  ],
+  "failing_examples": [],
+  "failing_rows": 0,
+  "gold_rows": 382,
+  "min_baselines": 3,
+  "passed": true,
+  "prediction_rows_by_file": {
+    "dev_prior_all_test": 382,
+    "dev_prior_visualdiff_test": 229,
+    "metadata_template_test": 382,
+    "simple_diff_visualdiff_all": 1391,
+    "textlayer_heuristic_microtext_test": 153,
+    "train_dev_prior_all_test": 382,
+    "train_prior_all_test": 382,
+    "train_prior_microtext_test": 153,
+    "weak_center_test": 382,
+    "weak_full_page_test": 382
+  },
+  "rows_by_coverage": {
+    "8": 382
+  },
+  "rows_by_task": {
+    "microtext": 153,
+    "visualdiff": 229
+  },
+  "split": "test",
+  "unknown_predictions_by_file": {
+    "dev_prior_all_test": 0,
+    "dev_prior_visualdiff_test": 0,
+    "metadata_template_test": 0,
+    "simple_diff_visualdiff_all": 1162,
+    "textlayer_heuristic_microtext_test": 0,
+    "train_dev_prior_all_test": 0,
+    "train_prior_all_test": 0,
+    "train_prior_microtext_test": 0,
+    "weak_center_test": 0,
+    "weak_full_page_test": 0
+  }
+}

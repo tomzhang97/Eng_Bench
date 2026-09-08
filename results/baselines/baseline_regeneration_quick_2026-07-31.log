@@ -1,0 +1,393 @@
+[1/17] Generating weak_center_test
+{
+  "calibration_splits": [
+    "train"
+  ],
+  "grid_cell": null,
+  "grid_cols": null,
+  "grid_rows": null,
+  "mode": "center",
+  "predictions": 1230,
+  "prior_buckets": 0,
+  "split": "test",
+  "target_rows": 1230,
+  "task": "all"
+}
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_center_test_predictions.jsonl
+[1/17] Scoring weak_center_test
+Eng_Bench results for weak_center_test
+Rows scored: 1230
+Missing predictions: 0
+Rows by task: {'microtext': 359, 'visualdiff': 871}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_center_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_center_test_report.md
+[2/17] Generating weak_full_page_test
+{
+  "calibration_splits": [
+    "train"
+  ],
+  "grid_cell": null,
+  "grid_cols": null,
+  "grid_rows": null,
+  "mode": "full_page",
+  "predictions": 1230,
+  "prior_buckets": 0,
+  "split": "test",
+  "target_rows": 1230,
+  "task": "all"
+}
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_full_page_test_predictions.jsonl
+[2/17] Scoring weak_full_page_test
+Eng_Bench results for weak_full_page_test
+Rows scored: 1230
+Missing predictions: 0
+Rows by task: {'microtext': 359, 'visualdiff': 871}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_full_page_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_full_page_test_report.md
+[3/17] Generating metadata_template_test
+{
+  "calibration_splits": [
+    "train"
+  ],
+  "grid_cell": null,
+  "grid_cols": null,
+  "grid_rows": null,
+  "mode": "metadata_template",
+  "predictions": 1230,
+  "prior_buckets": 0,
+  "split": "test",
+  "target_rows": 1230,
+  "task": "all"
+}
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\metadata_template_test_predictions.jsonl
+[3/17] Scoring metadata_template_test
+Eng_Bench results for metadata_template_test
+Rows scored: 1230
+Missing predictions: 0
+Rows by task: {'microtext': 359, 'visualdiff': 871}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\metadata_template_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\metadata_template_test_report.md
+[4/17] Generating train_prior_microtext_test
+{
+  "calibration_splits": [
+    "train"
+  ],
+  "grid_cell": null,
+  "grid_cols": null,
+  "grid_rows": null,
+  "mode": "label_prior",
+  "predictions": 359,
+  "prior_buckets": 10,
+  "split": "test",
+  "target_rows": 359,
+  "task": "microtext"
+}
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\train_prior_microtext_test_predictions.jsonl
+[4/17] Scoring train_prior_microtext_test
+Eng_Bench results for train_prior_microtext_test
+Rows scored: 359
+Missing predictions: 0
+Rows by task: {'microtext': 359}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\train_prior_microtext_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\train_prior_microtext_test_report.md
+[5/17] Generating dev_prior_visualdiff_test
+{
+  "calibration_splits": [
+    "dev"
+  ],
+  "grid_cell": null,
+  "grid_cols": null,
+  "grid_rows": null,
+  "mode": "label_prior",
+  "predictions": 871,
+  "prior_buckets": 8,
+  "split": "test",
+  "target_rows": 871,
+  "task": "visualdiff"
+}
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\dev_prior_visualdiff_test_predictions.jsonl
+[5/17] Scoring dev_prior_visualdiff_test
+Eng_Bench results for dev_prior_visualdiff_test
+Rows scored: 871
+Missing predictions: 0
+Rows by task: {'visualdiff': 871}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\dev_prior_visualdiff_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\dev_prior_visualdiff_test_report.md
+[6/17] Generating train_prior_all_test
+{
+  "calibration_splits": [
+    "train"
+  ],
+  "grid_cell": null,
+  "grid_cols": null,
+  "grid_rows": null,
+  "mode": "label_prior",
+  "predictions": 1230,
+  "prior_buckets": 10,
+  "split": "test",
+  "target_rows": 1230,
+  "task": "all"
+}
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\train_prior_all_test_predictions.jsonl
+[6/17] Scoring train_prior_all_test
+Eng_Bench results for train_prior_all_test
+Rows scored: 1230
+Missing predictions: 0
+Rows by task: {'microtext': 359, 'visualdiff': 871}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\train_prior_all_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\train_prior_all_test_report.md
+[7/17] Generating dev_prior_all_test
+{
+  "calibration_splits": [
+    "dev"
+  ],
+  "grid_cell": null,
+  "grid_cols": null,
+  "grid_rows": null,
+  "mode": "label_prior",
+  "predictions": 1230,
+  "prior_buckets": 8,
+  "split": "test",
+  "target_rows": 1230,
+  "task": "all"
+}
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\dev_prior_all_test_predictions.jsonl
+[7/17] Scoring dev_prior_all_test
+Eng_Bench results for dev_prior_all_test
+Rows scored: 1230
+Missing predictions: 0
+Rows by task: {'microtext': 359, 'visualdiff': 871}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\dev_prior_all_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\dev_prior_all_test_report.md
+[8/17] Generating train_dev_prior_all_test
+{
+  "calibration_splits": [
+    "dev",
+    "train"
+  ],
+  "grid_cell": null,
+  "grid_cols": null,
+  "grid_rows": null,
+  "mode": "label_prior",
+  "predictions": 1230,
+  "prior_buckets": 10,
+  "split": "test",
+  "target_rows": 1230,
+  "task": "all"
+}
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\train_dev_prior_all_test_predictions.jsonl
+[8/17] Scoring train_dev_prior_all_test
+Eng_Bench results for train_dev_prior_all_test
+Rows scored: 1230
+Missing predictions: 0
+Rows by task: {'microtext': 359, 'visualdiff': 871}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\train_dev_prior_all_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\train_dev_prior_all_test_report.md
+[9/17] Generating weak_grid_cell_0_test
+{
+  "calibration_splits": [
+    "train"
+  ],
+  "grid_cell": 0,
+  "grid_cols": 3,
+  "grid_rows": 3,
+  "mode": "grid",
+  "predictions": 1230,
+  "prior_buckets": 0,
+  "split": "test",
+  "target_rows": 1230,
+  "task": "all"
+}
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_0_test_predictions.jsonl
+[9/17] Scoring weak_grid_cell_0_test
+Eng_Bench results for weak_grid_cell_0_test
+Rows scored: 1230
+Missing predictions: 0
+Rows by task: {'microtext': 359, 'visualdiff': 871}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_0_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_0_test_report.md
+[10/17] Generating weak_grid_cell_1_test
+{
+  "calibration_splits": [
+    "train"
+  ],
+  "grid_cell": 1,
+  "grid_cols": 3,
+  "grid_rows": 3,
+  "mode": "grid",
+  "predictions": 1230,
+  "prior_buckets": 0,
+  "split": "test",
+  "target_rows": 1230,
+  "task": "all"
+}
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_1_test_predictions.jsonl
+[10/17] Scoring weak_grid_cell_1_test
+Eng_Bench results for weak_grid_cell_1_test
+Rows scored: 1230
+Missing predictions: 0
+Rows by task: {'microtext': 359, 'visualdiff': 871}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_1_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_1_test_report.md
+[11/17] Generating weak_grid_cell_2_test
+{
+  "calibration_splits": [
+    "train"
+  ],
+  "grid_cell": 2,
+  "grid_cols": 3,
+  "grid_rows": 3,
+  "mode": "grid",
+  "predictions": 1230,
+  "prior_buckets": 0,
+  "split": "test",
+  "target_rows": 1230,
+  "task": "all"
+}
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_2_test_predictions.jsonl
+[11/17] Scoring weak_grid_cell_2_test
+Eng_Bench results for weak_grid_cell_2_test
+Rows scored: 1230
+Missing predictions: 0
+Rows by task: {'microtext': 359, 'visualdiff': 871}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_2_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_2_test_report.md
+[12/17] Generating weak_grid_cell_3_test
+{
+  "calibration_splits": [
+    "train"
+  ],
+  "grid_cell": 3,
+  "grid_cols": 3,
+  "grid_rows": 3,
+  "mode": "grid",
+  "predictions": 1230,
+  "prior_buckets": 0,
+  "split": "test",
+  "target_rows": 1230,
+  "task": "all"
+}
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_3_test_predictions.jsonl
+[12/17] Scoring weak_grid_cell_3_test
+Eng_Bench results for weak_grid_cell_3_test
+Rows scored: 1230
+Missing predictions: 0
+Rows by task: {'microtext': 359, 'visualdiff': 871}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_3_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_3_test_report.md
+[13/17] Generating weak_grid_cell_4_test
+{
+  "calibration_splits": [
+    "train"
+  ],
+  "grid_cell": 4,
+  "grid_cols": 3,
+  "grid_rows": 3,
+  "mode": "grid",
+  "predictions": 1230,
+  "prior_buckets": 0,
+  "split": "test",
+  "target_rows": 1230,
+  "task": "all"
+}
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_4_test_predictions.jsonl
+[13/17] Scoring weak_grid_cell_4_test
+Eng_Bench results for weak_grid_cell_4_test
+Rows scored: 1230
+Missing predictions: 0
+Rows by task: {'microtext': 359, 'visualdiff': 871}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_4_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_4_test_report.md
+[14/17] Generating weak_grid_cell_5_test
+{
+  "calibration_splits": [
+    "train"
+  ],
+  "grid_cell": 5,
+  "grid_cols": 3,
+  "grid_rows": 3,
+  "mode": "grid",
+  "predictions": 1230,
+  "prior_buckets": 0,
+  "split": "test",
+  "target_rows": 1230,
+  "task": "all"
+}
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_5_test_predictions.jsonl
+[14/17] Scoring weak_grid_cell_5_test
+Eng_Bench results for weak_grid_cell_5_test
+Rows scored: 1230
+Missing predictions: 0
+Rows by task: {'microtext': 359, 'visualdiff': 871}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_5_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_5_test_report.md
+[15/17] Generating weak_grid_cell_6_test
+{
+  "calibration_splits": [
+    "train"
+  ],
+  "grid_cell": 6,
+  "grid_cols": 3,
+  "grid_rows": 3,
+  "mode": "grid",
+  "predictions": 1230,
+  "prior_buckets": 0,
+  "split": "test",
+  "target_rows": 1230,
+  "task": "all"
+}
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_6_test_predictions.jsonl
+[15/17] Scoring weak_grid_cell_6_test
+Eng_Bench results for weak_grid_cell_6_test
+Rows scored: 1230
+Missing predictions: 0
+Rows by task: {'microtext': 359, 'visualdiff': 871}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_6_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_6_test_report.md
+[16/17] Generating weak_grid_cell_7_test
+{
+  "calibration_splits": [
+    "train"
+  ],
+  "grid_cell": 7,
+  "grid_cols": 3,
+  "grid_rows": 3,
+  "mode": "grid",
+  "predictions": 1230,
+  "prior_buckets": 0,
+  "split": "test",
+  "target_rows": 1230,
+  "task": "all"
+}
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_7_test_predictions.jsonl
+[16/17] Scoring weak_grid_cell_7_test
+Eng_Bench results for weak_grid_cell_7_test
+Rows scored: 1230
+Missing predictions: 0
+Rows by task: {'microtext': 359, 'visualdiff': 871}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_7_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_7_test_report.md
+[17/17] Generating weak_grid_cell_8_test
+{
+  "calibration_splits": [
+    "train"
+  ],
+  "grid_cell": 8,
+  "grid_cols": 3,
+  "grid_rows": 3,
+  "mode": "grid",
+  "predictions": 1230,
+  "prior_buckets": 0,
+  "split": "test",
+  "target_rows": 1230,
+  "task": "all"
+}
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_8_test_predictions.jsonl
+[17/17] Scoring weak_grid_cell_8_test
+Eng_Bench results for weak_grid_cell_8_test
+Rows scored: 1230
+Missing predictions: 0
+Rows by task: {'microtext': 359, 'visualdiff': 871}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_8_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\weak_grid_cell_8_test_report.md
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\baseline_regeneration_quick_2026-07-31.json

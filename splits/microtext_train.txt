@@ -1,1 +1,82 @@
-tolerances_table_iso
+# Microtext release split freeze, 2026-05-14.
+# Train holds the BeagleBone Black schematic family.
+bbb_schematic_revC
+bbb_schematic_revC3
+floor_plans_small_cooperative_dairy_plants
+wikimedia_pump_with_tank_pid_en
+wikimedia_pid_evaporative_crystallizer
+# Keep Commons process-flow diagram examples with the existing Wikimedia train family.
+wikimedia_continuous_fractional_distillation_en
+# Keep duplicate source aliases and language variants in one split.
+pid_041_pump_with_tank_pid_en
+pid_041_pump_with_tank_pid_de
+# Reviewed 2026-07 return: release-ready open-hardware families.
+arduino_giga_r1_wifi_schematics
+arduino_portenta_breakout_schematics
+arduino_portenta_machine_control_schematics
+jetson_orin_baseboard
+pixhawk_fmuv1_1_7_1_eagle
+pixhawk_fmuv2_4_6_eagle
+# Reviewed 2026-07 return: Caltrans family stays together.
+caltrans_xs10_010_deck_drain_type_c
+caltrans_xs1_120_1_pc_pretensioned_i_girder
+caltrans_xs4_210_slope_paving
+# Commons process-flow examples stay with the existing train family.
+wikimedia_refinery_flow
+wikimedia_aminwaesche
+# Commons P&ID-context examples stay in train to avoid source-family leakage.
+wikimedia_blue_grass_piping_designer
+# CC BY-SA Adafruit pinout family; keep all rows from this document together.
+adafruit_esp32_feather_v2_pinout
+# Manual-region return: all Voron mechanical drawings stay train-side by source family.
+voron_0_mid_panel_v0_1
+voron_2_4r1_back_panel
+voron_2_4r1_bottom_panel
+voron_2_4r1_deck_panel
+# Manual-region return: Antmicro board renders stay with jetson_orin_baseboard.
+pcb_025_render_in_top_ortho_view
+pcb_025_stackup
+arduino_due_schematics
+arduino_mkr_fox_1200_schematics
+arduino_mkr_wan_1310_schematics
+arduino_nano_33_ble_sense_rev2_schematics
+ds_009_pinout_pdf
+ds_009_schematics
+mechanical_drawing_faunce
+mechanical_drawing_reid
+olimex_esp32_evb_rev_i
+olimex_esp32_evb_rev_j
+olimex_esp32_evb_rev_k
+olimex_esp32_evb_rev_l
+pid_021_pump_with_tank_pid_de
+pixhawk_fmuv1_1_7_eagle
+pixhawk_fmuv2_4_3_eagle
+pixhawk_fmuv2_4_5_eagle
+pixhawk_fmuv3_rev_d_schematic_prints
+voron_2_4r2_back_panel
+voron_2_4r2_bottom_panel
+voron_2_4r2_deck_panel
+wikimedia_adsorption_chiller_schematic
+wikimedia_amine_treating
+wikimedia_biodieselblockdiagramm
+wikimedia_btl_verfahrensschema
+wikimedia_colloidal_silica_preparations
+wikimedia_continuous_binary_fractional_distillation_en
+wikimedia_dampfreformierung
+wikimedia_dungerherstellung
+wikimedia_ethylene_oxide_production_plant
+wikimedia_geib_spevack
+wikimedia_herstellung_zement_beton
+wikimedia_hydrolysis_of_cellulose_hagglund_bergius
+wikimedia_kalkherstellung
+wikimedia_nat_gas_processing
+wikimedia_naturalgascondensate_en
+wikimedia_oil_field_flow_metering
+wikimedia_phosphor_production_en
+wikimedia_polyvinyl_chloride_pvc_production_from_suspension_polymerization
+wikimedia_process_diagramm_crude_gas
+wikimedia_steam_cracking
+wikimedia_syngas_products
+wikimedia_synthesis_sio2_de
+wikimedia_verfahren_zur_schwefelsaureherstellung
+wikimedia_well_test_separator

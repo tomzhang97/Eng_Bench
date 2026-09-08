@@ -1,0 +1,3 @@
+# Optional raster OCR mining runtime. Core benchmark loading/evaluation does not require it.
+rapidocr==3.9.2
+onnxruntime==1.28.0

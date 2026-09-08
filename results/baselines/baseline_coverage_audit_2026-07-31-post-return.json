@@ -1,0 +1,501 @@
+{
+  "baseline_prediction_file_count": 29,
+  "baseline_prediction_files": [
+    "results\\baselines\\dev_prior_all_test_predictions.jsonl",
+    "results\\baselines\\dev_prior_visualdiff_test_predictions.jsonl",
+    "results\\baselines\\edge_diff_visualdiff_test_predictions.jsonl",
+    "results\\baselines\\largest_cc_diff_visualdiff_test_predictions.jsonl",
+    "results\\baselines\\metadata_template_test_predictions.jsonl",
+    "results\\baselines\\orb_residual_diff_visualdiff_test_predictions.jsonl",
+    "results\\baselines\\phase_diff_visualdiff_test_predictions.jsonl",
+    "results\\baselines\\simple_diff_visualdiff_all_predictions.jsonl",
+    "results\\baselines\\ssim_diff_visualdiff_test_predictions.jsonl",
+    "results\\baselines\\textlayer_center_span_microtext_test_predictions.jsonl",
+    "results\\baselines\\textlayer_diff_visualdiff_test_predictions.jsonl",
+    "results\\baselines\\textlayer_heuristic_microtext_test_predictions.jsonl",
+    "results\\baselines\\textlayer_page_frequency_microtext_test_predictions.jsonl",
+    "results\\baselines\\textlayer_smallest_span_microtext_test_predictions.jsonl",
+    "results\\baselines\\tile_zncc_diff_visualdiff_test_predictions.jsonl",
+    "results\\baselines\\train_dev_prior_all_test_predictions.jsonl",
+    "results\\baselines\\train_prior_all_test_predictions.jsonl",
+    "results\\baselines\\train_prior_microtext_test_predictions.jsonl",
+    "results\\baselines\\weak_center_test_predictions.jsonl",
+    "results\\baselines\\weak_full_page_test_predictions.jsonl",
+    "results\\baselines\\weak_grid_cell_0_test_predictions.jsonl",
+    "results\\baselines\\weak_grid_cell_1_test_predictions.jsonl",
+    "results\\baselines\\weak_grid_cell_2_test_predictions.jsonl",
+    "results\\baselines\\weak_grid_cell_3_test_predictions.jsonl",
+    "results\\baselines\\weak_grid_cell_4_test_predictions.jsonl",
+    "results\\baselines\\weak_grid_cell_5_test_predictions.jsonl",
+    "results\\baselines\\weak_grid_cell_6_test_predictions.jsonl",
+    "results\\baselines\\weak_grid_cell_7_test_predictions.jsonl",
+    "results\\baselines\\weak_grid_cell_8_test_predictions.jsonl"
+  ],
+  "baseline_registry": {
+    "counted": [
+      {
+        "name": "dev_prior_all_test",
+        "prediction_hash": "01c373df3c7cf82a69abf9a31a333f9d9e291b0b9489eb1a003882e13518c944",
+        "prediction_path": "results/baselines/dev_prior_all_test_predictions.jsonl",
+        "prediction_rows": 382,
+        "report_path": "results/baselines/dev_prior_all_test_report.json",
+        "report_rows_scored": 382
+      },
+      {
+        "name": "dev_prior_visualdiff_test",
+        "prediction_hash": "8a97be7a1d504e37b7cac90b2a3516cccade6a6bfdb50d112b39c33762e6a4d5",
+        "prediction_path": "results/baselines/dev_prior_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 229,
+        "report_path": "results/baselines/dev_prior_visualdiff_test_report.json",
+        "report_rows_scored": 229
+      },
+      {
+        "name": "edge_diff_visualdiff_test",
+        "prediction_hash": "2bc2abc4bc1ee37230db456c2badc39a01870566f0920252f84088607427eabf",
+        "prediction_path": "results/baselines/edge_diff_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 229,
+        "report_path": "results/baselines/edge_diff_visualdiff_test_report.json",
+        "report_rows_scored": 229
+      },
+      {
+        "name": "largest_cc_diff_visualdiff_test",
+        "prediction_hash": "fe35da16d7f56741c0c7638249af4e62ad3b8db628f4554d792ed785befe9662",
+        "prediction_path": "results/baselines/largest_cc_diff_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 229,
+        "report_path": "results/baselines/largest_cc_diff_visualdiff_test_report.json",
+        "report_rows_scored": 229
+      },
+      {
+        "name": "metadata_template_test",
+        "prediction_hash": "baa7258058e4463fc1bd6b888eba3864d100822d737f15df34745b273bef530c",
+        "prediction_path": "results/baselines/metadata_template_test_predictions.jsonl",
+        "prediction_rows": 395,
+        "report_path": "results/baselines/metadata_template_test_report.json",
+        "report_rows_scored": 395
+      },
+      {
+        "name": "orb_residual_diff_visualdiff_test",
+        "prediction_hash": "dfb5cce7e24a4f71db3f6dfb3f5c831e6293d5a6912640c40d4be0de313cce35",
+        "prediction_path": "results/baselines/orb_residual_diff_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 229,
+        "report_path": "results/baselines/orb_residual_diff_visualdiff_test_report.json",
+        "report_rows_scored": 229
+      },
+      {
+        "name": "phase_diff_visualdiff_test",
+        "prediction_hash": "5ba3b646a4822e2e896fec0d5f1134a900a0c04a0e2346e9559398a28c7fc51d",
+        "prediction_path": "results/baselines/phase_diff_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 229,
+        "report_path": "results/baselines/phase_diff_visualdiff_test_report.json",
+        "report_rows_scored": 229
+      },
+      {
+        "name": "simple_diff_visualdiff_all",
+        "prediction_hash": "fc703b21a323f03d40129acefa1715520ef94a2882891d723aaaf41b1fffc04b",
+        "prediction_path": "results/baselines/simple_diff_visualdiff_all_predictions.jsonl",
+        "prediction_rows": 1391,
+        "report_path": "results/baselines/simple_diff_visualdiff_all_report.json",
+        "report_rows_scored": 1391
+      },
+      {
+        "name": "ssim_diff_visualdiff_test",
+        "prediction_hash": "10527e7028ff16f2ae4cd8e936ace2d85ae9b4d61f11f292df826d5128a242ab",
+        "prediction_path": "results/baselines/ssim_diff_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 229,
+        "report_path": "results/baselines/ssim_diff_visualdiff_test_report.json",
+        "report_rows_scored": 229
+      },
+      {
+        "name": "textlayer_center_span_microtext_test",
+        "prediction_hash": "f5afb31920a49487f981888a36c3e74ee4f7d041456ad57b07820be872b68aea",
+        "prediction_path": "results/baselines/textlayer_center_span_microtext_test_predictions.jsonl",
+        "prediction_rows": 153,
+        "report_path": "results/baselines/textlayer_center_span_microtext_test_report.json",
+        "report_rows_scored": 153
+      },
+      {
+        "name": "textlayer_diff_visualdiff_test",
+        "prediction_hash": "bae94e96e3f407a83450d9156d8b7b8c02fcfbe1454469ac078b2850fbc24ce6",
+        "prediction_path": "results/baselines/textlayer_diff_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 229,
+        "report_path": "results/baselines/textlayer_diff_visualdiff_test_report.json",
+        "report_rows_scored": 229
+      },
+      {
+        "name": "textlayer_heuristic_microtext_test",
+        "prediction_hash": "5fcb1ae8ae9d7444af84611b7d4d7e55a187dce656b73bdfc7bea9baa08e99fe",
+        "prediction_path": "results/baselines/textlayer_heuristic_microtext_test_predictions.jsonl",
+        "prediction_rows": 153,
+        "report_path": "results/baselines/textlayer_heuristic_microtext_test_report.json",
+        "report_rows_scored": 153
+      },
+      {
+        "name": "textlayer_page_frequency_microtext_test",
+        "prediction_hash": "0c7fb1d1b394be95cf908517ff77ecf7047d7f6d0df2f3777b943820756f7a7b",
+        "prediction_path": "results/baselines/textlayer_page_frequency_microtext_test_predictions.jsonl",
+        "prediction_rows": 153,
+        "report_path": "results/baselines/textlayer_page_frequency_microtext_test_report.json",
+        "report_rows_scored": 153
+      },
+      {
+        "name": "textlayer_smallest_span_microtext_test",
+        "prediction_hash": "6eaf689fb3ec1d47ee9d347eb28db901aa2ed7111bc18cd85483530f0f5ea8f3",
+        "prediction_path": "results/baselines/textlayer_smallest_span_microtext_test_predictions.jsonl",
+        "prediction_rows": 153,
+        "report_path": "results/baselines/textlayer_smallest_span_microtext_test_report.json",
+        "report_rows_scored": 153
+      },
+      {
+        "name": "tile_zncc_diff_visualdiff_test",
+        "prediction_hash": "bf56199b8bd09ed0692b9382feddd3073ea8b3b4969c9a4ec0669d9357971586",
+        "prediction_path": "results/baselines/tile_zncc_diff_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 229,
+        "report_path": "results/baselines/tile_zncc_diff_visualdiff_test_report.json",
+        "report_rows_scored": 229
+      },
+      {
+        "name": "train_dev_prior_all_test",
+        "prediction_hash": "9b765349a586cf130fcd7714aece7d481b2855ed1152cbc6aea1fd080fb20182",
+        "prediction_path": "results/baselines/train_dev_prior_all_test_predictions.jsonl",
+        "prediction_rows": 382,
+        "report_path": "results/baselines/train_dev_prior_all_test_report.json",
+        "report_rows_scored": 382
+      },
+      {
+        "name": "train_prior_all_test",
+        "prediction_hash": "cf44aa8df04d56bbe6a39996483bdc293168c79ca606b4514a2e1d197438d133",
+        "prediction_path": "results/baselines/train_prior_all_test_predictions.jsonl",
+        "prediction_rows": 382,
+        "report_path": "results/baselines/train_prior_all_test_report.json",
+        "report_rows_scored": 382
+      },
+      {
+        "name": "train_prior_microtext_test",
+        "prediction_hash": "58005474aa6f55f0bb9d081218b7663f33b31eaff107c06243cb0f1789f5ffc3",
+        "prediction_path": "results/baselines/train_prior_microtext_test_predictions.jsonl",
+        "prediction_rows": 153,
+        "report_path": "results/baselines/train_prior_microtext_test_report.json",
+        "report_rows_scored": 153
+      },
+      {
+        "name": "weak_center_test",
+        "prediction_hash": "d0cdc18d70a290453bd96c387c5abb097e469eb1975157ceb0f3a308ae8e3a02",
+        "prediction_path": "results/baselines/weak_center_test_predictions.jsonl",
+        "prediction_rows": 395,
+        "report_path": "results/baselines/weak_center_test_report.json",
+        "report_rows_scored": 395
+      },
+      {
+        "name": "weak_full_page_test",
+        "prediction_hash": "7522802d49c109284ebad845f561723a8fd79ebb1455970ce0ef5bde83c5ee1f",
+        "prediction_path": "results/baselines/weak_full_page_test_predictions.jsonl",
+        "prediction_rows": 395,
+        "report_path": "results/baselines/weak_full_page_test_report.json",
+        "report_rows_scored": 395
+      },
+      {
+        "name": "weak_grid_cell_0_test",
+        "prediction_hash": "d6f53dd805abc38eec1a9980d7c249b93718438c203c211d51e44d1a2b6b569d",
+        "prediction_path": "results/baselines/weak_grid_cell_0_test_predictions.jsonl",
+        "prediction_rows": 382,
+        "report_path": "results/baselines/weak_grid_cell_0_test_report.json",
+        "report_rows_scored": 382
+      },
+      {
+        "name": "weak_grid_cell_1_test",
+        "prediction_hash": "cdb2301d368bf8a57beda763a8ffd725c17029efd967a8f584ef0fb660419da7",
+        "prediction_path": "results/baselines/weak_grid_cell_1_test_predictions.jsonl",
+        "prediction_rows": 382,
+        "report_path": "results/baselines/weak_grid_cell_1_test_report.json",
+        "report_rows_scored": 382
+      },
+      {
+        "name": "weak_grid_cell_2_test",
+        "prediction_hash": "fa81a1514364314ad0a21973ae9015bc81cab8559950cc16d8b3cef9874d2a61",
+        "prediction_path": "results/baselines/weak_grid_cell_2_test_predictions.jsonl",
+        "prediction_rows": 382,
+        "report_path": "results/baselines/weak_grid_cell_2_test_report.json",
+        "report_rows_scored": 382
+      },
+      {
+        "name": "weak_grid_cell_3_test",
+        "prediction_hash": "fd12f1e1a8e8b56a36fe2926efbd5d326548c8e426f8f13d0fe97216cfca3d51",
+        "prediction_path": "results/baselines/weak_grid_cell_3_test_predictions.jsonl",
+        "prediction_rows": 382,
+        "report_path": "results/baselines/weak_grid_cell_3_test_report.json",
+        "report_rows_scored": 382
+      },
+      {
+        "name": "weak_grid_cell_4_test",
+        "prediction_hash": "c250b0ebde13e8bf8eb2279432bc1fff37897d0e146bd32db473a9182f01041b",
+        "prediction_path": "results/baselines/weak_grid_cell_4_test_predictions.jsonl",
+        "prediction_rows": 382,
+        "report_path": "results/baselines/weak_grid_cell_4_test_report.json",
+        "report_rows_scored": 382
+      },
+      {
+        "name": "weak_grid_cell_5_test",
+        "prediction_hash": "2d14e6b00924adf527270a34bd4b35bfbdcc0e3cbffe0703f340d3e876d5f8a6",
+        "prediction_path": "results/baselines/weak_grid_cell_5_test_predictions.jsonl",
+        "prediction_rows": 382,
+        "report_path": "results/baselines/weak_grid_cell_5_test_report.json",
+        "report_rows_scored": 382
+      },
+      {
+        "name": "weak_grid_cell_6_test",
+        "prediction_hash": "81e5fb704ac2fdb69b1f6a9dd33a4b2944d4b77731dd2503ef3735cc9810149e",
+        "prediction_path": "results/baselines/weak_grid_cell_6_test_predictions.jsonl",
+        "prediction_rows": 382,
+        "report_path": "results/baselines/weak_grid_cell_6_test_report.json",
+        "report_rows_scored": 382
+      },
+      {
+        "name": "weak_grid_cell_7_test",
+        "prediction_hash": "378efcc4465c40b0119a7193d6dae51eaefa445095ce7b2f1175f40de0a48171",
+        "prediction_path": "results/baselines/weak_grid_cell_7_test_predictions.jsonl",
+        "prediction_rows": 382,
+        "report_path": "results/baselines/weak_grid_cell_7_test_report.json",
+        "report_rows_scored": 382
+      },
+      {
+        "name": "weak_grid_cell_8_test",
+        "prediction_hash": "4984eb29eca4c851285abf07b9a7d7734e26796eaad1931f4bdf3765c8bbb975",
+        "prediction_path": "results/baselines/weak_grid_cell_8_test_predictions.jsonl",
+        "prediction_rows": 382,
+        "report_path": "results/baselines/weak_grid_cell_8_test_report.json",
+        "report_rows_scored": 382
+      }
+    ],
+    "excluded": []
+  },
+  "failing_examples": [
+    {
+      "baselines": [],
+      "coverage": 0,
+      "id": "q_mt__book_of_house_plans_buttrich__buttrich__p0072__000082",
+      "task": "microtext"
+    },
+    {
+      "baselines": [],
+      "coverage": 0,
+      "id": "q_mt__book_of_house_plans_buttrich__buttrich__p0072__000083",
+      "task": "microtext"
+    },
+    {
+      "baselines": [],
+      "coverage": 0,
+      "id": "q_mt__book_of_house_plans_buttrich__buttrich__p0072__000084",
+      "task": "microtext"
+    },
+    {
+      "baselines": [],
+      "coverage": 0,
+      "id": "q_mt__book_of_house_plans_buttrich__buttrich__p0072__000085",
+      "task": "microtext"
+    },
+    {
+      "baselines": [],
+      "coverage": 0,
+      "id": "q_mt__book_of_house_plans_buttrich__buttrich__p0072__000086",
+      "task": "microtext"
+    },
+    {
+      "baselines": [],
+      "coverage": 0,
+      "id": "q_mt__book_of_house_plans_buttrich__buttrich__p0072__000087",
+      "task": "microtext"
+    },
+    {
+      "baselines": [],
+      "coverage": 0,
+      "id": "q_mt__book_of_house_plans_buttrich__buttrich__p0072__000088",
+      "task": "microtext"
+    },
+    {
+      "baselines": [],
+      "coverage": 0,
+      "id": "q_mt__book_of_house_plans_buttrich__buttrich__p0072__000089",
+      "task": "microtext"
+    },
+    {
+      "baselines": [],
+      "coverage": 0,
+      "id": "q_mt__book_of_house_plans_buttrich__buttrich__p0072__000090",
+      "task": "microtext"
+    },
+    {
+      "baselines": [],
+      "coverage": 0,
+      "id": "q_mt__book_of_house_plans_buttrich__buttrich__p0072__000091",
+      "task": "microtext"
+    },
+    {
+      "baselines": [],
+      "coverage": 0,
+      "id": "q_mt__book_of_house_plans_buttrich__buttrich__p0084__000092",
+      "task": "microtext"
+    },
+    {
+      "baselines": [],
+      "coverage": 0,
+      "id": "q_mt__book_of_house_plans_buttrich__buttrich__p0084__000093",
+      "task": "microtext"
+    },
+    {
+      "baselines": [],
+      "coverage": 0,
+      "id": "q_mt__book_of_house_plans_buttrich__buttrich__p0084__000094",
+      "task": "microtext"
+    },
+    {
+      "baselines": [],
+      "coverage": 0,
+      "id": "q_mt__book_of_house_plans_buttrich__buttrich__p0084__000095",
+      "task": "microtext"
+    },
+    {
+      "baselines": [],
+      "coverage": 0,
+      "id": "q_mt__book_of_house_plans_buttrich__buttrich__p0084__000096",
+      "task": "microtext"
+    },
+    {
+      "baselines": [],
+      "coverage": 0,
+      "id": "q_mt__book_of_house_plans_buttrich__buttrich__p0084__000097",
+      "task": "microtext"
+    },
+    {
+      "baselines": [],
+      "coverage": 0,
+      "id": "q_mt__book_of_house_plans_buttrich__buttrich__p0084__000098",
+      "task": "microtext"
+    },
+    {
+      "baselines": [],
+      "coverage": 0,
+      "id": "q_mt__book_of_house_plans_buttrich__buttrich__p0084__000099",
+      "task": "microtext"
+    },
+    {
+      "baselines": [],
+      "coverage": 0,
+      "id": "q_mt__book_of_house_plans_buttrich__buttrich__p0084__000100",
+      "task": "microtext"
+    },
+    {
+      "baselines": [],
+      "coverage": 0,
+      "id": "q_mt__book_of_house_plans_buttrich__buttrich__p0084__000101",
+      "task": "microtext"
+    },
+    {
+      "baselines": [],
+      "coverage": 0,
+      "id": "q_mt__book_of_house_plans_buttrich__buttrich__p0084__000102",
+      "task": "microtext"
+    },
+    {
+      "baselines": [],
+      "coverage": 0,
+      "id": "q_mt__book_of_house_plans_buttrich__buttrich__p0084__000103",
+      "task": "microtext"
+    },
+    {
+      "baselines": [],
+      "coverage": 0,
+      "id": "q_mt__book_of_house_plans_buttrich__buttrich__p0084__000104",
+      "task": "microtext"
+    },
+    {
+      "baselines": [],
+      "coverage": 0,
+      "id": "q_mt__book_of_house_plans_buttrich__buttrich__p0084__000105",
+      "task": "microtext"
+    },
+    {
+      "baselines": [],
+      "coverage": 0,
+      "id": "q_mt__book_of_house_plans_buttrich__buttrich__p0084__000106",
+      "task": "microtext"
+    }
+  ],
+  "failing_rows": 199,
+  "gold_rows": 1230,
+  "min_baselines": 1,
+  "passed": false,
+  "prediction_rows_by_file": {
+    "dev_prior_all_test": 382,
+    "dev_prior_visualdiff_test": 229,
+    "edge_diff_visualdiff_test": 229,
+    "largest_cc_diff_visualdiff_test": 229,
+    "metadata_template_test": 395,
+    "orb_residual_diff_visualdiff_test": 229,
+    "phase_diff_visualdiff_test": 229,
+    "simple_diff_visualdiff_all": 1391,
+    "ssim_diff_visualdiff_test": 229,
+    "textlayer_center_span_microtext_test": 153,
+    "textlayer_diff_visualdiff_test": 229,
+    "textlayer_heuristic_microtext_test": 153,
+    "textlayer_page_frequency_microtext_test": 153,
+    "textlayer_smallest_span_microtext_test": 153,
+    "tile_zncc_diff_visualdiff_test": 229,
+    "train_dev_prior_all_test": 382,
+    "train_prior_all_test": 382,
+    "train_prior_microtext_test": 153,
+    "weak_center_test": 395,
+    "weak_full_page_test": 395,
+    "weak_grid_cell_0_test": 382,
+    "weak_grid_cell_1_test": 382,
+    "weak_grid_cell_2_test": 382,
+    "weak_grid_cell_3_test": 382,
+    "weak_grid_cell_4_test": 382,
+    "weak_grid_cell_5_test": 382,
+    "weak_grid_cell_6_test": 382,
+    "weak_grid_cell_7_test": 382,
+    "weak_grid_cell_8_test": 382
+  },
+  "rows_by_coverage": {
+    "0": 199,
+    "1": 636,
+    "20": 153,
+    "24": 229,
+    "3": 13
+  },
+  "rows_by_task": {
+    "microtext": 359,
+    "visualdiff": 871
+  },
+  "split": "test",
+  "unknown_predictions_by_file": {
+    "dev_prior_all_test": 0,
+    "dev_prior_visualdiff_test": 0,
+    "edge_diff_visualdiff_test": 0,
+    "largest_cc_diff_visualdiff_test": 0,
+    "metadata_template_test": 0,
+    "orb_residual_diff_visualdiff_test": 0,
+    "phase_diff_visualdiff_test": 0,
+    "simple_diff_visualdiff_all": 526,
+    "ssim_diff_visualdiff_test": 0,
+    "textlayer_center_span_microtext_test": 0,
+    "textlayer_diff_visualdiff_test": 0,
+    "textlayer_heuristic_microtext_test": 0,
+    "textlayer_page_frequency_microtext_test": 0,
+    "textlayer_smallest_span_microtext_test": 0,
+    "tile_zncc_diff_visualdiff_test": 0,
+    "train_dev_prior_all_test": 0,
+    "train_prior_all_test": 0,
+    "train_prior_microtext_test": 0,
+    "weak_center_test": 0,
+    "weak_full_page_test": 0,
+    "weak_grid_cell_0_test": 0,
+    "weak_grid_cell_1_test": 0,
+    "weak_grid_cell_2_test": 0,
+    "weak_grid_cell_3_test": 0,
+    "weak_grid_cell_4_test": 0,
+    "weak_grid_cell_5_test": 0,
+    "weak_grid_cell_6_test": 0,
+    "weak_grid_cell_7_test": 0,
+    "weak_grid_cell_8_test": 0
+  }
+}

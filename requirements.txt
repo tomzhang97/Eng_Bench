@@ -1,5 +1,21 @@
 numpy>=1.21.0
 Pillow>=9.0.0
+opencv-python-headless>=4.8.0
 datasets>=2.14.0
 scikit-learn>=1.0.0
 tqdm>=4.65.0
+
+# MAAP (Model-Assisted Annotation Pipeline)
+openai>=1.0.0
+anthropic>=0.18.0
+
+# Semantic Scoring (Eng-BERTScore)
+sentence-transformers>=2.2.0
+
+# Source conversion for XML-format EAGLE schematics and boards
+eagle2svg==0.1.5
+PyMuPDF>=1.24.0
+
+# Source conversion for native DWG control and mechanical drawings
+ezdxf>=1.4.0
+matplotlib>=3.8.0

@@ -1,0 +1,30 @@
+# Local agent/editor state
+.codex_tmp/
+.codex_work/
+.claude/
+
+# Python and test caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv*/
+
+# JavaScript dependencies and generated runtimes
+node_modules/
+
+# Maintainer-only review and build products
+derived/human_adjudication/
+derived/human_returns/
+derived/tmp*/
+derived/**/node_modules/
+outputs/
+tmp/
+
+# Private scoring-side artifacts
+release/private_labels/*.json
+release/private_labels/*.jsonl
+
+# Office lock files and OS noise
+~$*
+.DS_Store
+Thumbs.db

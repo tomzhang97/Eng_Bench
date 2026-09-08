@@ -1,0 +1,78 @@
+[1/7] Generating simple_diff_visualdiff_all
+[OK] Visualdiff rows: 1454
+[OK] Predictions: 1454
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\simple_diff_visualdiff_all_predictions.jsonl
+[1/7] Scoring simple_diff_visualdiff_all
+Eng_Bench results for simple_diff_visualdiff_all
+Rows scored: 1454
+Missing predictions: 0
+Rows by task: {'visualdiff': 1454}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\simple_diff_visualdiff_all_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\simple_diff_visualdiff_all_report.md
+[2/7] Generating edge_diff_visualdiff_test
+[OK] Visualdiff rows: 871
+[OK] Predictions: 871
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\edge_diff_visualdiff_test_predictions.jsonl
+[2/7] Scoring edge_diff_visualdiff_test
+Eng_Bench results for edge_diff_visualdiff_test
+Rows scored: 871
+Missing predictions: 0
+Rows by task: {'visualdiff': 871}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\edge_diff_visualdiff_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\edge_diff_visualdiff_test_report.md
+[3/7] Generating ssim_diff_visualdiff_test
+[OK] Visualdiff rows: 871
+[OK] Predictions: 871
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\ssim_diff_visualdiff_test_predictions.jsonl
+[3/7] Scoring ssim_diff_visualdiff_test
+Eng_Bench results for ssim_diff_visualdiff_test
+Rows scored: 871
+Missing predictions: 0
+Rows by task: {'visualdiff': 871}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\ssim_diff_visualdiff_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\ssim_diff_visualdiff_test_report.md
+[4/7] Generating phase_diff_visualdiff_test
+[OK] Visualdiff rows: 871
+[OK] Predictions: 871
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\phase_diff_visualdiff_test_predictions.jsonl
+[4/7] Scoring phase_diff_visualdiff_test
+Eng_Bench results for phase_diff_visualdiff_test
+Rows scored: 871
+Missing predictions: 0
+Rows by task: {'visualdiff': 871}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\phase_diff_visualdiff_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\phase_diff_visualdiff_test_report.md
+[5/7] Generating orb_residual_diff_visualdiff_test
+[OK] Visualdiff rows: 871
+[OK] Predictions: 871
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\orb_residual_diff_visualdiff_test_predictions.jsonl
+[5/7] Scoring orb_residual_diff_visualdiff_test
+Eng_Bench results for orb_residual_diff_visualdiff_test
+Rows scored: 871
+Missing predictions: 0
+Rows by task: {'visualdiff': 871}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\orb_residual_diff_visualdiff_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\orb_residual_diff_visualdiff_test_report.md
+[6/7] Generating largest_cc_diff_visualdiff_test
+[OK] Visualdiff rows: 871
+[OK] Predictions: 871
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\largest_cc_diff_visualdiff_test_predictions.jsonl
+[6/7] Scoring largest_cc_diff_visualdiff_test
+Eng_Bench results for largest_cc_diff_visualdiff_test
+Rows scored: 871
+Missing predictions: 0
+Rows by task: {'visualdiff': 871}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\largest_cc_diff_visualdiff_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\largest_cc_diff_visualdiff_test_report.md
+[7/7] Generating tile_zncc_diff_visualdiff_test
+[OK] Visualdiff rows: 871
+[OK] Predictions: 871
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\tile_zncc_diff_visualdiff_test_predictions.jsonl
+[7/7] Scoring tile_zncc_diff_visualdiff_test
+Eng_Bench results for tile_zncc_diff_visualdiff_test
+Rows scored: 871
+Missing predictions: 0
+Rows by task: {'visualdiff': 871}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\tile_zncc_diff_visualdiff_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\tile_zncc_diff_visualdiff_test_report.md
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\baseline_regeneration_pixel_2026-07-31.json

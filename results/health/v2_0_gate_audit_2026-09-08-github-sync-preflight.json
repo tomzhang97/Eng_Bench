@@ -1,0 +1,1057 @@
+{
+  "baseline_or_submission_names": [
+    "baseline:dev_prior_all_test",
+    "baseline:dev_prior_visualdiff_test",
+    "baseline:edge_diff_visualdiff_test",
+    "baseline:largest_cc_diff_visualdiff_test",
+    "baseline:metadata_template_test",
+    "baseline:orb_residual_diff_visualdiff_test",
+    "baseline:phase_diff_visualdiff_test",
+    "baseline:simple_diff_visualdiff_all",
+    "baseline:ssim_diff_visualdiff_test",
+    "baseline:textlayer_center_span_microtext_test",
+    "baseline:textlayer_diff_visualdiff_test",
+    "baseline:textlayer_heuristic_microtext_test",
+    "baseline:textlayer_page_frequency_microtext_test",
+    "baseline:textlayer_smallest_span_microtext_test",
+    "baseline:tile_zncc_diff_visualdiff_test",
+    "baseline:train_dev_prior_all_test",
+    "baseline:train_prior_all_test",
+    "baseline:train_prior_microtext_test",
+    "baseline:weak_center_test",
+    "baseline:weak_full_page_test",
+    "baseline:weak_grid_cell_0_test",
+    "baseline:weak_grid_cell_1_test",
+    "baseline:weak_grid_cell_2_test",
+    "baseline:weak_grid_cell_3_test",
+    "baseline:weak_grid_cell_4_test",
+    "baseline:weak_grid_cell_5_test",
+    "baseline:weak_grid_cell_6_test",
+    "baseline:weak_grid_cell_7_test",
+    "baseline:weak_grid_cell_8_test"
+  ],
+  "baseline_registry": {
+    "counted": [
+      {
+        "name": "dev_prior_all_test",
+        "prediction_hash": "bc435369dd6feab8612c1fbca81e88b7ad9277c32b8aed3ceb95177b6be21d76",
+        "prediction_path": "results/baselines/dev_prior_all_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/dev_prior_all_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "dev_prior_visualdiff_test",
+        "prediction_hash": "c38fcb42a499469b76c6bf048cf11ac1fa0e765e42489dabb33dac449ceb35b0",
+        "prediction_path": "results/baselines/dev_prior_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 962,
+        "report_path": "results/baselines/dev_prior_visualdiff_test_report.json",
+        "report_rows_scored": 962
+      },
+      {
+        "name": "edge_diff_visualdiff_test",
+        "prediction_hash": "e7304fda6749b3e90c6fb1b38731f03ab8df36b3ff2b11f2eff1b174d0d102ea",
+        "prediction_path": "results/baselines/edge_diff_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 962,
+        "report_path": "results/baselines/edge_diff_visualdiff_test_report.json",
+        "report_rows_scored": 962
+      },
+      {
+        "name": "largest_cc_diff_visualdiff_test",
+        "prediction_hash": "c62bebe087b8c4d458811cdb34de908f710ee09ad3f1eb86e3e7a3e2a843e9e8",
+        "prediction_path": "results/baselines/largest_cc_diff_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 962,
+        "report_path": "results/baselines/largest_cc_diff_visualdiff_test_report.json",
+        "report_rows_scored": 962
+      },
+      {
+        "name": "metadata_template_test",
+        "prediction_hash": "40e2dca5c8189ba25e48766fadb23b9fc35ba49d56149afddf239a601eea66f2",
+        "prediction_path": "results/baselines/metadata_template_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/metadata_template_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "orb_residual_diff_visualdiff_test",
+        "prediction_hash": "c3e21a146c6ed584a5046b1e060829775c94d3a07696fc0eb5ad0fc9a9bdd572",
+        "prediction_path": "results/baselines/orb_residual_diff_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 962,
+        "report_path": "results/baselines/orb_residual_diff_visualdiff_test_report.json",
+        "report_rows_scored": 962
+      },
+      {
+        "name": "phase_diff_visualdiff_test",
+        "prediction_hash": "c9e6e76eb2420ff804755ed5b1feccc9dc9c97ffc522915518f29548135115b0",
+        "prediction_path": "results/baselines/phase_diff_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 962,
+        "report_path": "results/baselines/phase_diff_visualdiff_test_report.json",
+        "report_rows_scored": 962
+      },
+      {
+        "name": "simple_diff_visualdiff_all",
+        "prediction_hash": "fb5f5228aac0c36aed9c09c5969b5c4b142ee84db8151e32eb238ce94011c92d",
+        "prediction_path": "results/baselines/simple_diff_visualdiff_all_predictions.jsonl",
+        "prediction_rows": 1561,
+        "report_path": "results/baselines/simple_diff_visualdiff_all_report.json",
+        "report_rows_scored": 1561
+      },
+      {
+        "name": "ssim_diff_visualdiff_test",
+        "prediction_hash": "c083367666b4d24fbee513b4342e0eeeaddcd90f9c7c2ebac7247825ee39bb2c",
+        "prediction_path": "results/baselines/ssim_diff_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 962,
+        "report_path": "results/baselines/ssim_diff_visualdiff_test_report.json",
+        "report_rows_scored": 962
+      },
+      {
+        "name": "textlayer_center_span_microtext_test",
+        "prediction_hash": "4b6998531d046421cd4576698f0096461b962978c96719422e1709ab095363d1",
+        "prediction_path": "results/baselines/textlayer_center_span_microtext_test_predictions.jsonl",
+        "prediction_rows": 638,
+        "report_path": "results/baselines/textlayer_center_span_microtext_test_report.json",
+        "report_rows_scored": 638
+      },
+      {
+        "name": "textlayer_diff_visualdiff_test",
+        "prediction_hash": "023dde7ba58646dade5ec162e8469a8089e1afa195602e6cb188a283796519c0",
+        "prediction_path": "results/baselines/textlayer_diff_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 962,
+        "report_path": "results/baselines/textlayer_diff_visualdiff_test_report.json",
+        "report_rows_scored": 962
+      },
+      {
+        "name": "textlayer_heuristic_microtext_test",
+        "prediction_hash": "d8f534e816cf335809aafd051fc9df09c775e31580162aade52fb87e295d7c11",
+        "prediction_path": "results/baselines/textlayer_heuristic_microtext_test_predictions.jsonl",
+        "prediction_rows": 638,
+        "report_path": "results/baselines/textlayer_heuristic_microtext_test_report.json",
+        "report_rows_scored": 638
+      },
+      {
+        "name": "textlayer_page_frequency_microtext_test",
+        "prediction_hash": "558e49d42554833b61fd6534e0f53fe12f985817949adb8d883f63ba1e58f855",
+        "prediction_path": "results/baselines/textlayer_page_frequency_microtext_test_predictions.jsonl",
+        "prediction_rows": 638,
+        "report_path": "results/baselines/textlayer_page_frequency_microtext_test_report.json",
+        "report_rows_scored": 638
+      },
+      {
+        "name": "textlayer_smallest_span_microtext_test",
+        "prediction_hash": "87a07b85e1020832fc6fa921c14c75da0a052ddf3fec56cc0b5cd744a612a529",
+        "prediction_path": "results/baselines/textlayer_smallest_span_microtext_test_predictions.jsonl",
+        "prediction_rows": 638,
+        "report_path": "results/baselines/textlayer_smallest_span_microtext_test_report.json",
+        "report_rows_scored": 638
+      },
+      {
+        "name": "tile_zncc_diff_visualdiff_test",
+        "prediction_hash": "2d462d5fc9ec34fb6e8a159d2fa61104b3fb5694ba9f46346658d9244a98b715",
+        "prediction_path": "results/baselines/tile_zncc_diff_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 962,
+        "report_path": "results/baselines/tile_zncc_diff_visualdiff_test_report.json",
+        "report_rows_scored": 962
+      },
+      {
+        "name": "train_dev_prior_all_test",
+        "prediction_hash": "009880a500a06e06dc034f39e3f78431651ee03c7f3d31f1780a3b849c9fc47d",
+        "prediction_path": "results/baselines/train_dev_prior_all_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/train_dev_prior_all_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "train_prior_all_test",
+        "prediction_hash": "fff53ede2f787389d1f8602dfad1a6b6b52240ee899e963d23503677c8e3214f",
+        "prediction_path": "results/baselines/train_prior_all_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/train_prior_all_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "train_prior_microtext_test",
+        "prediction_hash": "4cf318277a39cdd405e431457919e20093a26d47c98a183ec8f5516f2a742864",
+        "prediction_path": "results/baselines/train_prior_microtext_test_predictions.jsonl",
+        "prediction_rows": 638,
+        "report_path": "results/baselines/train_prior_microtext_test_report.json",
+        "report_rows_scored": 638
+      },
+      {
+        "name": "weak_center_test",
+        "prediction_hash": "73a766d3e3ed208806be9e9fb4d10b71d266633d4bd6dfc98cb20e0cb2ffc676",
+        "prediction_path": "results/baselines/weak_center_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/weak_center_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "weak_full_page_test",
+        "prediction_hash": "121499a655d5239e910bf540488e1d5addcf13feb562aec2424ae11610f8dc17",
+        "prediction_path": "results/baselines/weak_full_page_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/weak_full_page_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "weak_grid_cell_0_test",
+        "prediction_hash": "d7d80e1eff204e1da53f40566627a54562bab22b548935ee241dd23dd73fbf5c",
+        "prediction_path": "results/baselines/weak_grid_cell_0_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/weak_grid_cell_0_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "weak_grid_cell_1_test",
+        "prediction_hash": "31a8b3914fa94923d28be2fa38176c748f02cc9a839f8ca739986933f256c191",
+        "prediction_path": "results/baselines/weak_grid_cell_1_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/weak_grid_cell_1_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "weak_grid_cell_2_test",
+        "prediction_hash": "78e504749d225bd42236cd1ea5a427bc82699ba0e1598c0ed5fbfd351ba8a038",
+        "prediction_path": "results/baselines/weak_grid_cell_2_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/weak_grid_cell_2_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "weak_grid_cell_3_test",
+        "prediction_hash": "809ea56ed6f910f14f6ca551b9bd06b60c4983623f2b91809b5c9c7e2958f9d6",
+        "prediction_path": "results/baselines/weak_grid_cell_3_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/weak_grid_cell_3_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "weak_grid_cell_4_test",
+        "prediction_hash": "7b3209be31e9a1a0b56092c34cbaf60e4a1ead75498614051c668cea801cc630",
+        "prediction_path": "results/baselines/weak_grid_cell_4_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/weak_grid_cell_4_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "weak_grid_cell_5_test",
+        "prediction_hash": "96a85c3d5f20481da5406bacbbcb8d597f7ad7906c9c1862a08fa3a019b0e43c",
+        "prediction_path": "results/baselines/weak_grid_cell_5_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/weak_grid_cell_5_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "weak_grid_cell_6_test",
+        "prediction_hash": "74a986220e40961fc7387ee15db77262265fe9f9e9f011edd89c97c3a1df8a45",
+        "prediction_path": "results/baselines/weak_grid_cell_6_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/weak_grid_cell_6_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "weak_grid_cell_7_test",
+        "prediction_hash": "9bed9ceb8b5a9ca284f677e87a0f9bce337e3a888635d12b1bd8ddcf506f47b6",
+        "prediction_path": "results/baselines/weak_grid_cell_7_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/weak_grid_cell_7_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "weak_grid_cell_8_test",
+        "prediction_hash": "4d9a3cf83797940300eb78be613e980a768e04a9fecea09bc14d6bd34f3948b7",
+        "prediction_path": "results/baselines/weak_grid_cell_8_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/weak_grid_cell_8_test_report.json",
+        "report_rows_scored": 1600
+      }
+    ],
+    "excluded": []
+  },
+  "date_label": "2026-09-08-github-sync-preflight",
+  "gates": {
+    "baselines_or_external_submissions": {
+      "current": 29,
+      "passes": true,
+      "target": 20
+    },
+    "gold_source_docs": {
+      "current": 199,
+      "duplicate_alias_doc_ids": [
+        "pid_041_pump_with_tank_pid_de",
+        "wikimedia_pump_with_tank_pid_en"
+      ],
+      "duplicate_alias_docs": 2,
+      "duplicate_payload_groups": [
+        {
+          "alias_doc_ids": [
+            "pid_041_pump_with_tank_pid_de"
+          ],
+          "canonical_doc_id": "pid_021_pump_with_tank_pid_de",
+          "doc_ids": [
+            "pid_021_pump_with_tank_pid_de",
+            "pid_041_pump_with_tank_pid_de"
+          ],
+          "payload_key": "sha256:4772b33b305c6f803cd860504763dfd9815b9bc9c05b1b6cc65272dc53950714"
+        },
+        {
+          "alias_doc_ids": [
+            "wikimedia_pump_with_tank_pid_en"
+          ],
+          "canonical_doc_id": "pid_041_pump_with_tank_pid_en",
+          "doc_ids": [
+            "pid_041_pump_with_tank_pid_en",
+            "wikimedia_pump_with_tank_pid_en"
+          ],
+          "payload_key": "sha256:ee186d73483f530ea38007d903c2dec6460fc88b8227f4b8631dbd0d722417be"
+        }
+      ],
+      "excluded_not_paper_ready_doc_ids": [
+        "aquila_dev_v1.2",
+        "aquila_dev_v1.3",
+        "peel_sps_pid_legend",
+        "sandiego_stormwater_pump_station_guidelines",
+        "toradex_viola_v1.0",
+        "toradex_viola_v1.1",
+        "toradex_viola_v1.2",
+        "wsdot_drainage_ds6",
+        "wsdot_sign_support_sd1"
+      ],
+      "excluded_not_paper_ready_docs": 9,
+      "passes": true,
+      "raw_active_docs": 210,
+      "raw_current": 201,
+      "target": 150
+    },
+    "hidden_public_test_examples": {
+      "current": 1600,
+      "passes": false,
+      "target": 5000
+    },
+    "human_agreement_audit": {
+      "current": "0/185 complete",
+      "incomplete_rows": 185,
+      "input_contract_valid": true,
+      "non_release_ready_rows": 0,
+      "passes": false,
+      "readiness_reason": "release-safe sample verified; reviewer completion pending",
+      "readiness_report_path": "derived/quality/agreement_sample_readiness_2026-08-30-wave1105-return-contract.json",
+      "release_ready_rows": 185,
+      "report_path": "results/annotation/agreement_report_pending_2026-08-30-wave1104-contract-validated.json",
+      "sample_release_ready": false,
+      "sample_review_ready": true,
+      "target": "all sampled rows complete, release-safe, reference-hash linked, and agreement thresholds pass"
+    },
+    "leaderboard_infrastructure": {
+      "current": 7,
+      "passes": true,
+      "target": 7
+    },
+    "paper_ready_provenance": {
+      "current": "201/210 paper-ready",
+      "missing_recorded_sha256_docs": 0,
+      "passes": false,
+      "sha256_mismatch_docs": 0,
+      "target": "all active source documents release-ready with matching recorded SHA-256",
+      "unresolved_active_rows": 0
+    },
+    "release_safe_inventory_docs": {
+      "current": 552,
+      "duplicate_alias_doc_ids": [
+        "pid_022_ri_sample_iso",
+        "pid_023_sch_ma_p_id",
+        "pid_023_schema_pid",
+        "pid_041_pump_with_tank_pid_de",
+        "pid_041_pump_with_tank_pid_en",
+        "wikimedia_blue_grass_piping_designer",
+        "wikimedia_pid_evaporative_crystallizer",
+        "wikimedia_pump_with_tank_pid_en",
+        "wikimedia_ri_sample_iso"
+      ],
+      "duplicate_alias_docs": 9,
+      "passes": true,
+      "raw_current": 561,
+      "target": 150
+    },
+    "total_rows": {
+      "current": 4560,
+      "passes": false,
+      "target": "25000-50000"
+    },
+    "visualdiff_revision_families": {
+      "current": 43,
+      "passes": true,
+      "target": 30
+    }
+  },
+  "infrastructure": {
+    "hidden_private_labels": true,
+    "hidden_test_inputs": true,
+    "leaderboard_dir": true,
+    "leaderboard_protocol_doc": true,
+    "leaderboard_registration_tool": true,
+    "make_public_private_split_tool": true,
+    "submission_validator": true
+  },
+  "machine_certification": {
+    "active_gold_modified": false,
+    "auto_eligible_pending_calibration": 0,
+    "calibration_rows": 0,
+    "calibration_rows_completed_reused": 0,
+    "calibration_rows_remaining": 0,
+    "net_row_by_row_human_decisions_avoided": 0,
+    "reuse_evidence_status": "not_supplied",
+    "status": "not_supplied"
+  },
+  "machine_responsibility": {
+    "status": "not_supplied"
+  },
+  "release_constraints": {
+    "active_auditor_return_holds": {
+      "active_audit_flags": 49,
+      "by_split": {
+        "dev": 9,
+        "test": 34,
+        "train": 6
+      },
+      "by_task": {
+        "microtext": 42,
+        "visualdiff": 7
+      },
+      "current": 49,
+      "issues": [],
+      "passes": false,
+      "report_path": "derived/quality/auditor_active_link_reconciliation_2026-09-08-wave2042-post-component-promotion/report.json",
+      "scope": "all registered auditor decisions; historical flags require explicit resolution",
+      "target": "0 unresolved active audit flags"
+    },
+    "microtext_category_balance": {
+      "category_counts": {
+        "component_value": 16,
+        "dimension_value": 636,
+        "equipment_tag": 168,
+        "instrument_tag": 62,
+        "pin_label": 1757,
+        "pipe_line_tag": 20,
+        "process_label": 95,
+        "process_value": 19,
+        "room_label": 211,
+        "tolerance_value": 2
+      },
+      "category_minimums": {
+        "component_value": 300,
+        "dimension_value": 900,
+        "equipment_tag": 300,
+        "instrument_tag": 300,
+        "pin_label": 1000,
+        "pipe_line_tag": 150,
+        "process_label": 150,
+        "process_value": 150,
+        "room_label": 150,
+        "tolerance_value": 150
+      },
+      "category_shortfalls": {
+        "component_value": 284,
+        "dimension_value": 264,
+        "equipment_tag": 132,
+        "instrument_tag": 238,
+        "pin_label": 0,
+        "pipe_line_tag": 130,
+        "process_label": 55,
+        "process_value": 131,
+        "room_label": 0,
+        "tolerance_value": 148
+      },
+      "current": "pin share 58.84%; 8 category floors open",
+      "passes": false,
+      "pin_label_rows": 1757,
+      "pin_label_share": 0.588413,
+      "pin_label_share_max": 0.45,
+      "target": "pin_label <=45% and inherited Gold category minimums",
+      "total_rows": 2986
+    },
+    "visualdiff_description_finality": {
+      "by_kind": {
+        "graphic_uncertain": 4,
+        "text_added": 51,
+        "text_removed": 37
+      },
+      "by_split": {
+        "test": 92
+      },
+      "current": 1482,
+      "findings": [
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_artemis__spi_update__to__final__gap_03bdd0c32a1fc818",
+          "split": "test",
+          "target": "10uF"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_artemis__v14__to__v16__gap_006d399a43cd286a",
+          "split": "test",
+          "target": "(SDA3/MISO3/RX1)~D43"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_rp2040__flash_pullup__to__usb_mux_id__gap_00da1aefe23a0ec9",
+          "split": "test",
+          "target": "CLK"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_rp2040__initial__to__flash_pullup__gap_104c7fdd462d6975",
+          "split": "test",
+          "target": "10k"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__olimex_esp32_gateway__g__to__h__gap_016c9573730ff91a",
+          "split": "test",
+          "target": "GPIO19\\EMAC_TXD0(RMII)"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_artemis__spi_update__to__final__gap_16a643052e215fff",
+          "split": "test",
+          "target": "10uF"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_artemis__v14__to__v16__gap_091a4d3b0060f22e",
+          "split": "test",
+          "target": "SPI_SCK/QSPI_SCK"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_esp32__v02__to__v10__gap_1ae906d8d5e83e46",
+          "split": "test",
+          "target": "U0RXD"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_rp2040__flash_pullup__to__usb_mux_id__gap_04b8225a15877ade",
+          "split": "test",
+          "target": "10k"
+        },
+        {
+          "kind": "graphic_uncertain",
+          "pair_id": "vdiff__sparkfun_micromod_samd51__usb_host_dp_fix__to__can_names__gap_2e575c26ab04a5cf",
+          "split": "test",
+          "target": ""
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_teensy__v11_base__to__power_control__gap_033f97e133237d1b",
+          "split": "test",
+          "target": "C10"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__olimex_esp32_gateway__g__to__h__gap_017c973231211f25",
+          "split": "test",
+          "target": "GPIO16/HS1_DATA4/U2RXD/EMAC_CLK_OUT"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__olimex_esp32_poe__b2__to__c__gap_08ba128d2bbff4d8",
+          "split": "test",
+          "target": "CHARGING"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__olimex_esp32_poe__i__to__j__gap_0ad1aec1ae64ac1b",
+          "split": "test",
+          "target": "FID2 Fiducial"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_artemis__spi_update__to__final__gap_267b4f6460224e8b",
+          "split": "test",
+          "target": "V_BATT C4 10uF GND"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_artemis__v14__to__v16__gap_0d8acebddc93e11c",
+          "split": "test",
+          "target": "I2C_!INT!"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_rp2040__flash_pullup__to__usb_mux_id__gap_075eaa66014a1c13",
+          "split": "test",
+          "target": "D1/DO"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_rp2040__usb_mux_id__to__micromod_names__gap_1629edc2c750a00e",
+          "split": "test",
+          "target": "ADC0"
+        },
+        {
+          "kind": "graphic_uncertain",
+          "pair_id": "vdiff__sparkfun_micromod_samd51__usb_host_dp_fix__to__can_names__gap_3d05f16b4850c206",
+          "split": "test",
+          "target": ""
+        },
+        {
+          "kind": "graphic_uncertain",
+          "pair_id": "vdiff__sparkfun_micromod_teensy__v11_base__to__power_control__gap_05d8daedd82ac6fd",
+          "split": "test",
+          "target": ""
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__olimex_esp32_poe__e__to__g1__gap_07ffcfafbecf6289",
+          "split": "test",
+          "target": "R2"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_artemis__v14__to__v16__gap_12f3dc43a6921291",
+          "split": "test",
+          "target": "SPI_MOSI/QSPI_!CS!"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_artemis__v16__to__spi_update__gap_17e1230b0e6a911c",
+          "split": "test",
+          "target": "SPI_!CS1!/QSPI3"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_rp2040__flash_pullup__to__usb_mux_id__gap_135e7d7dd6f969d4",
+          "split": "test",
+          "target": "!CS!"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_rp2040__initial__to__flash_pullup__gap_2b9568983bbc7cf7",
+          "split": "test",
+          "target": "C15"
+        },
+        {
+          "kind": "graphic_uncertain",
+          "pair_id": "vdiff__sparkfun_micromod_teensy__v11_base__to__power_control__gap_060d883ef58b418f",
+          "split": "test",
+          "target": ""
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__olimex_esp32_poe__b2__to__c__gap_0e24035e41319a71",
+          "split": "test",
+          "target": "GND"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__olimex_esp32_poe__i__to__j__gap_0d7591b8e06cc344",
+          "split": "test",
+          "target": "GPIO12\\PHY_PWR 10k 1 10k 2 GND"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_esp32__v11__to__v11update__gap_80d5bc5e6e564263",
+          "split": "test",
+          "target": "FLASH_SD_DATA3"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_rp2040__flash_pullup__to__usb_mux_id__gap_139a113fd605e93c",
+          "split": "test",
+          "target": "R1 GND"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_rp2040__usb_mux_id__to__micromod_names__gap_4ecdd4dc702f6089",
+          "split": "test",
+          "target": "GPIO1"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_teensy__v11_base__to__power_control__gap_070a8b76c0fde05d",
+          "split": "test",
+          "target": "0.22uF"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__olimex_esp32_gateway__g__to__h__gap_072bb37a06b58c85",
+          "split": "test",
+          "target": "1 IO1 2 IO2 GND"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_artemis__v14__to__v16__gap_22766c0d780ad962",
+          "split": "test",
+          "target": "C3"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_esp32__v02__to__v10__gap_5c1f0f7c6276ed3a",
+          "split": "test",
+          "target": "U0TXD"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_esp32__v10fix__to__v11__gap_28268a3b89b06274",
+          "split": "test",
+          "target": "14-SPI_SCK/SD_CLK"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_rp2040__flash_pullup__to__usb_mux_id__gap_206a8819b84edf16",
+          "split": "test",
+          "target": "0.1uF"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_rp2040__usb_mux_id__to__micromod_names__gap_5122f60105ac64a0",
+          "split": "test",
+          "target": "GPIO3"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_teensy__v11_base__to__power_control__gap_070cf41944abc71c",
+          "split": "test",
+          "target": "TX1/17/A3"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__olimex_esp32_gateway__b__to__c__gap_1b022199c4392f27",
+          "split": "test",
+          "target": "CD"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_artemis__spi_update__to__final__gap_5ba2c6390780d568",
+          "split": "test",
+          "target": "1A/23V/620mV"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_esp32__v02__to__v10__gap_66a27004f19dcbc7",
+          "split": "test",
+          "target": "TP1"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__olimex_esp32_gateway__g__to__h__gap_0c3066681f1310d4",
+          "split": "test",
+          "target": "U3"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_artemis__spi_update__to__final__gap_5fb24442cc9dd528",
+          "split": "test",
+          "target": "C3"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_esp32__v10fix__to__v11__gap_2e2001238533692d",
+          "split": "test",
+          "target": "2-SPI_CIPO/SD_DATA0"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_rp2040__flash_pullup__to__usb_mux_id__gap_22cc04f3192ef698",
+          "split": "test",
+          "target": "BLUE"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__olimex_esp32_gateway__g__to__h__gap_0e1f6f33bcc35518",
+          "split": "test",
+          "target": "2 IO2 1 IO1 GND"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_rp2040__flash_pullup__to__usb_mux_id__gap_22d40922c6d9b19a",
+          "split": "test",
+          "target": "USBHOST_D+"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_teensy__v11_base__to__power_control__gap_09893aeae790d5ee",
+          "split": "test",
+          "target": "C25"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__olimex_esp32_gateway__b__to__c__gap_2b006d948e4983e4",
+          "split": "test",
+          "target": "+3.3V"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__olimex_esp32_gateway__c__to__d__gap_190a43ae0d0fb026",
+          "split": "test",
+          "target": "GPIO17/EMAC_CLK_OUT_180"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_artemis__spi_update__to__final__gap_80cf663d263fd432",
+          "split": "test",
+          "target": "C4"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_esp32__v10fix__to__v11__gap_30ac8799532cfb64",
+          "split": "test",
+          "target": "4-SD_DATA1/I2C_!INT"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_rp2040__flash_pullup__to__usb_mux_id__gap_2570cd4b4480cd63",
+          "split": "test",
+          "target": "BOOT"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__olimex_esp32_gateway__g__to__h__gap_100dc892bc45bb64",
+          "split": "test",
+          "target": "GG0402052R542P"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_artemis__v14__to__v16__gap_2ed34ff9f08b7205",
+          "split": "test",
+          "target": "0.22uF"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_esp32__v10fix__to__v11__gap_41d0e825acb7d77e",
+          "split": "test",
+          "target": "4-SD_DATA1/I2C_!INT"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_rp2040__flash_pullup__to__usb_mux_id__gap_2b3df02fe564b562",
+          "split": "test",
+          "target": "C29"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_esp32__v10fix__to__v11__gap_4648327253f3f09c",
+          "split": "test",
+          "target": "19-CIPO"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_rp2040__flash_pullup__to__usb_mux_id__gap_3238586fa4d755f5",
+          "split": "test",
+          "target": "!OE!"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__olimex_esp32_gateway__c__to__d__gap_2173463d06a78c1a",
+          "split": "test",
+          "target": "+3.3VLAN"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_artemis__spi_update__to__final__gap_9045e7786d544f16",
+          "split": "test",
+          "target": "C3"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_esp32__v02__to__v10__gap_c072f8683d6b2f56",
+          "split": "test",
+          "target": "TP2"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_esp32__v10fix__to__v11__gap_52c583b2d00dbbff",
+          "split": "test",
+          "target": "13-SPI_!CS!/SD_DATA3"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_rp2040__flash_pullup__to__usb_mux_id__gap_3306465b13d446e1",
+          "split": "test",
+          "target": "D2"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_rp2040__initial__to__flash_pullup__gap_d6ac245a83b9f69d",
+          "split": "test",
+          "target": "1A/23V/620mV"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__olimex_esp32_poe__b2__to__c__gap_2b82f4f4624fef80",
+          "split": "test",
+          "target": "10k/R0402 R1 GND"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_artemis__spi_update__to__final__gap_a0b48240283f89e7",
+          "split": "test",
+          "target": "3.3V GND"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_rp2040__flash_pullup__to__usb_mux_id__gap_37bf697fdceef98d",
+          "split": "test",
+          "target": "0.1uF"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_artemis__spi_update__to__final__gap_aab965e6f72ccf02",
+          "split": "test",
+          "target": "C4"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_esp32__v10__to__v10fix__gap_bf2abdf7cdc4fffe",
+          "split": "test",
+          "target": "33-G7/RTC"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_rp2040__flash_pullup__to__usb_mux_id__gap_3bca536dbae2fbcb",
+          "split": "test",
+          "target": "FSUSB30MUX"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_rp2040__initial__to__flash_pullup__gap_ffe229df9afdb5f1",
+          "split": "test",
+          "target": "C15"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__olimex_esp32_gateway__c__to__d__gap_2e1af1d8dc30ab0d",
+          "split": "test",
+          "target": "VDD"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_artemis__v14__to__v16__gap_3da7ec2d5c258f65",
+          "split": "test",
+          "target": "10uF"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_rp2040__flash_pullup__to__usb_mux_id__gap_46ab79c47e6132ed",
+          "split": "test",
+          "target": "BLUE"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__olimex_esp32_poe__b2__to__c__gap_333fd4adafde0d40",
+          "split": "test",
+          "target": "GND"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_artemis__spi_update__to__final__gap_ba6b4dfe373955e2",
+          "split": "test",
+          "target": "V_BATT C3 1.0uF GND"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_artemis__v14__to__v16__gap_42730c2a9395cfe5",
+          "split": "test",
+          "target": "SPI_MOSI/QSPI_!CS!"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_esp32__v10fix__to__v11__gap_697c2bbc2df0a53d",
+          "split": "test",
+          "target": "23-COPI"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_rp2040__flash_pullup__to__usb_mux_id__gap_4e6b6ac272c69f45",
+          "split": "test",
+          "target": "GPIO8"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__olimex_esp32_gateway__c__to__d__gap_32b1c8dc835f06e4",
+          "split": "test",
+          "target": "PWR_FLAG"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__olimex_esp32_gateway__g__to__h__gap_143dc5583d54c8a7",
+          "split": "test",
+          "target": "NA/C0402"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_artemis__spi_update__to__final__gap_c78dcfce5edc3669",
+          "split": "test",
+          "target": "1.0uF"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_esp32__v10__to__v10fix__gap_ec24d94fdb8e596a",
+          "split": "test",
+          "target": "0-!BOOT!/I2C_!INT"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__sparkfun_micromod_esp32__v10fix__to__v11__gap_6bd272377698468d",
+          "split": "test",
+          "target": "12-SD_DATA2/G4"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_rp2040__flash_pullup__to__usb_mux_id__gap_560a3c774466c752",
+          "split": "test",
+          "target": "USBHOST_D-"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__sparkfun_micromod_teensy__v11_base__to__power_control__gap_10ba5926392ad3e9",
+          "split": "test",
+          "target": "USB2_DP"
+        },
+        {
+          "kind": "text_removed",
+          "pair_id": "vdiff__adafruit_metro_m0_express__2017__to__2019__gap_0bba52aa90ec1dc8",
+          "split": "test",
+          "target": "FB1"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__olimex_esp32_gateway__d__to__e__gap_a9ee2280aa67e937",
+          "split": "test",
+          "target": "GND"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__olimex_esp32_gateway__e__to__f__gap_0294b15c8fb8a9f5",
+          "split": "test",
+          "target": "MODULE"
+        },
+        {
+          "kind": "text_added",
+          "pair_id": "vdiff__olimex_esp32_gateway__c__to__d__gap_084a7bdcd110edea",
+          "split": "test",
+          "target": "RBIAS"
+        }
+      ],
+      "passes": false,
+      "scope": "Known generator-template finality only; not semantic certification.",
+      "target": 1574,
+      "tentative_rows": 92
+    }
+  },
+  "source_payload_duplicates": {
+    "duplicate_alias_doc_ids": 16,
+    "duplicate_groups": 10,
+    "local_hash_mismatches": 0
+  },
+  "split_counts": {
+    "dev": 932,
+    "test": 1613,
+    "train": 2015
+  },
+  "submission_registry": {
+    "counted": [],
+    "excluded": []
+  },
+  "v2_0_global_complete": false
+}

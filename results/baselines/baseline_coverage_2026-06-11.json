@@ -1,0 +1,193 @@
+{
+  "baseline_prediction_file_count": 15,
+  "baseline_prediction_files": [
+    "results\\baselines\\dev_prior_all_test_predictions.jsonl",
+    "results\\baselines\\dev_prior_visualdiff_test_predictions.jsonl",
+    "results\\baselines\\edge_diff_visualdiff_test_predictions.jsonl",
+    "results\\baselines\\metadata_template_test_predictions.jsonl",
+    "results\\baselines\\phase_diff_visualdiff_test_predictions.jsonl",
+    "results\\baselines\\simple_diff_visualdiff_all_predictions.jsonl",
+    "results\\baselines\\ssim_diff_visualdiff_test_predictions.jsonl",
+    "results\\baselines\\textlayer_diff_visualdiff_test_predictions.jsonl",
+    "results\\baselines\\textlayer_heuristic_microtext_test_predictions.jsonl",
+    "results\\baselines\\textlayer_smallest_span_microtext_test_predictions.jsonl",
+    "results\\baselines\\train_dev_prior_all_test_predictions.jsonl",
+    "results\\baselines\\train_prior_all_test_predictions.jsonl",
+    "results\\baselines\\train_prior_microtext_test_predictions.jsonl",
+    "results\\baselines\\weak_center_test_predictions.jsonl",
+    "results\\baselines\\weak_full_page_test_predictions.jsonl"
+  ],
+  "baseline_registry": {
+    "counted": [
+      {
+        "name": "dev_prior_all_test",
+        "prediction_hash": "01c373df3c7cf82a69abf9a31a333f9d9e291b0b9489eb1a003882e13518c944",
+        "prediction_path": "results/baselines/dev_prior_all_test_predictions.jsonl",
+        "prediction_rows": 382,
+        "report_path": "results/baselines/dev_prior_all_test_report.json",
+        "report_rows_scored": 382
+      },
+      {
+        "name": "dev_prior_visualdiff_test",
+        "prediction_hash": "8a97be7a1d504e37b7cac90b2a3516cccade6a6bfdb50d112b39c33762e6a4d5",
+        "prediction_path": "results/baselines/dev_prior_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 229,
+        "report_path": "results/baselines/dev_prior_visualdiff_test_report.json",
+        "report_rows_scored": 229
+      },
+      {
+        "name": "edge_diff_visualdiff_test",
+        "prediction_hash": "2bc2abc4bc1ee37230db456c2badc39a01870566f0920252f84088607427eabf",
+        "prediction_path": "results/baselines/edge_diff_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 229,
+        "report_path": "results/baselines/edge_diff_visualdiff_test_report.json",
+        "report_rows_scored": 229
+      },
+      {
+        "name": "metadata_template_test",
+        "prediction_hash": "cabe8e35143ecba59916412509b3ab1bfac4239c13dfbab189145d7d97142532",
+        "prediction_path": "results/baselines/metadata_template_test_predictions.jsonl",
+        "prediction_rows": 382,
+        "report_path": "results/baselines/metadata_template_test_report.json",
+        "report_rows_scored": 382
+      },
+      {
+        "name": "phase_diff_visualdiff_test",
+        "prediction_hash": "5ba3b646a4822e2e896fec0d5f1134a900a0c04a0e2346e9559398a28c7fc51d",
+        "prediction_path": "results/baselines/phase_diff_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 229,
+        "report_path": "results/baselines/phase_diff_visualdiff_test_report.json",
+        "report_rows_scored": 229
+      },
+      {
+        "name": "simple_diff_visualdiff_all",
+        "prediction_hash": "fc703b21a323f03d40129acefa1715520ef94a2882891d723aaaf41b1fffc04b",
+        "prediction_path": "results/baselines/simple_diff_visualdiff_all_predictions.jsonl",
+        "prediction_rows": 1391,
+        "report_path": "results/baselines/simple_diff_visualdiff_all_report.json",
+        "report_rows_scored": 1391
+      },
+      {
+        "name": "ssim_diff_visualdiff_test",
+        "prediction_hash": "10527e7028ff16f2ae4cd8e936ace2d85ae9b4d61f11f292df826d5128a242ab",
+        "prediction_path": "results/baselines/ssim_diff_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 229,
+        "report_path": "results/baselines/ssim_diff_visualdiff_test_report.json",
+        "report_rows_scored": 229
+      },
+      {
+        "name": "textlayer_diff_visualdiff_test",
+        "prediction_hash": "bae94e96e3f407a83450d9156d8b7b8c02fcfbe1454469ac078b2850fbc24ce6",
+        "prediction_path": "results/baselines/textlayer_diff_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 229,
+        "report_path": "results/baselines/textlayer_diff_visualdiff_test_report.json",
+        "report_rows_scored": 229
+      },
+      {
+        "name": "textlayer_heuristic_microtext_test",
+        "prediction_hash": "5fcb1ae8ae9d7444af84611b7d4d7e55a187dce656b73bdfc7bea9baa08e99fe",
+        "prediction_path": "results/baselines/textlayer_heuristic_microtext_test_predictions.jsonl",
+        "prediction_rows": 153,
+        "report_path": "results/baselines/textlayer_heuristic_microtext_test_report.json",
+        "report_rows_scored": 153
+      },
+      {
+        "name": "textlayer_smallest_span_microtext_test",
+        "prediction_hash": "6eaf689fb3ec1d47ee9d347eb28db901aa2ed7111bc18cd85483530f0f5ea8f3",
+        "prediction_path": "results/baselines/textlayer_smallest_span_microtext_test_predictions.jsonl",
+        "prediction_rows": 153,
+        "report_path": "results/baselines/textlayer_smallest_span_microtext_test_report.json",
+        "report_rows_scored": 153
+      },
+      {
+        "name": "train_dev_prior_all_test",
+        "prediction_hash": "9b765349a586cf130fcd7714aece7d481b2855ed1152cbc6aea1fd080fb20182",
+        "prediction_path": "results/baselines/train_dev_prior_all_test_predictions.jsonl",
+        "prediction_rows": 382,
+        "report_path": "results/baselines/train_dev_prior_all_test_report.json",
+        "report_rows_scored": 382
+      },
+      {
+        "name": "train_prior_all_test",
+        "prediction_hash": "cf44aa8df04d56bbe6a39996483bdc293168c79ca606b4514a2e1d197438d133",
+        "prediction_path": "results/baselines/train_prior_all_test_predictions.jsonl",
+        "prediction_rows": 382,
+        "report_path": "results/baselines/train_prior_all_test_report.json",
+        "report_rows_scored": 382
+      },
+      {
+        "name": "train_prior_microtext_test",
+        "prediction_hash": "58005474aa6f55f0bb9d081218b7663f33b31eaff107c06243cb0f1789f5ffc3",
+        "prediction_path": "results/baselines/train_prior_microtext_test_predictions.jsonl",
+        "prediction_rows": 153,
+        "report_path": "results/baselines/train_prior_microtext_test_report.json",
+        "report_rows_scored": 153
+      },
+      {
+        "name": "weak_center_test",
+        "prediction_hash": "6c55bf91cb6242c72d2f223695a59a64d0bc199080f15e94b7e7211b179157f8",
+        "prediction_path": "results/baselines/weak_center_test_predictions.jsonl",
+        "prediction_rows": 382,
+        "report_path": "results/baselines/weak_center_test_report.json",
+        "report_rows_scored": 382
+      },
+      {
+        "name": "weak_full_page_test",
+        "prediction_hash": "1c0f0e6c52c04105d632eb7739acd9c127ef843654a1e5e268b8b3a97eea85d5",
+        "prediction_path": "results/baselines/weak_full_page_test_predictions.jsonl",
+        "prediction_rows": 382,
+        "report_path": "results/baselines/weak_full_page_test_report.json",
+        "report_rows_scored": 382
+      }
+    ],
+    "excluded": []
+  },
+  "failing_examples": [],
+  "failing_rows": 0,
+  "gold_rows": 382,
+  "min_baselines": 3,
+  "passed": true,
+  "prediction_rows_by_file": {
+    "dev_prior_all_test": 382,
+    "dev_prior_visualdiff_test": 229,
+    "edge_diff_visualdiff_test": 229,
+    "metadata_template_test": 382,
+    "phase_diff_visualdiff_test": 229,
+    "simple_diff_visualdiff_all": 1391,
+    "ssim_diff_visualdiff_test": 229,
+    "textlayer_diff_visualdiff_test": 229,
+    "textlayer_heuristic_microtext_test": 153,
+    "textlayer_smallest_span_microtext_test": 153,
+    "train_dev_prior_all_test": 382,
+    "train_prior_all_test": 382,
+    "train_prior_microtext_test": 153,
+    "weak_center_test": 382,
+    "weak_full_page_test": 382
+  },
+  "rows_by_coverage": {
+    "12": 229,
+    "9": 153
+  },
+  "rows_by_task": {
+    "microtext": 153,
+    "visualdiff": 229
+  },
+  "split": "test",
+  "unknown_predictions_by_file": {
+    "dev_prior_all_test": 0,
+    "dev_prior_visualdiff_test": 0,
+    "edge_diff_visualdiff_test": 0,
+    "metadata_template_test": 0,
+    "phase_diff_visualdiff_test": 0,
+    "simple_diff_visualdiff_all": 1162,
+    "ssim_diff_visualdiff_test": 0,
+    "textlayer_diff_visualdiff_test": 0,
+    "textlayer_heuristic_microtext_test": 0,
+    "textlayer_smallest_span_microtext_test": 0,
+    "train_dev_prior_all_test": 0,
+    "train_prior_all_test": 0,
+    "train_prior_microtext_test": 0,
+    "weak_center_test": 0,
+    "weak_full_page_test": 0
+  }
+}

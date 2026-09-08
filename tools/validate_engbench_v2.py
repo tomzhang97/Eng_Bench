@@ -2,7 +2,7 @@
 """
 validate_engbench_v2.py
 
-Comprehensive 11-check validator for Eng_Bench (Phase 6.4):
+Comprehensive 13-check validator for Eng_Bench (Phase 6.4):
 1. qid uniqueness
 2. bbox bounds (answer + evidence bboxes)
 3. yes/no balance ≥30%
@@ -14,23 +14,41 @@ Comprehensive 11-check validator for Eng_Bench (Phase 6.4):
 9. change_id split overlap
 10. pair/doc resolvability (manifest)
 11. duplicate QA collapse
+12. unified image path resolvability
+13. benchmark-facing text encoding integrity
+14. machine-certification tier and evidence metadata
 """
 from __future__ import annotations
 
 import argparse
 import json
 import os
+import re
 from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Set, Tuple
 
-from benchmark_utils import (
-    dedup_key,
-    anchor_present,
-    normalize_entity_text,
-    extract_entity_from_question,
-    GENERIC_TOKENS,
-)
+try:
+    from benchmark_utils import (
+        GENERIC_TOKENS,
+        anchor_present,
+        dedup_key,
+        extract_entity_from_question,
+        normalize_entity_text,
+    )
+except ModuleNotFoundError:  # Imported as tools.validate_engbench_v2 in tests.
+    from tools.benchmark_utils import (
+        GENERIC_TOKENS,
+        anchor_present,
+        dedup_key,
+        extract_entity_from_question,
+        normalize_entity_text,
+    )
+
+try:
+    from text_encoding import mojibake_signatures
+except ModuleNotFoundError:  # Imported as tools.validate_engbench_v2 in tests.
+    from tools.text_encoding import mojibake_signatures
 
 
 def load_jsonl(path: str) -> List[dict]:
@@ -110,6 +128,83 @@ class ValidatorReport:
         self.warnings.append(f"[Check {check}] {msg}")
 
 
+def metadata(item: Dict[str, Any]) -> Dict[str, Any]:
+    meta = item.get("metadata")
+    return meta if isinstance(meta, dict) else {}
+
+
+def qid_for(item: Dict[str, Any]) -> str:
+    return str(item.get("question_id") or item.get("qid") or item.get("id") or "<unknown>")
+
+
+def answer_dict(item: Dict[str, Any]) -> Dict[str, Any]:
+    ans = item.get("answer")
+    return ans if isinstance(ans, dict) else {}
+
+
+def pair_id_for(item: Dict[str, Any]) -> str:
+    return str(item.get("pair_id") or metadata(item).get("pair_id") or "")
+
+
+def doc_id_for(item: Dict[str, Any]) -> str:
+    return str(item.get("doc_id") or metadata(item).get("doc_id") or "")
+
+
+def image_errors(root: str, item: Dict[str, Any]) -> List[str]:
+    errors = []
+    images = item.get("images", [])
+    if not isinstance(images, list):
+        return ["images must be a list"]
+    for image_path in images:
+        if not isinstance(image_path, str) or not image_path.strip():
+            errors.append("image path must be a non-empty string")
+            continue
+        candidate = Path(image_path)
+        full_path = candidate if candidate.is_absolute() else Path(root) / candidate
+        if not full_path.exists():
+            errors.append(f"missing image path '{image_path}'")
+    return errors
+
+
+def benchmark_strings(value: Any, path: tuple[str, ...] = ()):
+    """Yield strings that can reach a benchmark prompt, answer, label, or ID."""
+    if isinstance(value, dict):
+        for key, child in value.items():
+            if key in {"source_raw_text", "source_text_parts", "upstream_raw_text"}:
+                continue
+            yield from benchmark_strings(child, (*path, str(key)))
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            yield from benchmark_strings(child, (*path, f"[{index}]"))
+    elif isinstance(value, str):
+        yield ".".join(path), value
+
+
+def pair_manifest_candidates(pair_id: str) -> List[str]:
+    candidates = [pair_id]
+    stem, sep, suffix = pair_id.rpartition("__")
+    row_suffix = (
+        suffix.isdigit()
+        or re.fullmatch(r"txt\d+", suffix, flags=re.IGNORECASE)
+        or re.fullmatch(r"gap_[0-9a-f]+", suffix, flags=re.IGNORECASE)
+    )
+    if sep and row_suffix:
+        candidates.append(stem)
+        family, page_sep, page_suffix = stem.rpartition("__")
+        if page_sep and re.fullmatch(r"p\d+", page_suffix, flags=re.IGNORECASE):
+            candidates.append(family)
+    return list(dict.fromkeys(candidates))
+
+
+def pair_in_manifest(pair_id: str, manifest: Dict[str, dict]) -> bool:
+    return any(candidate in manifest for candidate in pair_manifest_candidates(pair_id))
+
+
+def answer_yes(item: Dict[str, Any]) -> Optional[bool]:
+    value = answer_dict(item).get("yes")
+    return value if isinstance(value, bool) else None
+
+
 def validate_bbox(bbox: List, name: str, page_dims: Optional[Tuple[int, int]] = None) -> List[str]:
     """Validate a single bbox."""
     errors = []
@@ -146,9 +241,13 @@ def validate_all(
     if not skip_textlayer:
         doc_ids = set()
         for it in items:
-            pair_id = it.get("pair_id", "")
-            if pair_id in manifest:
-                pair = manifest[pair_id]
+            pair_id = pair_id_for(it)
+            manifest_pair_id = next(
+                (candidate for candidate in pair_manifest_candidates(pair_id) if candidate in manifest),
+                "",
+            )
+            if manifest_pair_id:
+                pair = manifest[manifest_pair_id]
                 doc_ids.add(pair.get("from_doc_id", ""))
                 doc_ids.add(pair.get("to_doc_id", ""))
         for doc_id in doc_ids:
@@ -156,27 +255,31 @@ def validate_all(
                 textlayers[doc_id] = load_textlayer(root, doc_id)
 
     # --- Check 1: qid uniqueness ---
-    qids = [it.get("question_id") or it.get("qid") for it in items]
+    qids = [qid_for(it) for it in items]
     qid_counts = Counter(qids)
     dups = {q for q, c in qid_counts.items() if c > 1}
     if dups:
         for i, it in enumerate(items):
-            q = it.get("question_id") or it.get("qid")
+            q = qid_for(it)
             if q in dups:
                 report.error(1, f"Duplicate qid: {q}")
                 bad_indices.add(i)
 
     # --- Check 2: bbox bounds (answer + evidence) ---
     for i, it in enumerate(items):
-        qid = it.get("question_id") or it.get("qid")
-        ans = it.get("answer", {})
+        qid = qid_for(it)
+        ans = answer_dict(it)
         
         # Get page dims if possible
         page = None
         if isinstance(ans, dict) and ans.get("page") is not None:
             page = int(ans["page"])
-        pair_id = it.get("pair_id", "")
-        doc_id = manifest.get(pair_id, {}).get("to_doc_id", "")
+        pair_id = pair_id_for(it)
+        manifest_pair_id = next(
+            (candidate for candidate in pair_manifest_candidates(pair_id) if candidate in manifest),
+            "",
+        )
+        doc_id = manifest.get(manifest_pair_id, {}).get("to_doc_id", "")
         dims = get_page_dims(root, doc_id, page) if page is not None and doc_id else None
         
         found_err = False
@@ -204,8 +307,8 @@ def validate_all(
         by_split[it.get("split", "unknown")].append(it)
 
     for split, split_items in by_split.items():
-        yes_count = sum(1 for it in split_items if it.get("answer", {}).get("yes") is True)
-        no_count = sum(1 for it in split_items if it.get("answer", {}).get("yes") is False)
+        yes_count = sum(1 for it in split_items if answer_yes(it) is True)
+        no_count = sum(1 for it in split_items if answer_yes(it) is False)
         total = yes_count + no_count
         if total > 0:
             minority = min(yes_count, no_count) / total
@@ -221,15 +324,19 @@ def validate_all(
     # --- Check 4: negative entity on page (hard-neg enforcement) ---
     if not skip_textlayer:
         for i, it in enumerate(items):
-            ans = it.get("answer", {})
-            if isinstance(ans, dict) and ans.get("yes") is False:
-                qid = it.get("question_id") or it.get("qid")
+            ans = answer_dict(it)
+            if ans.get("yes") is False:
+                qid = qid_for(it)
                 entity = it.get("entity") or extract_entity_from_question(it.get("question", ""))
                 page = ans.get("page")
-                pair_id = it.get("pair_id", "")
+                pair_id = pair_id_for(it)
+                manifest_pair_id = next(
+                    (candidate for candidate in pair_manifest_candidates(pair_id) if candidate in manifest),
+                    "",
+                )
                 
-                if page is not None and pair_id in manifest:
-                    pair = manifest[pair_id]
+                if page is not None and manifest_pair_id:
+                    pair = manifest[manifest_pair_id]
                     doc_a = pair.get("from_doc_id", "")
                     doc_b = pair.get("to_doc_id", "")
                     
@@ -260,8 +367,8 @@ def validate_all(
     # --- Check 5: scope-schema match ---
     for i, it in enumerate(items):
         qtype = it.get("question_type", "")
-        ans = it.get("answer", {})
-        qid = it.get("question_id") or it.get("qid")
+        ans = answer_dict(it)
+        qid = qid_for(it)
         found_err = False
         if qtype == "locate_bbox" and not ans.get("bbox"):
             report.error(5, f"{qid}: locate_bbox without bbox answer")
@@ -280,17 +387,21 @@ def validate_all(
             entity = it.get("entity") or extract_entity_from_question(it.get("question", ""))
             if not entity: continue
             
-            ans = it.get("answer", {})
-            page = ans.get("page") if isinstance(ans, dict) else None
-            pair_id = it.get("pair_id", "")
+            ans = answer_dict(it)
+            page = ans.get("page")
+            pair_id = pair_id_for(it)
+            manifest_pair_id = next(
+                (candidate for candidate in pair_manifest_candidates(pair_id) if candidate in manifest),
+                "",
+            )
             
-            if page is not None and pair_id in manifest:
-                pair = manifest[pair_id]
+            if page is not None and manifest_pair_id:
+                pair = manifest[manifest_pair_id]
                 doc_b = pair.get("to_doc_id", "")
                 count = count_entity_on_page(textlayers.get(doc_b, {}), page, entity)
                 
                 if count > 3:
-                    qid = it.get("question_id") or it.get("qid")
+                    qid = qid_for(it)
                     msg = f"{qid}: entity '{entity}' appears {count}x on page {page} without anchor"
                     if strict:
                         report.error(6, msg)
@@ -300,11 +411,11 @@ def validate_all(
 
     # --- Check 7: evidence on positives ---
     for i, it in enumerate(items):
-        ans = it.get("answer", {})
-        if isinstance(ans, dict) and ans.get("yes") is True:
+        ans = answer_dict(it)
+        if ans.get("yes") is True:
             ev = it.get("evidence", [])
             if not ev:
-                qid = it.get("question_id") or it.get("qid")
+                qid = qid_for(it)
                 msg = f"{qid}: positive without evidence"
                 if strict:
                     report.error(7, msg)
@@ -332,10 +443,15 @@ def validate_all(
 
     # --- Check 10: pair/doc resolvability ---
     for i, it in enumerate(items):
-        pid = it.get("pair_id")
-        if pid and pid not in manifest:
+        pid = pair_id_for(it)
+        if pid and not pair_in_manifest(pid, manifest):
             report.error(10, f"pair_id '{pid}' not in manifest")
             bad_indices.add(i)
+        elif not pid:
+            doc_id = doc_id_for(it)
+            if doc_id and doc_id not in manifest:
+                report.error(10, f"doc_id '{doc_id}' not in manifest")
+                bad_indices.add(i)
 
     # --- Check 11: duplicate QA collapse ---
     seen_keys: Dict[Tuple, int] = {}
@@ -343,19 +459,92 @@ def validate_all(
         key = dedup_key(it)
         if key in seen_keys:
             old_i = seen_keys[key]
-            old_qid = items[old_i].get("question_id") or items[old_i].get("qid")
-            new_qid = it.get("question_id") or it.get("qid")
+            old_qid = qid_for(items[old_i])
+            new_qid = qid_for(it)
             report.error(11, f"Duplicate QA: {new_qid} collides with {old_qid}")
             # Mark the NEW duplicate as bad
             bad_indices.add(i)
         else:
             seen_keys[key] = i
 
+    # --- Check 12: unified image path resolvability ---
+    missing_images = 0
+    rows_with_missing_images = 0
+    for i, it in enumerate(items):
+        qid = qid_for(it)
+        errs = image_errors(root, it)
+        if errs:
+            rows_with_missing_images += 1
+            missing_images += len(errs)
+            for err in errs:
+                report.error(12, f"{qid}: {err}")
+            bad_indices.add(i)
+    report.stats["missing_images"] = missing_images
+    report.stats["rows_with_missing_images"] = rows_with_missing_images
+
+    # --- Check 13: benchmark-facing text encoding integrity ---
+    encoding_issue_count = 0
+    for i, it in enumerate(items):
+        qid = qid_for(it)
+        found_err = False
+        for field, value in benchmark_strings(it):
+            signatures = mojibake_signatures(value)
+            if not signatures:
+                continue
+            encoding_issue_count += 1
+            msg = f"{qid}: mojibake in {field} ({', '.join(signatures)})"
+            if strict:
+                report.error(13, msg)
+                found_err = True
+            else:
+                report.warn(13, msg)
+        if found_err:
+            bad_indices.add(i)
+    report.stats["text_encoding_issues"] = encoding_issue_count
+
+    # --- Check 14: machine-certification tier and evidence metadata ---
+    machine_certified_rows = 0
+    for i, it in enumerate(items):
+        meta = metadata(it)
+        method = str(meta.get("certification_method") or "").strip().lower()
+        if not method:
+            continue
+        machine_certified_rows += 1
+        qid = qid_for(it)
+        issues: list[str] = []
+        if method != "machine_verified":
+            issues.append(f"unsupported certification_method '{method}'")
+        if str(it.get("task") or "").strip().lower() != "microtext":
+            issues.append("machine certification is limited to microtext")
+        if str(it.get("split") or "").strip().lower() != "train":
+            issues.append("machine certification is limited to train")
+        if str(meta.get("certification_tier") or "") != "auto_gold_train":
+            issues.append("certification_tier must be auto_gold_train")
+        if str(meta.get("certification_policy_version") or "") != "1.0":
+            issues.append("certification_policy_version must be 1.0")
+        if meta.get("human_reviewed") is not False:
+            issues.append("human_reviewed must be false")
+        if str(meta.get("review_source") or "") != "machine_certification_policy":
+            issues.append("review_source must be machine_certification_policy")
+        for field in (
+            "machine_certification_evidence_sha256",
+            "certification_eligibility_report_sha256",
+            "certification_calibration_attestation_sha256",
+        ):
+            value = str(meta.get(field) or "").strip().lower()
+            if not re.fullmatch(r"[0-9a-f]{64}", value):
+                issues.append(f"{field} must be a SHA-256")
+        for issue in issues:
+            report.error(14, f"{qid}: {issue}")
+        if issues:
+            bad_indices.add(i)
+    report.stats["machine_certified_rows"] = machine_certified_rows
+
     return report, bad_indices
 
 
 def main():
-    ap = argparse.ArgumentParser(description="Eng_Bench 11-check validator")
+    ap = argparse.ArgumentParser(description="Eng_Bench 14-check validator")
     ap.add_argument("--root", required=True, help="Eng_Bench root")
     ap.add_argument("--input", required=True, help="JSONL file to validate")
     ap.add_argument("--manifest", default="manifest.jsonl")

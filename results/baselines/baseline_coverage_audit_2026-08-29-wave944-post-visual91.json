@@ -1,0 +1,347 @@
+{
+  "baseline_prediction_file_count": 29,
+  "baseline_prediction_files": [
+    "results\\baselines\\dev_prior_all_test_predictions.jsonl",
+    "results\\baselines\\dev_prior_visualdiff_test_predictions.jsonl",
+    "results\\baselines\\edge_diff_visualdiff_test_predictions.jsonl",
+    "results\\baselines\\largest_cc_diff_visualdiff_test_predictions.jsonl",
+    "results\\baselines\\metadata_template_test_predictions.jsonl",
+    "results\\baselines\\orb_residual_diff_visualdiff_test_predictions.jsonl",
+    "results\\baselines\\phase_diff_visualdiff_test_predictions.jsonl",
+    "results\\baselines\\simple_diff_visualdiff_all_predictions.jsonl",
+    "results\\baselines\\ssim_diff_visualdiff_test_predictions.jsonl",
+    "results\\baselines\\textlayer_center_span_microtext_test_predictions.jsonl",
+    "results\\baselines\\textlayer_diff_visualdiff_test_predictions.jsonl",
+    "results\\baselines\\textlayer_heuristic_microtext_test_predictions.jsonl",
+    "results\\baselines\\textlayer_page_frequency_microtext_test_predictions.jsonl",
+    "results\\baselines\\textlayer_smallest_span_microtext_test_predictions.jsonl",
+    "results\\baselines\\tile_zncc_diff_visualdiff_test_predictions.jsonl",
+    "results\\baselines\\train_dev_prior_all_test_predictions.jsonl",
+    "results\\baselines\\train_prior_all_test_predictions.jsonl",
+    "results\\baselines\\train_prior_microtext_test_predictions.jsonl",
+    "results\\baselines\\weak_center_test_predictions.jsonl",
+    "results\\baselines\\weak_full_page_test_predictions.jsonl",
+    "results\\baselines\\weak_grid_cell_0_test_predictions.jsonl",
+    "results\\baselines\\weak_grid_cell_1_test_predictions.jsonl",
+    "results\\baselines\\weak_grid_cell_2_test_predictions.jsonl",
+    "results\\baselines\\weak_grid_cell_3_test_predictions.jsonl",
+    "results\\baselines\\weak_grid_cell_4_test_predictions.jsonl",
+    "results\\baselines\\weak_grid_cell_5_test_predictions.jsonl",
+    "results\\baselines\\weak_grid_cell_6_test_predictions.jsonl",
+    "results\\baselines\\weak_grid_cell_7_test_predictions.jsonl",
+    "results\\baselines\\weak_grid_cell_8_test_predictions.jsonl"
+  ],
+  "baseline_registry": {
+    "counted": [
+      {
+        "name": "dev_prior_all_test",
+        "prediction_hash": "bc435369dd6feab8612c1fbca81e88b7ad9277c32b8aed3ceb95177b6be21d76",
+        "prediction_path": "results/baselines/dev_prior_all_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/dev_prior_all_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "dev_prior_visualdiff_test",
+        "prediction_hash": "c38fcb42a499469b76c6bf048cf11ac1fa0e765e42489dabb33dac449ceb35b0",
+        "prediction_path": "results/baselines/dev_prior_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 962,
+        "report_path": "results/baselines/dev_prior_visualdiff_test_report.json",
+        "report_rows_scored": 962
+      },
+      {
+        "name": "edge_diff_visualdiff_test",
+        "prediction_hash": "e7304fda6749b3e90c6fb1b38731f03ab8df36b3ff2b11f2eff1b174d0d102ea",
+        "prediction_path": "results/baselines/edge_diff_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 962,
+        "report_path": "results/baselines/edge_diff_visualdiff_test_report.json",
+        "report_rows_scored": 962
+      },
+      {
+        "name": "largest_cc_diff_visualdiff_test",
+        "prediction_hash": "c62bebe087b8c4d458811cdb34de908f710ee09ad3f1eb86e3e7a3e2a843e9e8",
+        "prediction_path": "results/baselines/largest_cc_diff_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 962,
+        "report_path": "results/baselines/largest_cc_diff_visualdiff_test_report.json",
+        "report_rows_scored": 962
+      },
+      {
+        "name": "metadata_template_test",
+        "prediction_hash": "40e2dca5c8189ba25e48766fadb23b9fc35ba49d56149afddf239a601eea66f2",
+        "prediction_path": "results/baselines/metadata_template_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/metadata_template_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "orb_residual_diff_visualdiff_test",
+        "prediction_hash": "c3e21a146c6ed584a5046b1e060829775c94d3a07696fc0eb5ad0fc9a9bdd572",
+        "prediction_path": "results/baselines/orb_residual_diff_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 962,
+        "report_path": "results/baselines/orb_residual_diff_visualdiff_test_report.json",
+        "report_rows_scored": 962
+      },
+      {
+        "name": "phase_diff_visualdiff_test",
+        "prediction_hash": "c9e6e76eb2420ff804755ed5b1feccc9dc9c97ffc522915518f29548135115b0",
+        "prediction_path": "results/baselines/phase_diff_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 962,
+        "report_path": "results/baselines/phase_diff_visualdiff_test_report.json",
+        "report_rows_scored": 962
+      },
+      {
+        "name": "simple_diff_visualdiff_all",
+        "prediction_hash": "fb5f5228aac0c36aed9c09c5969b5c4b142ee84db8151e32eb238ce94011c92d",
+        "prediction_path": "results/baselines/simple_diff_visualdiff_all_predictions.jsonl",
+        "prediction_rows": 1561,
+        "report_path": "results/baselines/simple_diff_visualdiff_all_report.json",
+        "report_rows_scored": 1561
+      },
+      {
+        "name": "ssim_diff_visualdiff_test",
+        "prediction_hash": "c083367666b4d24fbee513b4342e0eeeaddcd90f9c7c2ebac7247825ee39bb2c",
+        "prediction_path": "results/baselines/ssim_diff_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 962,
+        "report_path": "results/baselines/ssim_diff_visualdiff_test_report.json",
+        "report_rows_scored": 962
+      },
+      {
+        "name": "textlayer_center_span_microtext_test",
+        "prediction_hash": "4b6998531d046421cd4576698f0096461b962978c96719422e1709ab095363d1",
+        "prediction_path": "results/baselines/textlayer_center_span_microtext_test_predictions.jsonl",
+        "prediction_rows": 638,
+        "report_path": "results/baselines/textlayer_center_span_microtext_test_report.json",
+        "report_rows_scored": 638
+      },
+      {
+        "name": "textlayer_diff_visualdiff_test",
+        "prediction_hash": "023dde7ba58646dade5ec162e8469a8089e1afa195602e6cb188a283796519c0",
+        "prediction_path": "results/baselines/textlayer_diff_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 962,
+        "report_path": "results/baselines/textlayer_diff_visualdiff_test_report.json",
+        "report_rows_scored": 962
+      },
+      {
+        "name": "textlayer_heuristic_microtext_test",
+        "prediction_hash": "d8f534e816cf335809aafd051fc9df09c775e31580162aade52fb87e295d7c11",
+        "prediction_path": "results/baselines/textlayer_heuristic_microtext_test_predictions.jsonl",
+        "prediction_rows": 638,
+        "report_path": "results/baselines/textlayer_heuristic_microtext_test_report.json",
+        "report_rows_scored": 638
+      },
+      {
+        "name": "textlayer_page_frequency_microtext_test",
+        "prediction_hash": "558e49d42554833b61fd6534e0f53fe12f985817949adb8d883f63ba1e58f855",
+        "prediction_path": "results/baselines/textlayer_page_frequency_microtext_test_predictions.jsonl",
+        "prediction_rows": 638,
+        "report_path": "results/baselines/textlayer_page_frequency_microtext_test_report.json",
+        "report_rows_scored": 638
+      },
+      {
+        "name": "textlayer_smallest_span_microtext_test",
+        "prediction_hash": "87a07b85e1020832fc6fa921c14c75da0a052ddf3fec56cc0b5cd744a612a529",
+        "prediction_path": "results/baselines/textlayer_smallest_span_microtext_test_predictions.jsonl",
+        "prediction_rows": 638,
+        "report_path": "results/baselines/textlayer_smallest_span_microtext_test_report.json",
+        "report_rows_scored": 638
+      },
+      {
+        "name": "tile_zncc_diff_visualdiff_test",
+        "prediction_hash": "2d462d5fc9ec34fb6e8a159d2fa61104b3fb5694ba9f46346658d9244a98b715",
+        "prediction_path": "results/baselines/tile_zncc_diff_visualdiff_test_predictions.jsonl",
+        "prediction_rows": 962,
+        "report_path": "results/baselines/tile_zncc_diff_visualdiff_test_report.json",
+        "report_rows_scored": 962
+      },
+      {
+        "name": "train_dev_prior_all_test",
+        "prediction_hash": "009880a500a06e06dc034f39e3f78431651ee03c7f3d31f1780a3b849c9fc47d",
+        "prediction_path": "results/baselines/train_dev_prior_all_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/train_dev_prior_all_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "train_prior_all_test",
+        "prediction_hash": "fff53ede2f787389d1f8602dfad1a6b6b52240ee899e963d23503677c8e3214f",
+        "prediction_path": "results/baselines/train_prior_all_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/train_prior_all_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "train_prior_microtext_test",
+        "prediction_hash": "4cf318277a39cdd405e431457919e20093a26d47c98a183ec8f5516f2a742864",
+        "prediction_path": "results/baselines/train_prior_microtext_test_predictions.jsonl",
+        "prediction_rows": 638,
+        "report_path": "results/baselines/train_prior_microtext_test_report.json",
+        "report_rows_scored": 638
+      },
+      {
+        "name": "weak_center_test",
+        "prediction_hash": "73a766d3e3ed208806be9e9fb4d10b71d266633d4bd6dfc98cb20e0cb2ffc676",
+        "prediction_path": "results/baselines/weak_center_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/weak_center_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "weak_full_page_test",
+        "prediction_hash": "121499a655d5239e910bf540488e1d5addcf13feb562aec2424ae11610f8dc17",
+        "prediction_path": "results/baselines/weak_full_page_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/weak_full_page_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "weak_grid_cell_0_test",
+        "prediction_hash": "d7d80e1eff204e1da53f40566627a54562bab22b548935ee241dd23dd73fbf5c",
+        "prediction_path": "results/baselines/weak_grid_cell_0_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/weak_grid_cell_0_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "weak_grid_cell_1_test",
+        "prediction_hash": "31a8b3914fa94923d28be2fa38176c748f02cc9a839f8ca739986933f256c191",
+        "prediction_path": "results/baselines/weak_grid_cell_1_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/weak_grid_cell_1_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "weak_grid_cell_2_test",
+        "prediction_hash": "78e504749d225bd42236cd1ea5a427bc82699ba0e1598c0ed5fbfd351ba8a038",
+        "prediction_path": "results/baselines/weak_grid_cell_2_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/weak_grid_cell_2_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "weak_grid_cell_3_test",
+        "prediction_hash": "809ea56ed6f910f14f6ca551b9bd06b60c4983623f2b91809b5c9c7e2958f9d6",
+        "prediction_path": "results/baselines/weak_grid_cell_3_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/weak_grid_cell_3_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "weak_grid_cell_4_test",
+        "prediction_hash": "7b3209be31e9a1a0b56092c34cbaf60e4a1ead75498614051c668cea801cc630",
+        "prediction_path": "results/baselines/weak_grid_cell_4_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/weak_grid_cell_4_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "weak_grid_cell_5_test",
+        "prediction_hash": "96a85c3d5f20481da5406bacbbcb8d597f7ad7906c9c1862a08fa3a019b0e43c",
+        "prediction_path": "results/baselines/weak_grid_cell_5_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/weak_grid_cell_5_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "weak_grid_cell_6_test",
+        "prediction_hash": "74a986220e40961fc7387ee15db77262265fe9f9e9f011edd89c97c3a1df8a45",
+        "prediction_path": "results/baselines/weak_grid_cell_6_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/weak_grid_cell_6_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "weak_grid_cell_7_test",
+        "prediction_hash": "9bed9ceb8b5a9ca284f677e87a0f9bce337e3a888635d12b1bd8ddcf506f47b6",
+        "prediction_path": "results/baselines/weak_grid_cell_7_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/weak_grid_cell_7_test_report.json",
+        "report_rows_scored": 1600
+      },
+      {
+        "name": "weak_grid_cell_8_test",
+        "prediction_hash": "4d9a3cf83797940300eb78be613e980a768e04a9fecea09bc14d6bd34f3948b7",
+        "prediction_path": "results/baselines/weak_grid_cell_8_test_predictions.jsonl",
+        "prediction_rows": 1600,
+        "report_path": "results/baselines/weak_grid_cell_8_test_report.json",
+        "report_rows_scored": 1600
+      }
+    ],
+    "excluded": []
+  },
+  "failing_examples": [],
+  "failing_rows": 0,
+  "gold_rows": 1600,
+  "min_baselines": 1,
+  "passed": true,
+  "prediction_rows_by_file": {
+    "dev_prior_all_test": 1600,
+    "dev_prior_visualdiff_test": 962,
+    "edge_diff_visualdiff_test": 962,
+    "largest_cc_diff_visualdiff_test": 962,
+    "metadata_template_test": 1600,
+    "orb_residual_diff_visualdiff_test": 962,
+    "phase_diff_visualdiff_test": 962,
+    "simple_diff_visualdiff_all": 1561,
+    "ssim_diff_visualdiff_test": 962,
+    "textlayer_center_span_microtext_test": 638,
+    "textlayer_diff_visualdiff_test": 962,
+    "textlayer_heuristic_microtext_test": 638,
+    "textlayer_page_frequency_microtext_test": 638,
+    "textlayer_smallest_span_microtext_test": 638,
+    "tile_zncc_diff_visualdiff_test": 962,
+    "train_dev_prior_all_test": 1600,
+    "train_prior_all_test": 1600,
+    "train_prior_microtext_test": 638,
+    "weak_center_test": 1600,
+    "weak_full_page_test": 1600,
+    "weak_grid_cell_0_test": 1600,
+    "weak_grid_cell_1_test": 1600,
+    "weak_grid_cell_2_test": 1600,
+    "weak_grid_cell_3_test": 1600,
+    "weak_grid_cell_4_test": 1600,
+    "weak_grid_cell_5_test": 1600,
+    "weak_grid_cell_6_test": 1600,
+    "weak_grid_cell_7_test": 1600,
+    "weak_grid_cell_8_test": 1600
+  },
+  "rows_by_coverage": {
+    "20": 638,
+    "24": 962
+  },
+  "rows_by_task": {
+    "microtext": 638,
+    "visualdiff": 962
+  },
+  "split": "test",
+  "unknown_predictions_by_file": {
+    "dev_prior_all_test": 0,
+    "dev_prior_visualdiff_test": 0,
+    "edge_diff_visualdiff_test": 0,
+    "largest_cc_diff_visualdiff_test": 0,
+    "metadata_template_test": 0,
+    "orb_residual_diff_visualdiff_test": 0,
+    "phase_diff_visualdiff_test": 0,
+    "simple_diff_visualdiff_all": 599,
+    "ssim_diff_visualdiff_test": 0,
+    "textlayer_center_span_microtext_test": 0,
+    "textlayer_diff_visualdiff_test": 0,
+    "textlayer_heuristic_microtext_test": 0,
+    "textlayer_page_frequency_microtext_test": 0,
+    "textlayer_smallest_span_microtext_test": 0,
+    "tile_zncc_diff_visualdiff_test": 0,
+    "train_dev_prior_all_test": 0,
+    "train_prior_all_test": 0,
+    "train_prior_microtext_test": 0,
+    "weak_center_test": 0,
+    "weak_full_page_test": 0,
+    "weak_grid_cell_0_test": 0,
+    "weak_grid_cell_1_test": 0,
+    "weak_grid_cell_2_test": 0,
+    "weak_grid_cell_3_test": 0,
+    "weak_grid_cell_4_test": 0,
+    "weak_grid_cell_5_test": 0,
+    "weak_grid_cell_6_test": 0,
+    "weak_grid_cell_7_test": 0,
+    "weak_grid_cell_8_test": 0
+  }
+}

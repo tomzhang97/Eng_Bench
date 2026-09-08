@@ -1,0 +1,677 @@
+{
+  "confidence_intervals": {
+    "microtext.character_error_rate": {
+      "high": 1.639043075195191,
+      "low": 1.505178897780208,
+      "point": 1.5698267074413863,
+      "samples": 200
+    },
+    "microtext.evidence_iou_0_5": {
+      "high": 0.0,
+      "low": 0.0,
+      "point": 0.0,
+      "samples": 200
+    },
+    "microtext.normalized_exact_match": {
+      "high": 0.0,
+      "low": 0.0,
+      "point": 0.0,
+      "samples": 200
+    },
+    "visualdiff.change_type_accuracy": {
+      "high": 0.0,
+      "low": 0.0,
+      "point": 0.0,
+      "samples": 200
+    },
+    "visualdiff.evidence_recall_iou_0_3": {
+      "high": 0.0,
+      "low": 0.0,
+      "point": 0.0,
+      "samples": 200
+    },
+    "visualdiff.evidence_recall_iou_0_5": {
+      "high": 0.0,
+      "low": 0.0,
+      "point": 0.0,
+      "samples": 200
+    },
+    "visualdiff.normalized_description_f1": {
+      "high": 0.03421421732814894,
+      "low": 0.027865709033290876,
+      "point": 0.03079247866346182,
+      "samples": 200
+    },
+    "visualdiff.old_new_side_hit_rate": {
+      "high": 0.0,
+      "low": 0.0,
+      "point": 0.0,
+      "samples": 200
+    }
+  },
+  "duplicate_predictions": 0,
+  "microtext": {
+    "character_error_rate": 1.5698267074413863,
+    "evidence_iou_0_5": 0.0,
+    "exact_match": 0.0,
+    "normalized_exact_match": 0.0,
+    "per_category_accuracy": {
+      "component_value": {
+        "exact_match": 0.0,
+        "normalized_exact_match": 0.0,
+        "total": 3
+      },
+      "dimension_value": {
+        "exact_match": 0.0,
+        "normalized_exact_match": 0.0,
+        "total": 325
+      },
+      "equipment_tag": {
+        "exact_match": 0.0,
+        "normalized_exact_match": 0.0,
+        "total": 47
+      },
+      "instrument_tag": {
+        "exact_match": 0.0,
+        "normalized_exact_match": 0.0,
+        "total": 1
+      },
+      "pin_label": {
+        "exact_match": 0.0,
+        "normalized_exact_match": 0.0,
+        "total": 47
+      },
+      "pipe_line_tag": {
+        "exact_match": 0.0,
+        "normalized_exact_match": 0.0,
+        "total": 2
+      },
+      "process_label": {
+        "exact_match": 0.0,
+        "normalized_exact_match": 0.0,
+        "total": 1
+      },
+      "room_label": {
+        "exact_match": 0.0,
+        "normalized_exact_match": 0.0,
+        "total": 210
+      },
+      "tolerance_value": {
+        "exact_match": 0.0,
+        "normalized_exact_match": 0.0,
+        "total": 2
+      }
+    },
+    "total": 638
+  },
+  "missing_predictions": 0,
+  "model_name": "weak_grid_cell_6_test",
+  "per_domain": {
+    "adafruit_esp32_s3_tft_feather_pinout": {
+      "microtext_character_error_rate": 1.2380952380952381,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 4,
+      "rows": 4,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "adafruit_esp32_s3_tft_feather_sch": {
+      "microtext_character_error_rate": 3.5,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 1,
+      "rows": 1,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "adafruit_feather_esp32_s3_pinout": {
+      "microtext_character_error_rate": 1.2380952380952381,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 4,
+      "rows": 4,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "adafruit_feather_esp32_s3_sch": {
+      "microtext_character_error_rate": 1.9090909090909092,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 3,
+      "rows": 3,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "adafruit_feather_m0_express_pinout": {
+      "microtext_character_error_rate": 2.888888888888889,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 4,
+      "rows": 4,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "adafruit_feather_m0_express_sch": {
+      "microtext_character_error_rate": 0.8947368421052632,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 4,
+      "rows": 4,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "adafruit_feather_m4_express_pinout": {
+      "microtext_character_error_rate": 3.111111111111111,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 4,
+      "rows": 4,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "adafruit_feather_m4_express_sch": {
+      "microtext_character_error_rate": 1.3333333333333333,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 4,
+      "rows": 4,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "adafruit_huzzah32_esp32_feather_pinout": {
+      "microtext_character_error_rate": 1.5263157894736843,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 4,
+      "rows": 4,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "adafruit_huzzah32_esp32_feather_sch": {
+      "microtext_character_error_rate": 1.411764705882353,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 4,
+      "rows": 4,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "adafruit_itsybitsy_32u4_3v_2025": {
+      "microtext_character_error_rate": 2.7,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 4,
+      "rows": 4,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "adafruit_metro_m0_express_2019": {
+      "microtext_character_error_rate": 2.4545454545454546,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 4,
+      "rows": 4,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "arch_012_1_13_third_floor_plan_second_floor_plan_first_floor_plan_grou": {
+      "microtext_character_error_rate": 0.9310344827586207,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 4,
+      "rows": 4,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "arch_012_1_first_floor_plan_attic_floor_plan_second_floor_plan_section": {
+      "microtext_character_error_rate": 2.3333333333333335,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 3,
+      "rows": 3,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "arch_012_1_first_floor_plan_second_floor_plan_basement_floor_plan_sout": {
+      "microtext_character_error_rate": 0.9615384615384616,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 4,
+      "rows": 4,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "arch_012_3_evolution_1950_preliminary_first_floor_plan_1950_constructe": {
+      "microtext_character_error_rate": 0.8378378378378378,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 4,
+      "rows": 4,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "arch_012_3_second_floor_plan_basement_floor_plan_observation_level_flo": {
+      "microtext_character_error_rate": 1.0,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 4,
+      "rows": 4,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "arch_013_2_lock_tender_s_shelter_south_elevation_north_elevation_east_": {
+      "microtext_character_error_rate": 1.8666666666666667,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 4,
+      "rows": 4,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "arch_013_two_and_three_bedroom_units_first_floor_plan_second_floor_pla": {
+      "microtext_character_error_rate": 1.1304347826086956,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 4,
+      "rows": 4,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "arch_014_1_plan_section_a_a_section_b_b_section_c_c_gate_details_timbe": {
+      "microtext_character_error_rate": 1.4761904761904763,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 4,
+      "rows": 4,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "arch_014_cross_sections_no_1_hold_section_at_fr_24_looking_fwd_no_1_ho": {
+      "microtext_character_error_rate": 1.6923076923076923,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 3,
+      "rows": 3,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "arch_014_roof_plans_section_c_c_roof_plan_roof_framing_plans_section_c": {
+      "microtext_character_error_rate": 3.0,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 3,
+      "rows": 3,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "arch_014_section_at_frame_195_section_at_frame_154_section_at_midship_": {
+      "microtext_character_error_rate": 1.0454545454545454,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 3,
+      "rows": 3,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "arch_014_section_at_frame_19_looking_forward_section_at_frame_25_looki": {
+      "microtext_character_error_rate": 1.1666666666666667,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 2,
+      "rows": 2,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "arch_016_1_statement_of_significance_location_plan_floor_plan_roof_pla": {
+      "microtext_character_error_rate": 1.2941176470588236,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 3,
+      "rows": 3,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "arch_016_1_statement_of_significance_site_plan_floor_plan_elevations_s": {
+      "microtext_character_error_rate": 2.3333333333333335,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 3,
+      "rows": 3,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "arch_016_building_43_old_rain_shed_roof_plan_roof_truss_plan_hawaii_vo": {
+      "microtext_character_error_rate": 2.0,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 2,
+      "rows": 2,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "book_of_house_plans_buttrich": {
+      "microtext_character_error_rate": 1.1234817813765183,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 163,
+      "rows": 163,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "espressif_esp32_c5_devkitc_1": {
+      "microtext_character_error_rate": 0.0,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 0,
+      "rows": 6,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 6
+    },
+    "floor_plan_4_bedroom_rural_dwelling": {
+      "microtext_character_error_rate": 7.0,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 12,
+      "rows": 12,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "floor_plan_5_bedroom_usda": {
+      "microtext_character_error_rate": 2.7636363636363637,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 44,
+      "rows": 44,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "loc22_bridge_truss_2_east_elevation_bridge_plan_truss_details_chickama": {
+      "microtext_character_error_rate": 0.9791666666666666,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 3,
+      "rows": 3,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "loc22_bridge_truss_5_queenpost_truss_details_morgan_bridge_spanning_no": {
+      "microtext_character_error_rate": 0.8,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 2,
+      "rows": 2,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "loc22_bridge_truss_truss_details_covered_bridge_carlisle_warren_county": {
+      "microtext_character_error_rate": 1.0833333333333333,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 3,
+      "rows": 3,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "loc22_bridge_truss_truss_details_covered_bridge_wickecheoke_creek_serg": {
+      "microtext_character_error_rate": 1.2,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 1,
+      "rows": 1,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "loc22_canal_lock_1_lock_gate_typical_elevation_section_a_a_section_b_b": {
+      "microtext_character_error_rate": 0.8723404255319149,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 3,
+      "rows": 3,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "loc22_canal_lock_2_lock_1_savannah_river_lock_elevation_of_north_wall_": {
+      "microtext_character_error_rate": 0.8888888888888888,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 3,
+      "rows": 3,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "loc22_steam_engine_1_16_engine_room_piping_diagram_steam_schooner_wapa": {
+      "microtext_character_error_rate": 0.8863636363636364,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 3,
+      "rows": 3,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "loc22_steam_engine_1_steam_engine_maquina_de_vapor_hacienda_azucarera_": {
+      "microtext_character_error_rate": 0.8421052631578947,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 3,
+      "rows": 3,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "loc22_steam_engine_engine_north_elevation_north_east_elevation_estate_": {
+      "microtext_character_error_rate": 1.2105263157894737,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 3,
+      "rows": 3,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "loc22_turbine_1_site_plan_mill_room_turbine_room_plans_north_elevation": {
+      "microtext_character_error_rate": 1.15,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 3,
+      "rows": 3,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "loc22_turbine_3_plan_turbines_3_4_side_view_turbines_3_4_section_a_a_a": {
+      "microtext_character_error_rate": 1.5714285714285714,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 3,
+      "rows": 3,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "loc22_turbine_7_cotton_flour_mill_section_a_a_section_b_b_plan_view_le": {
+      "microtext_character_error_rate": 0.8888888888888888,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 3,
+      "rows": 3,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "loc22_turbine_machine_location_plan_and_section_turbine_area_reheater_": {
+      "microtext_character_error_rate": 0.967741935483871,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 3,
+      "rows": 3,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "loc22_turbine_machine_location_turbine_area_sections_haddam_neck_nucle": {
+      "microtext_character_error_rate": 0.918918918918919,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 3,
+      "rows": 3,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "loc22_turbine_machine_location_turbine_area_sections_haddam_neck_nucle_2": {
+      "microtext_character_error_rate": 1.1428571428571428,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 3,
+      "rows": 3,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "loc_habs_crystal_palace_saloon": {
+      "microtext_character_error_rate": 1.8846153846153846,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 7,
+      "rows": 7,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "loc_habs_woodlawn_architecture": {
+      "microtext_character_error_rate": 1.1428571428571428,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 39,
+      "rows": 39,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "loc_haer_fort_belvoir_bridge": {
+      "microtext_character_error_rate": 1.6426332288401253,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 73,
+      "rows": 73,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "mechanical_drawing_cornell": {
+      "microtext_character_error_rate": 4.076628352490421,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 152,
+      "rows": 152,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "olimex_esp32_gateway": {
+      "microtext_character_error_rate": 0.0,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 0,
+      "rows": 13,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 13
+    },
+    "olimex_esp32_poe": {
+      "microtext_character_error_rate": 0.0,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 0,
+      "rows": 7,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 7
+    },
+    "sandiego_stormwater_pump_station_guidelines": {
+      "microtext_character_error_rate": 2.3333333333333335,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 6,
+      "rows": 6,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "sparkfun_micromod_artemis": {
+      "microtext_character_error_rate": 0.0,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 0,
+      "rows": 20,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 20
+    },
+    "sparkfun_micromod_artemis_final": {
+      "microtext_character_error_rate": 1.2272727272727273,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 3,
+      "rows": 3,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "sparkfun_micromod_esp32": {
+      "microtext_character_error_rate": 0.0,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 0,
+      "rows": 15,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 15
+    },
+    "sparkfun_micromod_esp32_v11update": {
+      "microtext_character_error_rate": 2.0,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 3,
+      "rows": 3,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 0
+    },
+    "sparkfun_micromod_rp2040": {
+      "microtext_character_error_rate": 0.0,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 0,
+      "rows": 25,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 25
+    },
+    "sparkfun_micromod_samd51": {
+      "microtext_character_error_rate": 0.0,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 0,
+      "rows": 2,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 2
+    },
+    "sparkfun_micromod_teensy": {
+      "microtext_character_error_rate": 0.0,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 0,
+      "rows": 9,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 9
+    },
+    "viola": {
+      "microtext_character_error_rate": 0.0,
+      "microtext_normalized_exact_match": 0.0,
+      "microtext_rows": 0,
+      "rows": 865,
+      "visualdiff_evidence_recall_iou_0_5": 0.0,
+      "visualdiff_old_new_side_hit_rate": 0.0,
+      "visualdiff_rows": 865
+    }
+  },
+  "rows_by_task": {
+    "microtext": 638,
+    "visualdiff": 962
+  },
+  "rows_scored": 1600,
+  "split": "test",
+  "task": "all",
+  "visualdiff": {
+    "change_type_accuracy": 0.0,
+    "evidence_recall_iou_0_3": 0.0,
+    "evidence_recall_iou_0_5": 0.0,
+    "exact_match": 0.0,
+    "normalized_description_f1": 0.03079247866346182,
+    "normalized_exact_match": 0.0,
+    "old_new_side_hit_rate": 0.0,
+    "total": 962
+  }
+}

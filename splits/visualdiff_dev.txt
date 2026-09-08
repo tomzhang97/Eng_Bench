@@ -1,1 +1,6 @@
-vdiff__viola__pcbV1.0__to__pcbV1.1
+# Reviewed 2026-07 return: Aquila stays with the microtext Aquila dev family.
+vdiff__aquila_dev__v1_2__to__v1_3
+vdiff__adafruit_feather_esp32_s2__original__to__rev_c
+vdiff__adafruit_feather_rp2040__original__to__rev_b
+vdiff__adafruit_feather_nrf52840_sense__original__to__rev_c
+vdiff__voron_trident_300_deck__vtr1__to__vtr2

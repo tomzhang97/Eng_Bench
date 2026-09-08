@@ -1,0 +1,58 @@
+{
+  "eng_bench": {
+    "citation": "See DATACARD.md for provisional citation metadata.",
+    "description": "Engineering-document benchmark with visualdiff and microtext tasks.",
+    "features": {
+      "answer": {
+        "dtype": "string"
+      },
+      "evidence": {
+        "sequence": {
+          "dtype": "dict"
+        }
+      },
+      "id": {
+        "dtype": "string"
+      },
+      "images": {
+        "sequence": {
+          "dtype": "string"
+        }
+      },
+      "metadata": {
+        "dtype": "dict"
+      },
+      "question": {
+        "dtype": "string"
+      },
+      "split": {
+        "dtype": "string"
+      },
+      "task": {
+        "dtype": "string"
+      }
+    },
+    "homepage": "not yet released",
+    "license": "mixed public-source candidate; see DATACARD.md and SOURCE_INVENTORY.csv",
+    "source_count": 100,
+    "splits": {
+      "dev": {
+        "name": "dev",
+        "num_examples": 768
+      },
+      "test": {
+        "name": "test",
+        "num_examples": 1230
+      },
+      "train": {
+        "name": "train",
+        "num_examples": 1691
+      }
+    },
+    "task_counts": {
+      "microtext": 2235,
+      "visualdiff": 1454
+    },
+    "version": "0.95-package-clean-candidate"
+  }
+}

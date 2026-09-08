@@ -1,0 +1,66 @@
+[1/5] Generating textlayer_heuristic_microtext_test
+[OK] Microtext rows: 359
+[OK] Predictions: 247
+[WARN] Missing schema rows: 0
+[WARN] Missing textlayer rows: 112
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\textlayer_heuristic_microtext_test_predictions.jsonl
+[1/5] Scoring textlayer_heuristic_microtext_test
+Eng_Bench results for textlayer_heuristic_microtext_test
+Rows scored: 359
+Missing predictions: 112
+Rows by task: {'microtext': 359}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\textlayer_heuristic_microtext_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\textlayer_heuristic_microtext_test_report.md
+[2/5] Generating textlayer_smallest_span_microtext_test
+[OK] Microtext rows: 359
+[OK] Predictions: 247
+[WARN] Missing schema rows: 0
+[WARN] Missing textlayer rows: 112
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\textlayer_smallest_span_microtext_test_predictions.jsonl
+[2/5] Scoring textlayer_smallest_span_microtext_test
+Eng_Bench results for textlayer_smallest_span_microtext_test
+Rows scored: 359
+Missing predictions: 112
+Rows by task: {'microtext': 359}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\textlayer_smallest_span_microtext_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\textlayer_smallest_span_microtext_test_report.md
+[3/5] Generating textlayer_center_span_microtext_test
+[OK] Microtext rows: 359
+[OK] Predictions: 247
+[WARN] Missing schema rows: 0
+[WARN] Missing textlayer rows: 112
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\textlayer_center_span_microtext_test_predictions.jsonl
+[3/5] Scoring textlayer_center_span_microtext_test
+Eng_Bench results for textlayer_center_span_microtext_test
+Rows scored: 359
+Missing predictions: 112
+Rows by task: {'microtext': 359}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\textlayer_center_span_microtext_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\textlayer_center_span_microtext_test_report.md
+[4/5] Generating textlayer_page_frequency_microtext_test
+[OK] Microtext rows: 359
+[OK] Predictions: 247
+[WARN] Missing schema rows: 0
+[WARN] Missing textlayer rows: 112
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\textlayer_page_frequency_microtext_test_predictions.jsonl
+[4/5] Scoring textlayer_page_frequency_microtext_test
+Eng_Bench results for textlayer_page_frequency_microtext_test
+Rows scored: 359
+Missing predictions: 112
+Rows by task: {'microtext': 359}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\textlayer_page_frequency_microtext_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\textlayer_page_frequency_microtext_test_report.md
+[5/5] Generating textlayer_diff_visualdiff_test
+[OK] Visualdiff rows: 871
+[OK] Predictions: 865
+[WARN] Missing schema rows: 6
+[WARN] Missing textlayer rows: 0
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\textlayer_diff_visualdiff_test_predictions.jsonl
+[5/5] Scoring textlayer_diff_visualdiff_test
+Eng_Bench results for textlayer_diff_visualdiff_test
+Rows scored: 871
+Missing predictions: 6
+Rows by task: {'visualdiff': 871}
+Wrote JSON report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\textlayer_diff_visualdiff_test_report.json
+Wrote Markdown report: C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\textlayer_diff_visualdiff_test_report.md
+[OK] Wrote C:\Users\Tom\Desktop\tracerag\Eng_Bench\results\baselines\baseline_regeneration_textlayer_2026-07-31.json

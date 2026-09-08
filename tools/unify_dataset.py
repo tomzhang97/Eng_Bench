@@ -17,9 +17,70 @@ Output Schema:
     "metadata": dict     # Task-specific metadata
 }
 """
+import argparse
 import json
 import os
 from pathlib import Path
+
+
+def relpath(path: Path, root: Path) -> str:
+    """Return a POSIX-style path relative to the benchmark root."""
+    return path.relative_to(root).as_posix()
+
+
+def canonical_image_relpath(doc_id, version_id, page_index) -> str:
+    """Canonical public image path for a document page."""
+    clean_doc = str(doc_id or "")
+    clean_version = str(version_id or "unknown")
+    page_idx = int(page_index or 0)
+    return f"images/{clean_doc}__{clean_version}/page_{page_idx:04d}.png"
+
+
+def image_candidates(root: Path, doc_id, version_id, page_index) -> list[Path]:
+    """Candidate page-image locations in preferred public-to-derived order."""
+    page_idx = int(page_index or 0)
+    clean_doc = str(doc_id or "")
+    candidates = [root / canonical_image_relpath(clean_doc, version_id, page_idx)]
+    derived_dir = root / "derived" / "pages_300dpi" / clean_doc
+    candidates.extend(
+        [
+            derived_dir / f"page_{page_idx:04d}.png",
+            derived_dir / f"page_{page_idx:03d}.png",
+            derived_dir / f"p{page_idx:04d}.png",
+        ]
+    )
+    return candidates
+
+
+def resolve_image_path(root: Path, doc_id, version_id, page_index) -> str:
+    """
+    Resolve a page image to an existing path when possible.
+
+    The canonical image path remains preferred, but derived render locations are
+    accepted as a fallback so packaging gaps are visible and testable before
+    finalization copies them into images/.
+    """
+    candidates = image_candidates(root, doc_id, version_id, page_index)
+    for candidate in candidates:
+        if candidate.exists():
+            return relpath(candidate, root)
+    return relpath(candidates[0], root)
+
+
+def resolve_recorded_image_path(root: Path, recorded_path) -> str | None:
+    """Return an existing explicit row image path relative to the benchmark root."""
+    value = str(recorded_path or "").strip()
+    if not value:
+        return None
+    candidate = Path(value)
+    full_path = candidate if candidate.is_absolute() else root / candidate
+    if not full_path.exists():
+        return None
+    try:
+        return relpath(full_path.resolve(), root.resolve())
+    except ValueError:
+        return full_path.as_posix()
+
 
 def load_jsonl(path):
     """Load JSONL file."""
@@ -31,10 +92,18 @@ def load_jsonl(path):
                     items.append(json.loads(line))
     return items
 
-def process_visualdiff(root):
+
+def write_jsonl(path, rows):
+    """Write canonical JSONL matching the reviewed-promotion transaction."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8", newline="\n") as f:
+        for row in rows:
+            f.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
+
+def process_visualdiff(root, pairs_path=None, questions_path=None):
     """Process visualdiff pairs and questions into unified format."""
-    pairs_path = root / "visualdiff" / "annotations" / "visualdiff_pairs.jsonl"
-    questions_path = root / "visualdiff" / "annotations" / "visualdiff_questions.jsonl"
+    pairs_path = pairs_path or root / "visualdiff" / "annotations" / "visualdiff_pairs.jsonl"
+    questions_path = questions_path or root / "visualdiff" / "annotations" / "visualdiff_questions.jsonl"
     
     pairs = {p["pair_id"]: p for p in load_jsonl(pairs_path)}
     questions = load_jsonl(questions_path)
@@ -44,9 +113,24 @@ def process_visualdiff(root):
         pair = pairs.get(q["pair_id"], {})
         
         # Build image paths
-        page_idx = pair.get("page_index_old", 0)
-        img_old = f"images/{pair.get('doc_id', '')}__{pair.get('version_id_old', '')}/page_{page_idx:04d}.png"
-        img_new = f"images/{pair.get('doc_id', '')}__{pair.get('version_id_new', '')}/page_{page_idx:04d}.png"
+        page_idx_old = pair.get("page_index_old", 0)
+        page_idx_new = pair.get("page_index_new", page_idx_old)
+        img_old = resolve_recorded_image_path(root, pair.get("image_old"))
+        if not img_old:
+            img_old = resolve_image_path(
+                root,
+                pair.get("doc_id", ""),
+                pair.get("version_id_old", ""),
+                page_idx_old,
+            )
+        img_new = resolve_recorded_image_path(root, pair.get("image_new"))
+        if not img_new:
+            img_new = resolve_image_path(
+                root,
+                pair.get("doc_id", ""),
+                pair.get("version_id_new", ""),
+                page_idx_new,
+            )
         
         # Build evidence
         evidence = []
@@ -72,10 +156,10 @@ def process_visualdiff(root):
     
     return unified
 
-def process_microtext(root):
+def process_microtext(root, items_path=None, questions_path=None):
     """Process microtext items and questions into unified format."""
-    items_path = root / "microtext" / "annotations" / "microtext_items.jsonl"
-    questions_path = root / "microtext" / "annotations" / "microtext_questions.jsonl"
+    items_path = items_path or root / "microtext" / "annotations" / "microtext_items.jsonl"
+    questions_path = questions_path or root / "microtext" / "annotations" / "microtext_questions.jsonl"
     
     items = {i["item_id"]: i for i in load_jsonl(items_path)}
     questions = load_jsonl(questions_path)
@@ -86,16 +170,53 @@ def process_microtext(root):
     
     unified = []
     for q in questions:
-        item = items.get(q.get("item_id"), {})
+        item_ids = q.get("item_ids") or []
+        item_id = q.get("item_id") or (item_ids[0] if item_ids else "")
+        item = items.get(item_id, {})
         
         # Build image path
         page_idx = item.get("page_index", 0)
-        img_path = f"images/{item.get('doc_id', '')}__{item.get('version_id', '')}/page_{page_idx:04d}.png"
+        img_path = resolve_image_path(
+            root,
+            item.get("doc_id", ""),
+            item.get("version_id", "unknown"),
+            page_idx,
+        )
         
         # Build evidence
         evidence = []
         if item.get("bbox"):
             evidence.append({"bbox": item["bbox"], "image_index": 0})
+
+        item_metadata = {
+            "item_id": item_id,
+            "item_ids": item_ids or ([item_id] if item_id else []),
+            "doc_id": item.get("doc_id"),
+            "category": item.get("category", ""),
+        }
+        certification_fields = (
+            "review_source",
+            "human_reviewed",
+            "certification_method",
+            "certification_tier",
+            "certification_policy_version",
+            "certification_date",
+            "certification_eligibility_report_sha256",
+            "certification_calibration_attestation_sha256",
+            "machine_certification_evidence_sha256",
+        )
+        has_machine_certification = (
+            item.get("review_source") == "machine_certification_policy"
+            or any(
+                item.get(field) not in (None, "")
+                for field in certification_fields
+                if field not in {"review_source", "human_reviewed"}
+            )
+        )
+        if has_machine_certification:
+            for field in certification_fields:
+                if item.get(field) not in (None, ""):
+                    item_metadata[field] = item[field]
         
         unified.append({
             "id": q.get("question_id", q.get("item_id", "")),
@@ -105,18 +226,28 @@ def process_microtext(root):
             "images": [img_path],
             "evidence": evidence,
             "split": item.get("split", "test"),
-            "metadata": {
-                "item_id": q.get("item_id"),
-                "doc_id": item.get("doc_id"),
-                "category": item.get("category", ""),
-            }
+            "metadata": item_metadata,
         })
     
     return unified
 
-def main():
-    root = Path(".")
-    output_path = root / "eng_bench.jsonl"
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--root", type=Path, default=Path("."))
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=Path("eng_bench.jsonl"),
+        help="Output JSONL path, relative to --root unless absolute.",
+    )
+    return parser.parse_args(argv)
+
+
+def main(argv=None):
+    args = parse_args(argv)
+    root = args.root.resolve()
+    output_path = args.output if args.output.is_absolute() else root / args.output
+    output_path.parent.mkdir(parents=True, exist_ok=True)
     
     print("[*] Processing Visual Diff...")
     vdiff_data = process_visualdiff(root)
@@ -129,18 +260,17 @@ def main():
     all_data = vdiff_data + micro_data
     
     print(f"[*] Writing unified dataset to {output_path}...")
-    with open(output_path, 'w', encoding='utf-8') as f:
-        for item in all_data:
-            f.write(json.dumps(item) + '\n')
+    write_jsonl(output_path, all_data)
     
     # Stats
-    train_count = sum(1 for d in all_data if d["split"] == "train")
-    test_count = sum(1 for d in all_data if d["split"] == "test")
+    split_counts = {}
+    for row in all_data:
+        split_counts[row["split"]] = split_counts.get(row["split"], 0) + 1
     
     print(f"[OK] Unified dataset created:")
     print(f"     Total: {len(all_data)}")
-    print(f"     Train: {train_count}")
-    print(f"     Test:  {test_count}")
+    for split, count in sorted(split_counts.items()):
+        print(f"     {split.title()}: {count}")
     print(f"     Visual Diff: {len(vdiff_data)}")
     print(f"     Microtext:   {len(micro_data)}")
 

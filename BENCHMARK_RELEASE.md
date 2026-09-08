@@ -1,14 +1,162 @@
 # Eng_Bench v0.9 (Silver) Release Notes
 
-**Date:** 2026-01-16
-**Status:** Silver (Automated Seeds + Mock Validation)
-**Total Samples:** 1488 Visual-Diff Pairs, 57 Microtext Items
-**License:** [CC-BY-4.0](DATACARD.md)
+**Date:** 2026-09-03
+**Status:** v0.9 Silver lineage, working dataset; not a publishable Gold v2.0 Global release
+**Current Active Samples:** 1574 Visual-Diff Questions, 2986 Microtext Questions (4560 total)
+**License:** Mixed public-source candidate; see [DATACARD.md](DATACARD.md) and `SOURCE_INVENTORY.csv`
 
-## 1. Overview
+## Current Verified Checkpoint
+
+Gold v2.0 Global remains **5/9 gates PASS**. Row scale (4560/25000 minimum),
+test scale (1613/5000), formal agreement (0/185), and complete source provenance
+(201/210 paper-ready documents) remain OPEN. Category balance, 92 tentative
+VisualDiff descriptions and 48 unresolved active audit flags also block release.
+Current gate: `results/health/v2_0_gate_audit_2026-09-08-github-sync-preflight.json`.
+
+The existing 1600-row challenge export is a historical freeze, not evidence of
+current release eligibility. New export generation now refuses known unresolved
+test rows. The separate internal view under
+`derived/quality/filtered_evaluation_2026-09-03-wave1990/` retains 614 frozen rows
+(306 public, 308 hidden) after known-hold filtering. It contains 605 MicroText
+and only 9 VisualDiff rows and must not be reported as a balanced Gold benchmark.
+Keep `*_labels_private.jsonl` on the scoring side, never in model inputs. The
+original release and all human votes remain unchanged. See
+`AUDITOR_RETURN_STATUS.md` for current machine work and human actions.
+
+## 1. Overview And Earlier Checkpoints
 Eng_Bench is a benchmark for engineering diagram understanding, focusing on **Visual Diff** (detecting changes between revisions) and **Microtext** (reading dense technical text). See [DATACARD.md](DATACARD.md) for full details. 
 
-This "Silver" release validates the complete end-to-end pipeline, dataset schema, and evaluation infrastructure. Annotations are currently derived from automated seeds (mocked as human labels); the structure is 100% ready for "Gold" human refinement.
+This Silver-lineage working release validates the end-to-end schema, split policy, canonical image packaging, validation tooling, and baseline path. It is not yet a final public Gold v2.0 release: visualdiff includes human/CVAT-reviewed rows plus assisted descriptions with provenance fields, and current microtext rows were promoted after crop-level review. The machine-first target policy permits calibrated machine certification for objective train-only MicroText while preserving human authority for dev/test evaluation truth, unresolved VisualDiff meaning, and semantic or ambiguous rows. Existing human decisions do not require a second reviewer merely for English localization or canonical typing. The Wave620-Wave631 recovery pass promoted 14 such VisualDiff rows after visual reconciliation and an eight-gate hash-pinned atomic transaction, while holding one contradictory row. Wave919-Wave925 recovered and promoted two more completed family decisions through the same evidence-bound localization and atomic promotion lane. Wave926-Wave949 then accounted for all 845 ordinary reviewed rows in the latest primary return and atomically promoted 669 MicroText plus 91 VisualDiff rows; 85 rows remain explicit release holds. Wave950-Wave960 completed the first source-atomic provenance repair: seven blocked `wsdot_drainage_ds2` MicroText dev rows were replaced one-for-one with seven accepted, evidence-distinct rows under a hash-pinned preview and snapshot-backed atomic transaction. The current Wave960 checkpoint has 4,507 rows and passes strict unified validation, split leakage, question leakage, provenance-regression, baseline coverage, and snapshot-backed migration checks. Of 188 active documents, 179 are paper-ready, representing 177 distinct Gold payloads after alias deduplication. Release-safe inventory is 513/150. All 29 counted baselines cover the current 1,600-row test split, and the deterministic challenge package contains 802 public plus 798 hidden inputs. Global row/test scale, nine inherited provenance blockers, MicroText category balance, and independent agreement remain open.
+
+Wave640-Wave659 screened 52 additional VisualDiff candidates into 18 clear,
+machine-described family primaries, 18 dormant same-family backups, and 16
+reserve rows. This reduces the immediate family-gate confirmation task from 36
+rows to 18 without treating machine proposals as Gold.
+
+Wave919-Wave925 reconciled those 18 primaries against current human work: two
+completed decisions were evidence-localized and promoted, ten remain in the
+current primary assignment, and six genuinely unassigned families were placed
+in a compact engineering-confirmation packet. Active family breadth is now
+14/30 at that checkpoint; later reviewed promotions raised current active
+family breadth to 33/30 without admitting any unreviewed row.
+
+Wave926-Wave949 recovered 845 completed ordinary review rows from the latest
+primary controller, partitioned them through contract and duplicate gates, and
+promoted 760. The remaining 85 are explicit holds: 13 duplicate-QA MicroText
+rows, 60 VisualDiff rows needing change-type resolution, nine missing-split
+rows, two active overlaps, and one historical conflict. The current formal
+Gold v2.0 Global audit passes 5/9 gates: source payload breadth, release-safe
+inventory, VisualDiff family breadth, baselines, and leaderboard
+infrastructure. Total rows, test scale, agreement, and complete active-source
+provenance remain open.
+
+Wave950-Wave960 retired the first complete inherited provenance blocker without
+changing release scale. Seven accepted MicroText dev replacements were swapped
+for seven `wsdot_drainage_ds2` rows after a 14-gate read-only preview, hash-
+pinned dry run, full active-file snapshot, and atomic apply. Active provenance
+improved from 178/188 to 179/188 paper-ready documents; nine blockers remain.
+The frozen fallback contract changes seven dimensions to seven pins, so this
+is provenance progress rather than MicroText-balance progress.
+
+Wave663-Wave681 extend the machine-first balance path without changing active
+Gold. A balanced closure overlay now stages 614 rows across 153 documents and
+would close every MicroText category floor at full acceptance. At the 65%
+stress floor, only `pipe_line_tag` (9 rows short; 13 more candidates needed)
+and `process_value` (4 rows short; 6 more candidates needed) remain open. The
+official NASA TULIP cryogenic source added 69 visually checked, train-reserved
+rows after reducing 492 OCR regions to 69; all remain human-required because
+the source is raster-derived and most labels are semantic.
+
+Waves684-Wave702 close that modeled balance gap without changing active Gold.
+Two additional official NASA NTRS P&ID sources produced 358 raw OCR proposals;
+full machine review of eight contact sheets held 290 and retained 68 readable
+regions. The current balanced overlay now stages 633 rows from 155 documents:
+104 dimensions, 67 equipment tags, 220 instrument tags, 94 pipe-line tags,
+104 process values, and 44 tolerances. Every category floor now closes even at
+the 65% modeled acceptance rate. The final 68-row NASA packet passes identity,
+evidence, image, workbook, Gold-collision, and physical-region checks, but all
+rows remain train-reserved and human-required under the fail-closed semantic
+and raster-extraction policy. Review rows 1-50 are the category-closure
+priority; rows 51-68 are visibly deferred reserve and need no current action.
+
+The frozen 300-row non-pin calibration has now received a complete 300/300
+machine visual second opinion with no observed mismatch. This is a reviewer
+aid, not release authority: one independent person must still confirm the
+sample. A passing return would authorize the existing 1,149-row deterministic
+non-pin lane to proceed to strict promotion preview and would avoid 849
+additional row-by-row checks. No unreviewed row was promoted.
+
+Waves720-Wave723 supersede the first Wave708/Wave718 rights-replacement pass,
+and Waves840-Wave844 minimize its review churn against the complete issued
+contract.
+The human-assignment justification audit exposed ten preferred candidates that
+had already been promoted into active Gold. The planner and independent
+readiness audit now reject underlying active pair/item identities. The rebuilt
+contract rejects 14 active identities, retains 1,427 issued rows, retires the
+ten promoted rows, and selects exactly ten fresh substitutes while preserving
+all 1,437 affected rows, 1,437 unique evidence fingerprints, and zero
+task/split gap. The default return controller now uses this minimal-churn
+contract and recognizes 399 completed replacement decisions with 1,038 still
+outstanding. The live preview verifies 1,437/1,437 reservations, zero uncovered
+rows, and unchanged active hashes; it remains fail-closed until all reviews are
+complete. Wave723 also justifies all 21,771 remaining human-owned benchmark
+rows with zero unexplained assignments. Wave712 formalizes the
+maximum-machine-responsibility rule and verifies 8,976 machine-owned row
+decisions.
+
+Waves726-Wave753 correct the capacity model and exhaust the current local
+non-pin source reservoir without changing active Gold. Complete-history
+calibration verifies 692/692 historical pin-label decisions, with a 95%
+one-sided lower bound of 0.9957, so that category qualifies for the calibrated
+machine lane. Other non-pin categories remain below the required calibration
+sample size. The materialized responsibility ledger contains 3,603 current and
+18,168 future human-owned rows, but 1,437 are provenance replacements rather
+than additive growth. Corrected all-accepted active-plus-net capacity is
+therefore 24,079 rows, 921 below the 25,000-row floor. Maintaining the planned
+45% maximum pin share requires 5,482 additional canonical non-pin rows.
+
+Reservation-safe audits removed frozen machine cohorts and near-region repeats
+from the apparent unstaged reservoir. Re-mining the remaining 46 eligible
+local sources produced no new non-pin capacity, and the final two raster PCB
+sources produced 153 physically new pin labels that are deferred for balance.
+The Wave748 plan consequently has zero eligible local balance sources. The
+next machine-side expansion must acquire and convert new rights-clean,
+non-pin-rich P&ID, process, mechanical, and civil sheets. Re-running the same
+local OCR and text-layer reservoirs is recorded as exhausted and must not be
+counted as progress.
+
+Waves754-Wave770 begin that external expansion with five official NASA NTRS
+process and flow-diagram sources. Eleven high-yield pages produced 1,066 OCR
+candidates. Machine pattern and visual review removed 841 row decisions and
+corrected 41 retained proposals, leaving 225 semantic confirmations. The
+standalone packet has 225 unique crops, ten full-page contexts, HTML browsing,
+CSV and validated XLSX checklists, Chinese instructions, zero Gold collisions,
+and zero missing or invalid images. This is a 78.8931% reduction in row-by-row
+human work. The new sources increase release-safe inventory to 493 unique
+documents, but the staged rows do not count as Gold until human confirmation
+and strict promotion.
+
+Waves771-Wave787 continue the same machine-first rule with five additional
+official NASA NTRS facility and engine-flow sources. Six selected pages yielded
+278 merged OCR candidates. Pattern filtering held 228 rows, full visual QA held
+17 more, and the machine corrected 13 retained proposals. Only 33 semantic
+confirmations remain, an 88.1295% reduction in row-by-row human work. Their
+verified workbook and evidence pack contain 33 unique physical regions, five
+full-page contexts, zero Gold collisions, zero missing images, source-level
+split reservations, and a zero-fatal promotion preflight. Release-safe
+inventory reaches 498 unique documents and the responsibility ledger reaches
+10,062 machine-owned row decisions; active Gold remains unchanged.
+
+Waves788-Wave807 add five more official NASA NTRS engineering sources and
+apply the maximum-responsibility policy end to end. The machine merged 1,111
+raw candidates, held 926 by repeatable filtering and 48 by full visual review,
+corrected 34 retained proposals, and left 137 structurally usable rows. Two
+objective train rows are isolated for independent calibration; the remaining
+135 semantic or evaluation-split judgments are in a self-contained review
+pack. This removes 976 immediate row decisions, an 87.8488% reduction, without
+promoting an unreviewed row. Release-safe inventory reaches 503 unique source
+documents and the cumulative responsibility ledger reaches 11,038 machine-
+owned row decisions.
 
 ## 2. Directory Structure
 The dataset is self-contained in the `Eng_Bench` root:
@@ -60,49 +208,79 @@ with open(os.path.join(ROOT, "visualdiff/annotations/visualdiff_pairs.jsonl"), "
 ### Splits
 To prevent data leakage, we strictly separate by **Document Family**:
 *   **Train**: `bbb` (BeagleBone Black Schematics). Same model, different revisions.
-*   **Test**: `viola` (Toradex Viola Datasheets). Completely different board and diagram style.
-*   **Split File Format**: Simple list of `pair_id`s.
+*   **Dev**: `viola` V1.0 to V1.1 (Toradex Viola Datasheets).
+*   **Test**: `viola` V1.1 to V1.2 plus the held-out ESP32-C5 pin-layout revision family.
+*   **Split File Format**: Simple list of visualdiff revision-family IDs or microtext document IDs.
+
+Microtext has a frozen document- and family-disjoint split assignment: train 1,460 rows, dev 848 rows, and test 638 rows. The earlier ISO tolerance seed slice remains outside active gold pending source-rights review. The split is leakage-clean, but train/dev remain pin-label heavy and full P&ID/process-sheet coverage is still low-volume.
 
 ## 4. Statistics (v0.9 Silver)
 
 | Dataset Content | Count | Source |
 | :--- | :--- | :--- |
-| **Visual-Diff Pairs** | **1488** | `05_seed_diff` + `07_cvat` + `manual_v1.1_v1.2` |
-| - Train (BBB) | 526 | Schematics |
-| - Test (Viola) | 962 | Datasheets |
-| **Microtext Items** | **57** | `08_seed` + `09_build` |
+| **Visual-Diff Pairs** | **1561** | Human/CVAT-reviewed rows, assisted descriptions with audit metadata, and recovered human-semantic rows; invalid and human-polish failures remain quarantined |
+| - Train | 551 | PCB schematic and engineering revision families |
+| - Dev | 48 | Held-out revision families |
+| - Test | 962 | Held-out revision families |
+| **Microtext Items** | **2946** | Reviewed set from text-layer candidates, image-region proposals, SVG extraction, and crop-level review |
+| - Train | 1460 | PCB, architectural/civil, mechanical, and process-sheet sources |
+| - Dev | 848 | Document- and family-disjoint engineering sources |
+| - Test | 638 | Held-out document families across multiple engineering domains |
 
 ## 5. From Silver to Gold
 To upgrade this dataset to v1.0 (Gold):
-1.  **Import to CVAT**: Upload the images and `seeds` to CVAT (Task 6 in `next_steps.md`).
-2.  **Human Annotation**: Correct the `change_desc`, refine `bbox`, and assign correct attributes.
-3.  **Export**: Export "COCO 1.0" from CVAT.
-4.  **Convert**: Run `07_cvat_coco_to_engbench_jsonl.py` pointing to the real export.
+1.  **Continue Visualdiff Gold Expansion**: Release-critical dev/test pending-description rows are cleared, and the 98-row human polish pack has been adjudicated. Four low-confidence rows were retained as usable, while 77 no-change rows and 17 bbox-mismatch rows were quarantined. The remaining visualdiff polish debt is 125 train-only pending descriptions. For family breadth, confirm the 18 Wave659 primaries first; their machine-written descriptions cover 18 distinct missing families and reach the 30-family upper bound if accepted. Review a bound backup only when its primary is rejected.
+2.  **Source-rights cleanup**: Migrate the nine remaining rights-blocked active documents to reviewed one-for-one replacements. Wave956 retired `wsdot_drainage_ds2` only after its complete seven-row source-atomic contract passed human review and every migration gate. Rebuild the remaining replacement controller against the current active hash before issuing or applying another slice; never retire a source until all of its exact replacement rows are complete and the atomic preview passes.
+3.  **Balance microtext beyond the freeze**: The 2,946-row active microtext set is split-clean and includes non-PCB and P&ID/process rows. Current counts are pin-heavy at 1,741/2,946 (59.10%), with eight category floors open. Wave691 provides a review overlay intended to close category floors, but rows still require certification and strict promotion before they count. Final public Gold also needs substantially more full-sheet and test coverage.
+4.  **Baseline and package**: Twenty-nine counted baseline reports exist, and all 1,600 current test rows meet the diagnostic coverage floor: microtext rows have 20 predictions and visualdiff rows have 24. Rerun affected artifacts after every Gold migration and all artifacts after every test-set promotion.
+5.  **Machine-first certification and recovery**: Apply `docs/MACHINE_CERTIFICATION_POLICY.md` to deterministic train MicroText. The current Wave482 cohort has 8,247 objective rows; 7,098 pin labels already satisfy historical zero-error calibration, while 1,149 non-pin rows need one 300-row calibration. The policy projects 7,947 avoided row-by-row checks. Reuse prior human VisualDiff semantics through the evidence-bound localization/reconciliation lane before assigning repeat review. Keep dev/test evaluation truth, unresolved VisualDiff meaning, semantic engineering tags, and all policy exceptions human-gated.
 
 The resulting JSONL files will be drop-in replacements for these Silver files.
 
-## 6. Usage (v1.0 Gold)
+## 6. Known Release Blockers
+
+The v0.95 package remains schema- and image-clean, but this does not imply Gold v2.0 release readiness. The latest formal Gold audit passes 5/9 gates and records nine active rights blockers. Gold remains blocked until the following are resolved:
+
+* The 98 low-confidence dev/test visualdiff rows have been adjudicated; 94 were quarantined and 4 were retained.
+* 125 train-only visualdiff pending descriptions remain in the BBB family.
+* Global scale is still short: 4,507 active rows, 1,561 visualdiff rows, 1,600 test rows, and 177 distinct paper-ready active source payloads. The three latest NASA tranches add review-only non-pin confirmations, but receive no Gold gate credit before required human semantics and strict promotion. The newest 61-row tranche is split-reserved as 14 dev and 47 test rows, has passed machine visual, evidence, payload, and global-cohort checks, and is packaged for primary engineering review in `Eng_Bench_Wave915_NASA_Primary_Microtext_61_2026-08-29.zip`.
+* Revision-family breadth is now 33/30 for Gold v2.0 Global and passes. Remaining VisualDiff work is for scale, agreement, and row quality rather than this breadth gate.
+* Independent agreement is 0/185 release-usable. The legacy sample has 148 rights-blocked rows, Reviewer A has 146 schema-complete decisions, and Reviewer B has 0. The 2026-08-28 independent-auditor delivery contains 288 quality-control decisions across 12 reviewers, but these do not count toward the formal 185-row agreement gate until paired with release-ready primary truth and the agreement sample contract. Current release-ready dev/test capacity supports 555 MicroText rows but only 6 VisualDiff rows against the required 95/90 agreement design. Regenerate the final two-reviewer sample only after provenance migration closes the 84-row VisualDiff capacity gap.
+* Microtext category coverage is still pin-label heavy; more full P&ID/process-sheet rows are needed before per-split category metrics are stable.
+* The v2.0 baseline-count gate passes with 29 counted reports, but external submissions remain desirable adoption evidence.
+* Public release packaging still needs final license language, citation metadata, and leaderboard/paper links.
+
+The latest formal report is
+`derived/quality/v2_0_gate_audit_2026-08-29-wave960-post-wsdot-ds2-migration.md`.
+It passes 5/9 Gold v2.0 Global gates: distinct paper-ready Gold payloads
+177/150, release-safe inventory 513/150, VisualDiff families 33/30,
+baselines/submissions 29/20, and leaderboard infrastructure 7/7. Total rows
+4,507/25,000, test rows 1,600/5,000, agreement 0/185, and complete provenance
+179/188 remain open.
+
+## 7. Usage (v0.9 Silver Candidate)
 
 ### Installation
 
 ```bash
 pip install -r requirements.txt
+pip install -e . --no-deps
 ```
 
 ### Loading Data (Python)
 
-We provide a simple loader that returns HuggingFace `Dataset` objects:
+We provide a simple loader that returns unified row dictionaries with resolved image paths:
 
 ```python
-from eng_bench import load_eng_bench
+from engbench import load_eng_bench
 
 # Load Visual Diff Test Set
-ds = load_eng_bench("visualdiff", split="test")
+rows = load_eng_bench(root=".", task="visualdiff", split="test", verify_images=True)
 
 # Access Data
-item = ds[0]
-print(f"Question: {item['query_text']}")
-print(f"Image: {item['image_new']}") # PIL Image
+item = rows[0]
+print(f"Question: {item['question']}")
+print(f"Images: {item['resolved_images']}")
 ```
 
 ### Running Evaluation
@@ -110,5 +288,59 @@ print(f"Image: {item['image_new']}") # PIL Image
 Use the `benchmark_runner.py` tool to evaluate your predictions:
 
 ```bash
-python tools/benchmark_runner.py --gt ground_truth.jsonl --pred predictions.jsonl --task visualdiff
+python tools/benchmark_runner.py --gt eng_bench.jsonl --pred predictions.jsonl --task visualdiff
 ```
+
+From the parent TraceRAG checkout, the same scoring path is also exposed through
+the module CLI:
+
+```bash
+python -m tracerag.cli.main eval \
+  --dataset Eng_Bench/eng_bench.jsonl \
+  --predictions Eng_Bench/results/baselines/tile_zncc_diff_visualdiff_test_predictions.jsonl \
+  --task visualdiff \
+  --split test \
+  --model-name tile_zncc_diff_visualdiff_test \
+  --report-json Eng_Bench/results/smoke/tracerag_cli_tile_zncc_visualdiff_test_report.json \
+  --report-md Eng_Bench/results/smoke/tracerag_cli_tile_zncc_visualdiff_test_report.md
+```
+
+## 8. Current Gold v2.0 Global Checkpoint (2026-09-08)
+
+The current verified release state is 5/9 formal gates PASS. Active Gold remains
+4,560 rows, including 1,613 test rows. Distinct paper-ready source payloads
+(199/150), release-safe inventory (552/150), VisualDiff families (43/30), counted
+baselines (29/20), and leaderboard infrastructure (7/7) pass. Total scale
+(4,560/25,000), test scale (1,613/5,000), formal agreement (0/185), and complete
+provenance (201/210) remain open.
+
+The 12-auditor history now contains 528 validated quality-control observations
+and 49 unresolved active-Gold flags. A new paired active-Gold recheck assigns
+144 previously unaudited identities to two independent reviewers each (288
+answers total), balanced across both tasks and all three splits. It is quality
+control only: no answer automatically promotes, removes, or rewrites Gold, and
+it does not substitute for the separate formal 185-row agreement contract.
+
+Latest gate report:
+`results/health/v2_0_gate_audit_2026-09-08-github-sync-preflight.md`.
+
+## 9. Current Gold v2.0 Global Checkpoint (2026-09-08)
+
+The latest verified checkpoint is **5/9 formal gates PASS**. Active Gold now
+contains 4,560 rows after 14 reviewed, independently supported rows passed
+exact-image QA, strict preview, snapshots, atomic application, provenance,
+deduplication, leakage, and strict validation. No unreviewed row was promoted.
+
+PASS: 199/150 paper-ready active payloads, 552/150 release-safe inventory
+documents, 43/30 VisualDiff revision families, 29/20 baselines, and 7/7
+leaderboard infrastructure. OPEN: 4,560/25,000 active rows, 1,600/5,000 frozen
+test examples, 0/185 formal agreement, and 201/210 paper-ready active source
+documents. The nine blocked documents have complete local/hash provenance but
+lack explicit redistribution-license evidence.
+
+Known release constraints remain 49 unresolved active-audit flags, 92 tentative
+VisualDiff descriptions, and MicroText category imbalance. The 614-row filtered
+view under `derived/quality/filtered_evaluation_2026-09-08-wave2047-current/`
+is suitable only for internal TraceRAG diagnostics; it is not a Gold release or
+an unbiased benchmark. The authoritative gate report is
+`derived/quality/v2_0_gate_audit_2026-09-08-wave2050-machine-side-refresh.md`.

@@ -32,6 +32,11 @@ Add these attributes to each annotation for better analysis:
 - `titleblock` - Title block/metadata change
 - `unknown` - Unclear
 
+Use `layout` only for a real object-level position change: a label, symbol,
+wire, component, table cell, or other drawing element moved relative to nearby
+content. Do not use `layout` for identical old/new crops or for whole-crop/page
+alignment jitter; those are false positives to reject or re-crop.
+
 ### severity
 - `low` - Minor cosmetic change
 - `medium` - Moderate functional change
