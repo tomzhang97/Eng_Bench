@@ -8,11 +8,11 @@ from pathlib import Path
 try:
     from . import audit_active_gold_provenance as provenance
     from .reconcile_auditor_active_links import release_constraint
-    from .visualdiff_description_finality import tentative_description_details
+    from .visualdiff_description_finality import description_release_issue
 except ImportError:
     import audit_active_gold_provenance as provenance
     from reconcile_auditor_active_links import release_constraint
-    from visualdiff_description_finality import tentative_description_details
+    from visualdiff_description_finality import description_release_issue
 
 
 def unique_index(rows: list[dict], key: str) -> dict[str, dict]:
@@ -61,8 +61,18 @@ def classify_rows(rows: list[dict], active: list[dict], items: list[dict], pairs
         reasons = []
         if (task, identity) in held:
             reasons.append("unresolved_independent_audit")
-        if task == "visualdiff" and tentative_description_details(str(row.get("answer") or "")):
-            reasons.append("tentative_visualdiff_description")
+        if task == "visualdiff":
+            description_issue = description_release_issue(annotation)
+            if description_issue:
+                reason = description_issue["reason"]
+                reasons.append({
+                    "tentative_generator_template": "tentative_visualdiff_description",
+                    "blank": "missing_visualdiff_description",
+                    "placeholder": "placeholder_visualdiff_description",
+                    "non_english": "visualdiff_description_requires_english_localization",
+                    "unvalidated_machine_visual": "unvalidated_machine_visual_description",
+                    "generic_machine_description": "generic_machine_visual_description",
+                }[reason])
         unready = sorted(str(doc) for doc in doc_ids if doc not in ready_docs)
         if resolve_error or (task, identity) in unresolved or unready:
             reasons.append("source_provenance_not_paper_ready")

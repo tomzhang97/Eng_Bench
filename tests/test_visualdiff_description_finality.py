@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from tools.visualdiff_description_finality import (
+    description_release_issue, machine_known_description_issue,
     tentative_description_details, visualdiff_description_finality,
 )
 from tools.audit_visualdiff_description_finality import ACTIVE_PATHS, box, build_audit, probe_target, triage
@@ -39,6 +40,44 @@ class DescriptionFinalityTest(unittest.TestCase):
         self.assertFalse(result["passes"])
         self.assertEqual(1, result["current"])
         self.assertEqual({"test": 1}, result["by_split"])
+
+    def test_release_finality_counts_objective_description_debt(self):
+        rows = [
+            {"pair_id": "todo", "split": "train", "change_desc_gt": "CHANGE_DESC_GT_TODO"},
+            {"pair_id": "cjk", "split": "test", "change_desc_gt": "红框内文字被删除。", "desc_source": "human"},
+            {
+                "pair_id": "machine",
+                "split": "test",
+                "change_desc_gt": "Highlighted graphic/symbol appearance changed from A to B.",
+                "desc_source": "codex_assisted_visual_review",
+            },
+            {
+                "pair_id": "human",
+                "split": "test",
+                "change_desc_gt": "Highlighted graphic/symbol appearance changed subtly from A to B.",
+                "desc_source": "human_validated_codex_assisted",
+            },
+        ]
+        result = visualdiff_description_finality(rows)
+        self.assertEqual(1, result["current"])
+        self.assertEqual(3, result["nonfinal_rows"])
+        self.assertEqual(3, result["machine_known_nonrelease_rows"])
+        self.assertEqual(
+            {"non_english": 1, "placeholder": 1, "unvalidated_machine_visual": 1},
+            result["by_reason"],
+        )
+        self.assertIsNone(description_release_issue(rows[-1]))
+
+    def test_text_only_machine_debt_classifier_is_fail_closed(self):
+        self.assertEqual("blank", machine_known_description_issue(""))
+        self.assertEqual("placeholder", machine_known_description_issue("TODO"))
+        self.assertEqual("non_english", machine_known_description_issue("工程标签被删除。"))
+        self.assertEqual(
+            "generic_machine_description",
+            machine_known_description_issue(
+                "Highlighted graphic/symbol appearance changed from A to B."
+            ),
+        )
 
     def test_direct_merge_rejects_accepted_tentative_description(self):
         result, errors = normalize_reviewed_pair({

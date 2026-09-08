@@ -95,6 +95,14 @@ class PreparePairedActiveGoldAuditorRoundTests(unittest.TestCase):
             },
             {
                 "task": "visualdiff",
+                "record_id": "vd_generic_graphic",
+                "change_description": (
+                    "Highlighted graphic/symbol appearance changed from rev A to rev B."
+                ),
+                "desc_source": "codex_assisted_visual_review",
+            },
+            {
+                "task": "visualdiff",
                 "record_id": "vd_non_english",
                 "change_description": "NEW 相比 OLD 删除了工程标签。",
             },
@@ -110,9 +118,17 @@ class PreparePairedActiveGoldAuditorRoundTests(unittest.TestCase):
             },
         ]
         ids, reasons = active.machine_known_nonrelease_visualdiff(rows)
-        self.assertEqual({"vd_todo", "vd_generic", "vd_non_english"}, ids)
         self.assertEqual(
-            {"generic_highlight": 1, "non_english": 1, "placeholder": 1},
+            {"vd_todo", "vd_generic", "vd_generic_graphic", "vd_non_english"},
+            ids,
+        )
+        self.assertEqual(
+            {
+                "generic_machine_description": 1,
+                "non_english": 1,
+                "placeholder": 1,
+                "unvalidated_machine_visual": 1,
+            },
             dict(reasons),
         )
         self.assertIsNone(

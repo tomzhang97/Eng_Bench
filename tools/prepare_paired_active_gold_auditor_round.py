@@ -11,7 +11,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
@@ -36,17 +35,6 @@ STRATA = tuple(
 )
 ROWS_PER_STRATUM = UNIQUE_ROWS // len(STRATA)
 DEFAULT_ROUND_NAME = "paired_active_gold_recheck_2026_09_07"
-PLACEHOLDER_DESCRIPTIONS = {
-    "CHANGE_DESC_GT_TODO",
-    "CHANGE_DESC_TODO",
-    "TODO",
-    "TBD",
-}
-GENERIC_HIGHLIGHT_DESCRIPTION = re.compile(
-    r"Highlighted visual content changed(?: near .+)? from .+ to .+\.",
-    re.DOTALL,
-)
-CJK_CHARACTER = re.compile(r"[\u3400-\u4dbf\u4e00-\u9fff]")
 
 
 def active_hashes(root: Path) -> dict[str, str]:
@@ -101,6 +89,13 @@ def annotation_aliases(root: Path) -> dict[str, set[str]]:
 
 def benchmark_rows(root: Path) -> list[dict[str, Any]]:
     aliases = annotation_aliases(root)
+    visual_pairs = {
+        str(row.get("pair_id") or "").strip(): row
+        for row in fresh.read_jsonl(
+            root / "visualdiff/annotations/visualdiff_pairs.jsonl"
+        )
+        if str(row.get("pair_id") or "").strip()
+    }
     rows: list[dict[str, Any]] = []
     seen: set[str] = set()
     for primary_index, unified in enumerate(
@@ -114,6 +109,7 @@ def benchmark_rows(root: Path) -> list[dict[str, Any]]:
         if task not in {"microtext", "visualdiff"} or not identity or identity in seen:
             continue
         seen.add(identity)
+        visual_pair = visual_pairs.get(identity, {}) if task == "visualdiff" else {}
         rows.append(
             {
                 "task": task,
@@ -129,6 +125,7 @@ def benchmark_rows(root: Path) -> list[dict[str, Any]]:
                 "corrected_category": str(metadata.get("category") or "").strip(),
                 "corrected_text": str(unified.get("answer") or "") if task == "microtext" else "",
                 "change_description": str(unified.get("answer") or "") if task == "visualdiff" else "",
+                "desc_source": str(visual_pair.get("desc_source") or ""),
                 "machine_suggestion": (
                     f"{unified.get('answer') or ''}\n类别：{metadata.get('category') or ''}"
                     if task == "microtext"
@@ -160,16 +157,7 @@ def tentative_visualdiff_ids(rows: list[dict[str, Any]]) -> set[str]:
 
 def machine_known_description_issue(description: str) -> str | None:
     """Return debts that are already machine-provable and need no audit vote."""
-    text = description.strip()
-    if not text:
-        return "blank"
-    if text.upper() in PLACEHOLDER_DESCRIPTIONS:
-        return "placeholder"
-    if GENERIC_HIGHLIGHT_DESCRIPTION.fullmatch(text):
-        return "generic_highlight"
-    if CJK_CHARACTER.search(text):
-        return "non_english"
-    return None
+    return finality.machine_known_description_issue(description)
 
 
 def machine_known_nonrelease_visualdiff(
@@ -180,8 +168,9 @@ def machine_known_nonrelease_visualdiff(
     for row in rows:
         if row.get("task") != "visualdiff":
             continue
-        issue = machine_known_description_issue(
-            str(row.get("change_description") or "")
+        issue = finality.machine_known_description_issue(
+            str(row.get("change_description") or ""),
+            desc_source=str(row.get("desc_source") or ""),
         )
         identity = str(row.get("record_id") or "").strip()
         if issue and identity:

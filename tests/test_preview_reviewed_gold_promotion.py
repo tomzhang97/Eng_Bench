@@ -272,6 +272,32 @@ class ReviewedGoldPromotionPreviewTest(unittest.TestCase):
         self.assertEqual(1, report["hold_reasons"]["tentative_visualdiff_description"])
         self.assertEqual(0, report["counts"]["prepared_visualdiff_rows"])
 
+    def test_generic_machine_visualdiff_description_is_held(self) -> None:
+        root, temp, plan = self.build_root()
+        self.addCleanup(temp.cleanup)
+        reviewed = root / "visual_reviewed.jsonl"
+        write_jsonl(reviewed, [{
+            "pair_id": "vdiff__visual_fixture__v1__to__v2__p0000__000",
+            "project_id": "vdiff__visual_fixture__v1__to__v2",
+            "page_index_old": 0, "page_index_new": 0,
+            "bbox_old": [1, 2, 30, 40], "bbox_new": [1, 2, 30, 40],
+            "image_old": "derived/pages_300dpi/visual_old/page_000.png",
+            "image_new": "derived/pages_300dpi/visual_new/page_000.png",
+            "change_type": "symbol", "human_review_status": "accepted",
+            "human_description": (
+                "Highlighted graphic/symbol appearance changed from v1 to v2."
+            ),
+            "desc_source": "codex_assisted_visual_review",
+            "safe_to_merge_gold": False, "reserved_split": "test",
+            "split_reservation_id": "r2",
+        }])
+        report = build_preview(
+            root, [], [reviewed], plan, Path("derived/quality/preview"), "fixture"
+        )
+        self.assertFalse(report["ready_for_apply"])
+        self.assertEqual(1, report["hold_reasons"]["generic_visualdiff_description"])
+        self.assertEqual(0, report["counts"]["prepared_visualdiff_rows"])
+
     def test_cjk_visualdiff_description_is_held_for_english_localization(self) -> None:
         root, temp, plan = self.build_root()
         self.addCleanup(temp.cleanup)

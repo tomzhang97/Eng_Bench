@@ -36,7 +36,11 @@ import leakage_check
 import unify_dataset
 import validate_engbench_v2
 import visualdiff_merge
-from visualdiff_description_finality import definitive_description, tentative_description_details
+from visualdiff_description_finality import (
+    definitive_description,
+    machine_known_description_issue,
+    tentative_description_details,
+)
 from candidate_evidence_holds import evidence_hold_ids, is_evidence_held
 from preview_reviewed_gold_promotion import (
     ACTIVE_PATHS,
@@ -259,6 +263,11 @@ def validate_prepared_rows(
             issues.append(f"visualdiff:{identity}:missing_description")
         elif tentative_description_details(str(row["change_desc_gt"])):
             issues.append(f"visualdiff:{identity}:tentative_visualdiff_description")
+        elif machine_known_description_issue(
+            str(row["change_desc_gt"]),
+            desc_source=str(row.get("desc_source") or ""),
+        ) in {"unvalidated_machine_visual", "generic_machine_description"}:
+            issues.append(f"visualdiff:{identity}:generic_visualdiff_description")
         if not normalized or "unknown" in normalized:
             issues.append(f"visualdiff:{identity}:unresolved_change_type")
         desc_source = str(row.get("desc_source") or "").strip().lower()

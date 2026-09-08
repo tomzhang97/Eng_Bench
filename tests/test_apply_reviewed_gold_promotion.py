@@ -81,6 +81,15 @@ class ApplyReviewedGoldPromotionTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "tentative_visualdiff_description"):
             validate_prepared_rows([], [row])
 
+    def test_prepared_generic_machine_description_cannot_bypass_preview(self) -> None:
+        row = self.localized_visualdiff_row()
+        row["change_desc_gt"] = (
+            "Highlighted graphic/symbol appearance changed from v1 to v2."
+        )
+        row["desc_source"] = "codex_assisted_visual_review"
+        with self.assertRaisesRegex(ValueError, "generic_visualdiff_description"):
+            validate_prepared_rows([], [row])
+
     def localized_visualdiff_row(self) -> dict:
         return {
             "pair_id": "vdiff__family__v1__to__v2__p0000__000",

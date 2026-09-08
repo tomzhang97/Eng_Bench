@@ -36,7 +36,10 @@ from audit_active_gold_provenance import (
     resolve_visualdiff_docs,
 )
 from audit_staged_promotion_contract import image_dimensions, parse_bbox, source_audit
-from visualdiff_description_finality import tentative_description_details
+from visualdiff_description_finality import (
+    machine_known_description_issue,
+    tentative_description_details,
+)
 from candidate_evidence_holds import evidence_hold_ids, is_evidence_held
 
 
@@ -525,6 +528,16 @@ def build_preview(
                 reasons.append("tentative_visualdiff_description")
             elif visualdiff_description_requires_english_localization(description):
                 reasons.append("visualdiff_description_requires_english_localization")
+            else:
+                description_issue = machine_known_description_issue(
+                    description,
+                    desc_source=str(row.get("desc_source") or ""),
+                )
+                if description_issue in {
+                    "unvalidated_machine_visual",
+                    "generic_machine_description",
+                }:
+                    reasons.append("generic_visualdiff_description")
             doc_ids, resolution_issue = resolve_visualdiff_docs(row, docs, manifest_pairs)
             if resolution_issue:
                 reasons.append(f"visualdiff_manifest_resolution:{resolution_issue}")

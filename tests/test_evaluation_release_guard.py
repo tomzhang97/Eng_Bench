@@ -49,6 +49,22 @@ class ReleaseGuardTests(unittest.TestCase):
         result = guard.classify_rows(rows, rows, items, pairs, [], source, {}, manifest_pairs)
         self.assertEqual(["tentative_visualdiff_description"], result[1]["reason_codes"])
 
+    def test_unvalidated_machine_visual_annotation_is_blocked(self):
+        rows, items, pairs, source, manifest_pairs = fixture()
+        description = "Highlighted graphic/symbol appearance changed from A to B."
+        pairs[0].update(
+            change_desc_gt=description,
+            desc_source="codex_assisted_visual_review",
+        )
+        rows[1]["answer"] = description
+        result = guard.classify_rows(
+            rows, rows, items, pairs, [], source, {}, manifest_pairs
+        )
+        self.assertEqual(
+            ["unvalidated_machine_visual_description"],
+            result[1]["reason_codes"],
+        )
+
     def test_input_cannot_hide_held_identity_or_answer(self):
         for field in ("answer", "metadata"):
             rows = fixture()[0]
