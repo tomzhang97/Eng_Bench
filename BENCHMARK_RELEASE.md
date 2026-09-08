@@ -1,6 +1,6 @@
 # Eng_Bench v0.9 (Silver) Release Notes
 
-**Date:** 2026-09-03
+**Date:** 2026-09-08
 **Status:** v0.9 Silver lineage, working dataset; not a publishable Gold v2.0 Global release
 **Current Active Samples:** 1596 Visual-Diff Questions, 2986 Microtext Questions (4582 total)
 **License:** Mixed public-source candidate; see [DATACARD.md](DATACARD.md) and `SOURCE_INVENTORY.csv`
@@ -9,9 +9,16 @@
 
 Gold v2.0 Global remains **5/9 gates PASS**. Row scale (4582/25000 minimum),
 frozen challenge scale (1600/5000), formal agreement (0/185), and complete source provenance
-(204/213 paper-ready documents) remain OPEN. Category balance, 43 tentative
+(204/213 paper-ready documents) remain OPEN. Category balance, 40 tentative
 VisualDiff descriptions and 49 unresolved active audit flags also block release.
-Current gate: `derived/quality/v2_0_gate_audit_2026-09-08-wave2111-relocation4-current.json`.
+Current gate: `derived/quality/v2_0_gate_audit_2026-09-08-wave2134-replacement3-current.json`.
+
+The formal agreement preparation blocker is now closed. A quality-filtered,
+release-safe 185-row sample (95 MicroText and 90 VisualDiff) is packaged for two
+independent reviewers under
+`derived/human_adjudication/Eng_Bench_Gold_v2_FORMAL_AGREEMENT_185_2026-09-08.zip`.
+Review completion is still 0/185, so this preparation does not pass the
+agreement gate or alter Gold.
 
 The existing 1600-row challenge export is a historical freeze, not evidence of
 current release eligibility. New export generation now refuses known unresolved
@@ -411,7 +418,7 @@ additions, and four graphical changes, all in test. Repeated labels, replacement
 text, audit-held rows, graphical changes, and unbound source spans remain held.
 No unreviewed row was promoted and no human or auditor decision was overwritten.
 
-All **1,473 tests and 241 subtests** pass. Legacy validation passes at 1,596
+All **1,476 tests and 241 subtests** pass. Legacy validation passes at 1,596
 VisualDiff and 2,986 MicroText records; strict unified validation covers all
 4,582 rows; split leakage and question leakage both report zero failures. The
 authoritative gate report is
@@ -420,3 +427,41 @@ The applied transaction is
 `derived/quality/active_visualdiff_relocation_correction_transaction_2026-09-08-wave2107-applied.json`,
 and the current unified SHA-256 is
 `1403a10c0e0ba0f8e7e65f880966811a9b19e764efd1266c6c1a380b10c863e7`.
+
+## 13. Formal Agreement Packet Readiness (2026-09-08)
+
+The agreement sampler now fails closed on both release provenance and active
+quality holds. It excludes active audit identities and every VisualDiff answer
+still matching a tentative template, including aliases represented by unified,
+pair, item, or source-candidate identifiers. Capacity after filtering is 959
+MicroText and 99 VisualDiff rows, sufficient for the 95/90 target.
+
+The resulting 185-row packet contains complete evidence, source IDs, source
+URLs, and separate blank Reviewer A and Reviewer B checklists. ZIP verification
+reports 503 entries, no nested archive, no CRC error, no missing evidence, and
+no rights or quality blocker. SHA-256 is
+`9707f54ceeea14733fcf08895cb54bb3cb7ee17b78fe7e0f6e4f918c3b2249b2`.
+The two reviewers must work independently and may not copy the current 12 x 24
+quality-control audit answers.
+
+Gold v2.0 Global remains **5/9 gates PASS** because both checklists are blank.
+The Wave2122 readiness report records 185/185 release-ready rows and 0/185
+completed reviews. The Wave2124 gate report is authoritative. All 1,476 tests
+and 241 subtests, legacy validation, strict unified validation, split leakage,
+and question leakage pass.
+
+## 14. Same-Slot Text Replacement Finality (2026-09-08)
+
+A third fail-closed description-finality lane corrected three existing
+human-reviewed answers from tentative wording to exact same-slot replacement wording. Held-out answer text is omitted from the public release notes.
+Eligibility required a unique related opposite-side span within the reviewed
+gap, matching page, font, size, flags, left edge and baseline, clean source
+rights, and no audit or evidence hold. All three evidence panels were visually
+inspected. The transaction was dry-run, snapshot-backed, hash-pinned, and
+applied without rollback; no row or vote was added, removed, or overwritten.
+
+Tentative VisualDiff descriptions fall from 43 to **40**. Neither current human
+handoff contains a corrected identity, so no workbook or formal agreement row
+became stale. All 1,484 tests and 241 subtests and all release validators pass.
+The authoritative gate remains **5/9 PASS** at
+`derived/quality/v2_0_gate_audit_2026-09-08-wave2134-replacement3-current.json`.

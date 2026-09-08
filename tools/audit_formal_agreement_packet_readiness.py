@@ -11,6 +11,8 @@ from typing import Any
 
 try:
     from build_agreement_audit_packet import (
+        active_audit_identities,
+        filter_quality_ready_rows,
         filter_release_ready_rows,
         provenance_documents,
         read_jsonl,
@@ -18,6 +20,8 @@ try:
     )
 except ModuleNotFoundError:
     from tools.build_agreement_audit_packet import (
+        active_audit_identities,
+        filter_quality_ready_rows,
         filter_release_ready_rows,
         provenance_documents,
         read_jsonl,
@@ -49,10 +53,17 @@ def build_report(
     microtext_target: int,
     visualdiff_target: int,
     date_label: str,
+    audit_holds_path: Path | None = None,
+    require_quality_ready: bool = False,
 ) -> dict[str, Any]:
     root = root.resolve()
     input_path = resolve(root, input_path)
     provenance_path = resolve(root, provenance_path)
+    if require_quality_ready and audit_holds_path is None:
+        raise ValueError("require_quality_ready requires an audit_holds_path")
+    audit_holds_path = (
+        resolve(root, audit_holds_path) if audit_holds_path is not None else None
+    )
     rows = read_jsonl(input_path)
     dev_test = [
         row
@@ -78,6 +89,12 @@ def build_report(
         visualdiff_manifest_docs=visualdiff_manifest_docs,
         provenance_docs=provenance_documents(provenance_path),
     )
+    release_available = Counter(str(row.get("task") or "") for row in eligible)
+    audit_ids = active_audit_identities(audit_holds_path) if audit_holds_path else set()
+    eligible, quality_contexts, quality_exclusions = filter_quality_ready_rows(
+        eligible,
+        active_audit_ids=audit_ids,
+    )
     available = Counter(str(row.get("task") or "") for row in eligible)
     total = Counter(str(row.get("task") or "") for row in dev_test)
     blocked = Counter()
@@ -98,16 +115,23 @@ def build_report(
         "active_gold_modified": False,
         "targets": targets,
         "available_release_ready": dict(sorted(available.items())),
+        "available_release_ready_before_quality_filter": dict(sorted(release_available.items())),
+        "available_release_and_quality_ready": dict(sorted(available.items())),
         "active_dev_test_rows": dict(sorted(total.items())),
         "rights_or_provenance_blocked": dict(sorted(blocked.items())),
         "deficits": deficits,
         "issues": issues,
         "release_filter_exclusions": exclusions,
+        "quality_filter_exclusions": quality_exclusions,
+        "quality_hold_filter_required": require_quality_ready,
+        "active_audit_filter_enabled": audit_holds_path is not None,
         "inputs": {
             "active_gold": relative(root, input_path),
             "active_gold_sha256": file_sha256(input_path),
             "provenance_report": relative(root, provenance_path),
             "provenance_report_sha256": file_sha256(provenance_path),
+            "audit_holds_jsonl": relative(root, audit_holds_path) if audit_holds_path else "",
+            "audit_holds_jsonl_sha256": file_sha256(audit_holds_path) if audit_holds_path else "",
         },
         "next_action": (
             "Build the formal two-reviewer packet from active Gold."
@@ -153,6 +177,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--date-label", required=True)
     parser.add_argument("--output-json", required=True)
     parser.add_argument("--require-ready", action="store_true")
+    parser.add_argument("--audit-holds-jsonl")
+    parser.add_argument("--require-quality-ready", action="store_true")
     args = parser.parse_args(argv)
     root = Path(args.root)
     report = build_report(
@@ -162,6 +188,10 @@ def main(argv: list[str] | None = None) -> int:
         microtext_target=args.microtext_target,
         visualdiff_target=args.visualdiff_target,
         date_label=args.date_label,
+        audit_holds_path=(
+            Path(args.audit_holds_jsonl) if args.audit_holds_jsonl else None
+        ),
+        require_quality_ready=args.require_quality_ready,
     )
     output = resolve(root.resolve(), args.output_json)
     write_report(output, report)

@@ -25,6 +25,66 @@ def write_jsonl(path: Path, rows: list[dict[str, object]]) -> None:
 
 
 class AgreementAuditPacketInstructionTest(unittest.TestCase):
+    def test_quality_filter_excludes_active_audits_and_tentative_visualdiff(self) -> None:
+        rows = [
+            {"id": "mt-ok", "task": "microtext", "answer": "12.0"},
+            {
+                "id": "q_mt-hold",
+                "task": "microtext",
+                "answer": "13.0",
+                "metadata": {"item_id": "mt-hold"},
+            },
+            {
+                "id": "vd-tentative",
+                "task": "visualdiff",
+                "answer": "Localized text may have been added: 'R1'.",
+            },
+            {
+                "id": "vd-ok",
+                "task": "visualdiff",
+                "answer": "The resistor label R1 was added.",
+            },
+        ]
+        eligible, contexts, exclusions = (
+            build_agreement_audit_packet.filter_quality_ready_rows(
+                rows,
+                active_audit_ids={"mt-hold"},
+            )
+        )
+        self.assertEqual([row["id"] for row in eligible], ["mt-ok", "vd-ok"])
+        self.assertTrue(contexts["mt-ok"]["quality_ready"])
+        self.assertFalse(contexts["q_mt-hold"]["quality_ready"])
+        self.assertEqual(
+            exclusions,
+            {"active_audit_flag": 1, "tentative_visualdiff_description": 1},
+        )
+
+    def test_verifier_rejects_false_quality_ready_claim(self) -> None:
+        row = {
+            "id": "q1",
+            "doc_id": "ready",
+            "source_doc_ids": "ready",
+            "source_url": "https://example.com/ready",
+            "source_status": "public",
+            "quality_ready": "False",
+            "quality_blockers": "active_audit_flag",
+        }
+        report = verify_agreement_audit_packet.base_report(
+            [row],
+            [row],
+            [row],
+            [],
+            0,
+            {
+                "quality_hold_filter_required": True,
+                "quality_hold_filter_enabled": True,
+                "selected_quality_ready_rows": 0,
+            },
+        )
+        self.assertFalse(report["valid"])
+        self.assertEqual(report["non_quality_ready_rows"], 1)
+        self.assertEqual(report["quality_blocker_rows"], 1)
+
     def test_verifier_rejects_false_release_ready_claim(self) -> None:
         row = {
             "id": "q1",
@@ -161,6 +221,8 @@ class AgreementAuditPacketInstructionTest(unittest.TestCase):
             self.assertTrue(zh_path.exists())
             zh_text = zh_path.read_text(encoding="utf-8")
             self.assertIn("两位 reviewer 必须独立完成", zh_text)
+            self.assertIn("复制成 A、B 两份", zh_text)
+            self.assertIn("Reviewer A 返回原文件名", zh_text)
             self.assertIn("不要修改", zh_text)
             self.assertIn("sample_reference.csv", zh_text)
             self.assertIn("accept_reject", zh_text)

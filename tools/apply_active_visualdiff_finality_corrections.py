@@ -41,6 +41,12 @@ from visualdiff_relocation_finality import (
     relocation_description,
     span_shape_matches,
 )
+from visualdiff_replacement_finality import (
+    MAX_BOX_BIND_DISTANCE_PX as REPLACEMENT_MAX_BOX_BIND_DISTANCE_PX,
+    POLICY_VERSION as REPLACEMENT_POLICY_VERSION,
+    replacement_description,
+    same_slot_matches,
+)
 
 
 TEXTLAYER_POLICY_VERSION = "active_visualdiff_textlayer_finality_v1"
@@ -49,14 +55,17 @@ DESC_SOURCE = "human_semantics_machine_textlayer_finalized"
 SUPPORTED_PREVIEW_MODES = {
     TEXTLAYER_POLICY_VERSION: "read_only_active_visualdiff_finality_correction_preview",
     RELOCATION_POLICY_VERSION: "read_only_active_visualdiff_relocation_correction_preview",
+    REPLACEMENT_POLICY_VERSION: "read_only_active_visualdiff_replacement_correction_preview",
 }
 DESC_SOURCE_BY_POLICY = {
     TEXTLAYER_POLICY_VERSION: DESC_SOURCE,
     RELOCATION_POLICY_VERSION: "human_reviewed_machine_unique_text_relocation",
+    REPLACEMENT_POLICY_VERSION: "human_reviewed_machine_same_slot_text_replacement",
 }
 METHOD_BY_POLICY = {
     TEXTLAYER_POLICY_VERSION: "human_semantics_machine_textlayer_finalization",
     RELOCATION_POLICY_VERSION: "machine_unique_textlayer_relocation_of_human_reviewed_gap",
+    REPLACEMENT_POLICY_VERSION: "machine_same_slot_textlayer_replacement_of_human_reviewed_gap",
 }
 MUTABLE_PATHS = (
     "visualdiff/annotations/visualdiff_pairs.jsonl",
@@ -166,6 +175,29 @@ def deterministic_final_description(
     policy_version = str(correction.get("policy_version") or "")
     if policy_version == TEXTLAYER_POLICY_VERSION:
         return definitive_description(details)
+    if policy_version == REPLACEMENT_POLICY_VERSION:
+        old_text = str(correction.get("old_text") or "")
+        new_text = str(correction.get("new_text") or "")
+        target = str(details.get("target") or "")
+        if details.get("kind") == "text_removed" and target != old_text:
+            raise ValueError("replacement_old_target_mismatch")
+        if details.get("kind") == "text_added" and target != new_text:
+            raise ValueError("replacement_new_target_mismatch")
+        if str(correction.get("original_tentative_kind") or "") != str(details.get("kind") or ""):
+            raise ValueError("replacement_original_kind_mismatch")
+        old_probe = correction.get("old_probe") or {}
+        new_probe = correction.get("new_probe") or {}
+        for side, probe in (("old", old_probe), ("new", new_probe)):
+            if probe.get("status") != "observed":
+                raise ValueError(f"replacement_{side}_probe_not_observed")
+            if int(probe.get("nearby_matches") or 0) != 1:
+                raise ValueError(f"replacement_{side}_match_not_unique_in_gap")
+            best = probe.get("best") or {}
+            if not best or float(best.get("distance_px") or float("inf")) > REPLACEMENT_MAX_BOX_BIND_DISTANCE_PX:
+                raise ValueError(f"replacement_{side}_match_not_bound_to_gap")
+        if not same_slot_matches(old_probe.get("best") or {}, new_probe.get("best") or {}):
+            raise ValueError("replacement_spans_not_same_slot")
+        return replacement_description(old_text, new_text)
     if policy_version != RELOCATION_POLICY_VERSION:
         raise ValueError("unsupported_correction_policy")
     target = str(correction.get("target") or "")
@@ -267,12 +299,21 @@ def apply_corrections_to_rows(
                 "expected_probe": correction["expected_probe"],
                 "opposite_probe": correction["opposite_probe"],
             })
-        else:
+        elif policy_version == RELOCATION_POLICY_VERSION:
             certification.update({
                 "old_probe": correction["old_probe"],
                 "new_probe": correction["new_probe"],
                 "movement": correction["movement"],
                 "revision_target_count": correction["revision_target_count"],
+            })
+        else:
+            certification.update({
+                "original_tentative_kind": correction["original_tentative_kind"],
+                "old_text": correction["old_text"],
+                "new_text": correction["new_text"],
+                "old_probe": correction["old_probe"],
+                "new_probe": correction["new_probe"],
+                "localized_alternatives": correction["localized_alternatives"],
             })
         updated_pair = new_pairs[pair_index[pair_id]]
         updated_pair["change_desc_gt"] = final

@@ -89,6 +89,22 @@ def base_report(
         issues.append(f"non-release-ready reference rows: {non_release_ready_rows}")
     if release_claim_present and source_blocker_rows:
         issues.append(f"reference rows with source blockers: {source_blocker_rows}")
+    quality_claim_present = bool(reference and "quality_ready" in reference[0])
+    non_quality_ready_rows = (
+        sum(
+            str(row.get("quality_ready") or "").strip().lower() != "true"
+            for row in reference
+        )
+        if quality_claim_present
+        else 0
+    )
+    quality_blocker_rows = sum(
+        bool(str(row.get("quality_blockers") or "").strip()) for row in reference
+    )
+    if quality_claim_present and non_quality_ready_rows:
+        issues.append(f"non-quality-ready reference rows: {non_quality_ready_rows}")
+    if quality_claim_present and quality_blocker_rows:
+        issues.append(f"reference rows with quality blockers: {quality_blocker_rows}")
     build_report = build_report or {}
     release_filter_required = bool(build_report.get("release_ready_filter_required"))
     if release_filter_required:
@@ -98,6 +114,14 @@ def base_report(
             issues.append("release-filtered packet lacks source_release_ready fields")
         if build_report.get("selected_release_ready_rows") != len(reference):
             issues.append("build report release-ready row count does not match reference")
+    quality_filter_required = bool(build_report.get("quality_hold_filter_required"))
+    if quality_filter_required:
+        if not build_report.get("quality_hold_filter_enabled"):
+            issues.append("build report requires quality filtering but it was not enabled")
+        if not quality_claim_present:
+            issues.append("quality-filtered packet lacks quality_ready fields")
+        if build_report.get("selected_quality_ready_rows") != len(reference):
+            issues.append("build report quality-ready row count does not match reference")
     return {
         "sample_rows": len(reference),
         "reviewer_a_rows": len(reviewer_a),
@@ -109,6 +133,10 @@ def base_report(
         "non_release_ready_rows": non_release_ready_rows,
         "source_blocker_rows": source_blocker_rows,
         "release_filter_required": release_filter_required,
+        "quality_claim_present": quality_claim_present,
+        "non_quality_ready_rows": non_quality_ready_rows,
+        "quality_blocker_rows": quality_blocker_rows,
+        "quality_filter_required": quality_filter_required,
         "reviewer_sheets_identical": reviewer_a == reviewer_b,
         "issues": issues,
         "valid": not issues and bool(reference),
@@ -195,6 +223,9 @@ def render_markdown(report: dict[str, Any]) -> str:
         f"- Release-ready claim present: `{str(report.get('release_claim_present', False)).lower()}`",
         f"- Non-release-ready rows: `{report.get('non_release_ready_rows', 0)}`",
         f"- Source-blocker rows: `{report.get('source_blocker_rows', 0)}`",
+        f"- Quality-ready claim present: `{str(report.get('quality_claim_present', False)).lower()}`",
+        f"- Non-quality-ready rows: `{report.get('non_quality_ready_rows', 0)}`",
+        f"- Quality-blocker rows: `{report.get('quality_blocker_rows', 0)}`",
         f"- Reviewer sheets initially identical: `{str(report.get('reviewer_sheets_identical', False)).lower()}`",
     ]
     if report.get("issues"):

@@ -20,6 +20,11 @@ try:
 except ModuleNotFoundError:  # Imported as tools.build_agreement_audit_packet in tests.
     from tools import export_review_packs
 
+try:
+    import visualdiff_description_finality
+except ModuleNotFoundError:  # Imported as tools.build_agreement_audit_packet in tests.
+    from tools import visualdiff_description_finality
+
 
 REVIEW_FIELDS = (
     "answer_correct",
@@ -325,6 +330,63 @@ def filter_release_ready_rows(
     return eligible, release_contexts, dict(sorted(exclusions.items()))
 
 
+def active_audit_identities(path: Path) -> set[str]:
+    identities: set[str] = set()
+    for row in read_jsonl(path):
+        identity = str(
+            row.get("active_gold_identity")
+            or row.get("active_id")
+            or row.get("id")
+            or ""
+        ).strip()
+        if identity:
+            identities.add(identity)
+    return identities
+
+
+def filter_quality_ready_rows(
+    rows: list[dict[str, Any]],
+    *,
+    active_audit_ids: set[str] | None = None,
+) -> tuple[list[dict[str, Any]], dict[str, dict[str, Any]], dict[str, int]]:
+    active_audit_ids = active_audit_ids or set()
+    eligible: list[dict[str, Any]] = []
+    contexts: dict[str, dict[str, Any]] = {}
+    exclusions: Counter[str] = Counter()
+    for row in rows:
+        identifier = str(row.get("id") or "").strip()
+        metadata = row.get("metadata") if isinstance(row.get("metadata"), dict) else {}
+        identity_candidates = {
+            value
+            for value in (
+                identifier,
+                str(metadata.get("pair_id") or "").strip(),
+                str(metadata.get("item_id") or "").strip(),
+                str(metadata.get("source_candidate_id") or "").strip(),
+            )
+            if value
+        }
+        blockers: list[str] = []
+        if identity_candidates & active_audit_ids:
+            blockers.append("active_audit_flag")
+        if row.get("task") == "visualdiff" and (
+            visualdiff_description_finality.tentative_description_details(
+                str(row.get("answer") or "")
+            )
+            is not None
+        ):
+            blockers.append("tentative_visualdiff_description")
+        contexts[identifier] = {
+            "quality_ready": not blockers,
+            "quality_blockers": ";".join(blockers),
+        }
+        if blockers:
+            exclusions.update(blockers)
+        else:
+            eligible.append(row)
+    return eligible, contexts, dict(sorted(exclusions.items()))
+
+
 def evidence_for(row: dict[str, Any], image_index: int) -> dict[str, Any]:
     for entry in row.get("evidence") or []:
         if isinstance(entry, dict) and int(entry.get("image_index", 0)) == image_index:
@@ -400,6 +462,7 @@ def build_checklist_rows(
     visualdiff_manifest_docs: list[dict[str, Any]],
     output_rel: Path,
     release_contexts: dict[str, dict[str, Any]] | None = None,
+    quality_contexts: dict[str, dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for row in selected:
@@ -430,6 +493,8 @@ def build_checklist_rows(
         }
         if release_contexts is not None:
             checklist.update(release_contexts.get(identifier, {}))
+        if quality_contexts is not None:
+            checklist.update(quality_contexts.get(identifier, {}))
         checklist.update({field: "" for field in REVIEW_FIELDS})
         rows.append(checklist)
     return rows
@@ -471,8 +536,12 @@ def write_docs(output_dir: Path, report: dict[str, Any]) -> None:
                 "# Eng_Bench Independent Human Agreement Audit",
                 "",
                 f"- Sample rows: `{report['sample_rows']}`",
+                "- The coordinator makes two copies of this packet before review.",
+                "- Reviewer A edits only reviewer_a_checklist.csv in copy A.",
+                "- Reviewer B edits only reviewer_b_checklist.csv in copy B.",
                 "- Reviewer A and Reviewer B must work independently.",
-                "- Do not compare or copy decisions before both CSVs are complete.",
+                "- The coordinator combines the two completed CSVs only after both are returned.",
+                "- Reviewers must not compare or copy decisions before both CSVs are complete.",
                 "- This packet evaluates existing active-gold labels; it does not merge or modify gold.",
                 "",
                 "Open `index.html`, then fill only your assigned reviewer checklist.",
@@ -489,18 +558,21 @@ def write_docs(output_dir: Path, report: dict[str, Any]) -> None:
                 "",
                 "For Chinese instructions, start with `INTERN_INSTRUCTIONS_ZH.md`.",
                 "",
-                "1. Assign different people to `reviewer_a_checklist.csv` and `reviewer_b_checklist.csv`.",
-                "2. Work independently and inspect the crop/panel plus full-page links when needed.",
-                "3. Inspect `source_url` and `source_status` before deciding `rights_concern`.",
-                "4. Fill only the eight reviewer-response columns from `answer_correct` through `notes`.",
-                "5. Do not sort, add, delete, or reorder rows; do not edit IDs, references, evidence, paths, or source fields.",
-                "6. Set `answer_correct` and `bbox_correct` to `yes` or `no`.",
-                "7. If `answer_correct=no`, fill `corrected_answer`.",
-                "8. If `bbox_correct=no`, fill `corrected_evidence_json` using the same JSON format as `reference_evidence_json`.",
-                "9. Set `accept_reject` to `accept` or `reject`.",
-                "10. Set `ambiguity` and `rights_concern` to `yes` or `no`.",
-                "11. Add a short note for every reject, ambiguity, rights concern, or correction.",
-                "12. Return both completed CSVs without renaming them.",
+                "1. The coordinator makes two complete copies of the unmodified packet.",
+                "2. Assign different people to A and B. Give copy A to Reviewer A and copy B to Reviewer B.",
+                "3. Reviewer A fills only `reviewer_a_checklist.csv`; Reviewer B fills only `reviewer_b_checklist.csv`.",
+                "4. Work independently and inspect the crop/panel plus full-page links when needed.",
+                "5. Inspect `source_url` and `source_status` before deciding `rights_concern`.",
+                "6. Fill only the eight reviewer-response columns from `answer_correct` through `notes`.",
+                "7. Do not sort, add, delete, or reorder rows; do not edit IDs, references, evidence, paths, or source fields.",
+                "8. Set `answer_correct` and `bbox_correct` to `yes` or `no`.",
+                "9. If `answer_correct=no`, fill `corrected_answer`.",
+                "10. If `bbox_correct=no`, fill `corrected_evidence_json` using the same JSON format as `reference_evidence_json`.",
+                "11. Set `accept_reject` to `accept` or `reject`.",
+                "12. Set `ambiguity` and `rights_concern` to `yes` or `no`.",
+                "13. Add a short note for every reject, ambiguity, rights concern, or correction.",
+                "14. Each reviewer returns only their completed, original-named CSV to the coordinator.",
+                "15. After both returns arrive, the coordinator places both completed CSVs into one untouched master packet and returns it.",
                 "",
                 "The return checker rejects altered immutable cells, missing or duplicate IDs, and row reordering before any agreement metric is counted.",
                 "",
@@ -519,9 +591,11 @@ def write_docs(output_dir: Path, report: dict[str, Any]) -> None:
                 "",
                 "## 分工",
                 "",
+                "- 负责人先把原始压缩包复制成 A、B 两份；不要让两位 reviewer 共用同一个正在填写的文件夹。",
                 "- 两位 reviewer 必须独立完成，不能互相看答案、讨论或复制。",
-                "- Reviewer A 只填写 `reviewer_a_checklist.csv`。",
-                "- Reviewer B 只填写 `reviewer_b_checklist.csv`。",
+                "- A 份交给 Reviewer A，Reviewer A 只填写 `reviewer_a_checklist.csv`。",
+                "- B 份交给 Reviewer B，Reviewer B 只填写 `reviewer_b_checklist.csv`。",
+                "- 两份表都返回之前，负责人也不要把一位 reviewer 的答案转给另一位。",
                 "- 不要修改 `sample_reference.csv`，它只是对照表。",
                 "- 不要改文件名，也不要删除 `evidence/`、`index.html` 或任何图片。",
                 "- CSV 里只能填写从 `answer_correct` 到 `notes` 的 8 个审核结果列。",
@@ -549,7 +623,9 @@ def write_docs(output_dir: Path, report: dict[str, Any]) -> None:
                 "",
                 "## 返回",
                 "",
-                "完成后返回整个文件夹，尤其要包含两个 CSV、`index.html` 和 `evidence/` 文件夹。不要只发截图或只发一个 CSV。",
+                "- Reviewer A 返回原文件名的 `reviewer_a_checklist.csv`；Reviewer B 返回原文件名的 `reviewer_b_checklist.csv`。",
+                "- 负责人等两份都返回后，再把两个已完成 CSV 放回同一个未改动的母包文件夹。",
+                "- 最后返回完整母包，必须保留两个 CSV、`sample_reference.csv`、`index.html` 和 `evidence/`。不要只发截图。",
                 "",
             ]
         ),
@@ -581,6 +657,8 @@ def build_packet(
     provenance_report: Path | None = None,
     require_release_ready: bool = False,
     task_quotas: dict[str, int] | None = None,
+    audit_holds_jsonl: Path | None = None,
+    require_quality_ready: bool = False,
 ) -> dict[str, Any]:
     output_rel = relative_output(root, output_dir)
     output_abs = root / output_rel
@@ -608,6 +686,8 @@ def build_packet(
     ]
     if require_release_ready and provenance_report is None:
         raise ValueError("--require-release-ready requires --provenance-report")
+    if require_quality_ready and audit_holds_jsonl is None:
+        raise ValueError("--require-quality-ready requires --audit-holds-jsonl")
     release_contexts: dict[str, dict[str, Any]] | None = None
     release_exclusions: dict[str, int] = {}
     provenance_abs: Path | None = None
@@ -625,6 +705,20 @@ def build_packet(
             visualdiff_manifest_docs=visualdiff_manifest_docs,
             provenance_docs=provenance_documents(provenance_abs),
         )
+    release_eligible_rows = len(eligible_rows)
+    audit_holds_abs: Path | None = None
+    audit_ids: set[str] = set()
+    if audit_holds_jsonl is not None:
+        audit_holds_abs = (
+            audit_holds_jsonl
+            if audit_holds_jsonl.is_absolute()
+            else root / audit_holds_jsonl
+        )
+        audit_ids = active_audit_identities(audit_holds_abs)
+    eligible_rows, quality_contexts, quality_exclusions = filter_quality_ready_rows(
+        eligible_rows,
+        active_audit_ids=audit_ids,
+    )
     if task_quotas is not None:
         if sample_size is not None and sample_size != sum(task_quotas.values()):
             raise ValueError("sample_size must equal the sum of task quotas")
@@ -667,6 +761,7 @@ def build_packet(
         visualdiff_manifest_docs,
         output_rel,
         release_contexts,
+        quality_contexts,
     )
     write_csv(output_abs / "sample_reference.csv", checklist_rows)
     write_csv(output_abs / "reviewer_a_checklist.csv", checklist_rows)
@@ -676,10 +771,20 @@ def build_packet(
     report = {
         "input_rows": len(rows),
         "eligible_dev_test_rows": sum(row.get("split") in {"dev", "test"} for row in rows),
-        "eligible_after_release_filter": len(eligible_rows),
+        "eligible_after_release_filter": release_eligible_rows,
+        "eligible_after_quality_filter": len(eligible_rows),
         "release_ready_filter_enabled": provenance_report is not None,
         "release_ready_filter_required": require_release_ready,
         "release_filter_exclusions": release_exclusions,
+        "quality_hold_filter_enabled": audit_holds_abs is not None,
+        "quality_hold_filter_required": require_quality_ready,
+        "quality_filter_exclusions": quality_exclusions,
+        "audit_holds_jsonl": audit_holds_abs.as_posix() if audit_holds_abs else "",
+        "audit_holds_jsonl_sha256": (
+            hashlib.sha256(audit_holds_abs.read_bytes()).hexdigest()
+            if audit_holds_abs
+            else ""
+        ),
         "provenance_report": provenance_abs.as_posix() if provenance_abs else "",
         "provenance_report_sha256": (
             hashlib.sha256(provenance_abs.read_bytes()).hexdigest()
@@ -706,8 +811,28 @@ def build_packet(
             str(row.get("source_release_ready") or "").lower() == "true"
             for row in checklist_rows
         ),
+        "selected_quality_ready_rows": sum(
+            str(row.get("quality_ready") or "").lower() == "true"
+            for row in checklist_rows
+        ),
         "valid": len(checklist_rows) == len(selected)
-        and int(micro_stats.get("rows", 0)) + int(visual_stats.get("rows", 0)) == len(selected),
+        and int(micro_stats.get("rows", 0)) + int(visual_stats.get("rows", 0)) == len(selected)
+        and (
+            not require_release_ready
+            or sum(
+                str(row.get("source_release_ready") or "").lower() == "true"
+                for row in checklist_rows
+            )
+            == len(checklist_rows)
+        )
+        and (
+            not require_quality_ready
+            or sum(
+                str(row.get("quality_ready") or "").lower() == "true"
+                for row in checklist_rows
+            )
+            == len(checklist_rows)
+        ),
         "zip_output": zip_abs.as_posix(),
     }
     write_docs(output_abs, report)
@@ -739,6 +864,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--pad-px", type=int, default=48)
     parser.add_argument("--provenance-report")
     parser.add_argument("--require-release-ready", action="store_true")
+    parser.add_argument("--audit-holds-jsonl")
+    parser.add_argument("--require-quality-ready", action="store_true")
     args = parser.parse_args(argv)
     task_quota_args = (args.microtext_rows, args.visualdiff_rows)
     if any(value is not None for value in task_quota_args) and not all(
@@ -765,6 +892,10 @@ def main(argv: list[str] | None = None) -> int:
         ),
         require_release_ready=args.require_release_ready,
         task_quotas=task_quotas,
+        audit_holds_jsonl=(
+            Path(args.audit_holds_jsonl) if args.audit_holds_jsonl else None
+        ),
+        require_quality_ready=args.require_quality_ready,
     )
     print(json.dumps(report, indent=2, sort_keys=True))
     return 0 if report["valid"] else 1
