@@ -11,27 +11,37 @@ A comprehensive benchmark for evaluating vision-language models on engineering d
 
 | Property             | Value |
 | -------------------- | ----- |
-| #active source docs  | 210   |
-| #referenced images   | 489   |
-| #questions           | 4560  |
-| % micro-text         | 65.5% |
+| #active source docs  | 307   |
+| #referenced images   | 652   |
+| #questions           | 5694  |
+| % micro-text         | 72.0% |
 | % multi-page         | 0%    |
-| % revision           | 34.5% |
-| avg evidence regions | 1.35  |
+| % revision           | 28.0% |
+| avg evidence regions | 1.28  |
 
-Current active data contains 1,574 VisualDiff and 2,986 MicroText rows. The
-unified split is train 2,015, dev 932, and test 1,613. The public GitHub snapshot
+Current active data contains 1,596 VisualDiff and 4,098 MicroText rows. The
+unified split is train 2,789, dev 1,121, and test 1,784. The public GitHub snapshot
 is deliberately narrower: it keeps labeled train/dev rows only when every
 source payload is paper-ready and release-ready, and strips all answer and
 evidence fields from test rows. See
 [`release/public_dataset/`](release/public_dataset/) and
 [`PUBLIC_REPOSITORY_POLICY.md`](PUBLIC_REPOSITORY_POLICY.md).
 
-Latest verified checkpoint (2026-09-08): baseline and strict-v2 validation pass,
-with zero missing images, split leakage, question leakage, or source-hash
-mismatches. Gold v2.0 Global remains 5/9 gates PASS: total scale, test scale,
-formal agreement, and complete provenance are still open. See
+Latest verified checkpoint (2026-09-09): active Gold remains 5,694 rows after
+the 1,112-row primary-reviewed MicroText promotion. A source-identity-aware
+provenance plan now provides exact one-for-one capacity for all 1,430 rows tied
+to nine blocked active documents. The plan is structurally ready, with 1,171
+replacement reviews reusable and 259 still outstanding; no replacement has
+been applied. Legacy and strict-v2 validation pass with zero missing images,
+split leakage, question leakage, provenance regression, or source-hash
+mismatches. Gold v2.0 Global remains 5/9 gates PASS: total scale, frozen
+challenge scale, formal agreement, and complete provenance are still open. See
 [`BENCHMARK_RELEASE.md`](BENCHMARK_RELEASE.md) for the exact gate counts.
+The post-promotion machine audit reuses 25 exact calibration decisions and
+identifies 799 non-pin train MicroText rows that pass every strict forecast gate
+but remain outside Gold until the remaining 275-row calibration is complete.
+The current primary-review handoff is the verified flat 533-action ZIP recorded
+in `AUDITOR_RETURN_STATUS.md`; it supersedes the earlier 288-action package.
 
 ### Unified Loader
 

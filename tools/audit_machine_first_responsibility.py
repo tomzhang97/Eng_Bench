@@ -450,19 +450,28 @@ def build_report(
                 issues.append("calibration_reuse_modified_active_gold")
             if reuse.get("safe_to_merge_gold") is not False:
                 issues.append("calibration_reuse_unsafe_merge_flag")
-            reuse_eligibility_report_path = (
-                nonpin_eligibility_report_path
+            reuse_eligibility_sha = str(
+                (reuse.get("cohort") or {}).get("eligibility_report_sha256") or ""
+            ).lower()
+            full_eligibility_sha = file_sha256(eligibility_report_path).lower()
+            nonpin_eligibility_sha = (
+                file_sha256(nonpin_eligibility_report_path).lower()
                 if nonpin_eligibility_report_path is not None
-                else eligibility_report_path
+                and nonpin_eligibility_report_path.is_file()
+                else ""
             )
-            reuse_original_rows = (
-                nonpin_eligible_rows
-                if nonpin_eligibility_report_path is not None
-                else eligible_rows
-            )
-            if str((reuse.get("cohort") or {}).get("eligibility_report_sha256") or "") != file_sha256(
-                reuse_eligibility_report_path
+            if reuse_eligibility_sha == full_eligibility_sha:
+                reuse_original_rows = eligible_rows
+                reuse_eligibility_scope = "full"
+            elif (
+                nonpin_eligibility_sha
+                and reuse_eligibility_sha == nonpin_eligibility_sha
             ):
+                reuse_original_rows = nonpin_eligible_rows
+                reuse_eligibility_scope = "nonpin"
+            else:
+                reuse_original_rows = []
+                reuse_eligibility_scope = "unmatched"
                 issues.append("calibration_reuse_eligibility_sha256_mismatch")
             pending_path = verify_artifact(
                 root, reuse, "current_pending_auto_eligible", issues
@@ -525,6 +534,7 @@ def build_report(
                     "already_active_rows": len(already_active_rows),
                     "completed_calibration_rows": calibration_completed_reused,
                     "remaining_calibration_rows": calibration_rows_remaining,
+                    "eligibility_scope": reuse_eligibility_scope,
                 }
     if nonpin_readiness_report_path is not None:
         nonpin_readiness_report_path = resolve(root, nonpin_readiness_report_path)
@@ -571,13 +581,17 @@ def build_report(
                 else []
             )
             readiness_hold_rows: list[dict[str, Any]] = []
+            strict_duplicate_hold_rows: list[dict[str, Any]] = []
             for name in (
                 "structural_holds",
                 "near_region_holds",
                 "strict_duplicate_holds",
             ):
                 if readiness_paths[name].is_file():
-                    readiness_hold_rows.extend(read_jsonl(readiness_paths[name]))
+                    rows = read_jsonl(readiness_paths[name])
+                    readiness_hold_rows.extend(rows)
+                    if name == "strict_duplicate_holds":
+                        strict_duplicate_hold_rows = rows
             current_nonpin_ids = {
                 row_id(row)
                 for row in current_eligible_rows
@@ -607,11 +621,30 @@ def build_report(
                 readiness_hold_rows
             ):
                 issues.append("nonpin_readiness_hold_count_mismatch")
-            if int(
+            reported_active_collisions = int(
                 readiness_counts.get("strict_duplicate_collisions_with_active_gold")
                 or 0
+            )
+            reported_forecast_collisions = int(
+                readiness_counts.get("strict_duplicate_collisions_within_forecast")
+                or 0
+            )
+            active_unified_path = root / "eng_bench.jsonl"
+            active_unified_ids = {
+                row_id(row) for row in read_jsonl(active_unified_path)
+            } if active_unified_path.is_file() else set()
+            held_active_collisions = sum(
+                str(row.get("precalibration_collides_with") or "").strip()
+                in active_unified_ids
+                for row in strict_duplicate_hold_rows
+            )
+            if reported_active_collisions != held_active_collisions:
+                issues.append("nonpin_readiness_active_collision_hold_mismatch")
+            if (
+                reported_active_collisions + reported_forecast_collisions
+                != len(strict_duplicate_hold_rows)
             ):
-                issues.append("nonpin_readiness_collides_with_active_gold")
+                issues.append("nonpin_readiness_collision_partition_mismatch")
             precalibration_strict_ready = len(strict_ready_rows)
             precalibration_duplicate_holds = int(
                 readiness_counts.get("strict_duplicate_holds") or 0

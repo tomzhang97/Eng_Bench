@@ -186,7 +186,15 @@ def build_report(
     review_issues: list[dict[str, Any]] = []
 
     active_by_id = {active_identity(row): row for row in active_rows if active_identity(row)}
-    active_underlying_ids = planner.active_candidate_identities(active_rows)
+    active_underlying_ids = planner.active_candidate_identities(
+        active_rows,
+        active_items=read_jsonl(
+            root / "microtext" / "annotations" / "microtext_items.jsonl"
+        ),
+        active_pairs=read_jsonl(
+            root / "visualdiff" / "annotations" / "visualdiff_pairs.jsonl"
+        ),
+    )
     affected_ids = [str(row.get("active_id") or "").strip() for row in affected_rows]
     candidate_ids = [candidate_identity(row) for row in candidate_rows]
 

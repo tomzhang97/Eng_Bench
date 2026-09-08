@@ -328,8 +328,8 @@ async function buildVisualdiff(payload, outputDir, previewDir) {
 
   setupTop(sheet, {
     title: `Eng_Bench Gold v2.0 Global - VisualDiff 来源替换优先审核 ${rows.length} 条`,
-    instruction: `看 B 列红色 OLD 与青色 NEW，再核对 C/D。黄色 E 列填 1/2/3/4；其中 ${rewriteRequiredCount} 条标为【必须人工重写】，必须填 2 和 F/G。`,
-    rule: "1=框内真实工程变化且类型/描述全对；2=真实变化但机器类型或描述错误；3=相同/整体偏移/渲染差异/无工程变化；4=证据不足。",
+    instruction: `看 B 列红色 OLD 与青色 NEW，再核对 C/D。黄色 E 列填 1/2/3/4；其中 ${rewriteRequiredCount} 条标为【必须人工重写】，仅在确有变化时填 2 和 F/G。`,
+    rule: "1=框内真实工程变化且类型/描述全对；2=真实变化但机器类型或描述错误；3=相同/整体偏移/渲染差异/无工程变化；4=位置不对应或证据不足。",
     examples: "类型示例：text=文字替换；addition=新增；deletion=删除；symbol=符号/元件；geometry=几何/连线；layout=具体对象相对移动；value=数值。文字含义改变也可算真实工程变化。",
     rowCount: rows.length,
     lastRow,
@@ -350,7 +350,7 @@ async function buildVisualdiff(payload, outputDir, previewDir) {
     "",
     "",
     "",
-    rewriteRequired[index] ? "必须选择 2，并填写规范类型及具体工程变化描述" : "",
+    rewriteRequired[index] ? "确有变化：选2并重写；无变化：选3；位置不对应/证据不足：选4" : "",
     "",
     row.pair_id || "",
   ]);
@@ -384,7 +384,7 @@ async function buildVisualdiff(payload, outputDir, previewDir) {
   sheet.getRange(`I${firstRow}:I${lastRow}`).formulas = rows.map((_, index) => {
     const row = firstRow + index;
     if (rewriteRequired[index]) {
-      return [`=IF(E${row}="","未完成",IF(E${row}<>2,"必须选2并重写",IF(AND(F${row}<>"",G${row}<>""),"完成","需填写改正")))`];
+      return [`=IF(E${row}="","未完成",IF(E${row}=1,"不能直接选1",IF(E${row}=2,IF(AND(F${row}<>"",G${row}<>""),"完成","需填写改正"),"完成")))`];
     }
     return [`=IF(E${row}="","未完成",IF(E${row}=2,IF(AND(F${row}<>"",G${row}<>""),"完成","需填写改正"),"完成"))`];
   });

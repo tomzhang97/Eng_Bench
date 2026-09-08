@@ -171,8 +171,13 @@ def candidate_identity(row: dict[str, Any]) -> str:
     return identity_from_row(row)
 
 
-def active_candidate_identities(active_rows: list[dict[str, Any]]) -> set[str]:
-    """Return question and underlying item/pair identities already in Gold."""
+def active_candidate_identities(
+    active_rows: list[dict[str, Any]],
+    *,
+    active_items: list[dict[str, Any]] | None = None,
+    active_pairs: list[dict[str, Any]] | None = None,
+) -> set[str]:
+    """Return active question, annotation, and originating candidate identities."""
     identities: set[str] = set()
     for row in active_rows:
         direct = str(row.get("id") or row.get("qid") or "").strip()
@@ -188,6 +193,16 @@ def active_candidate_identities(active_rows: list[dict[str, Any]]) -> set[str]:
             for value in metadata.get("item_ids") or []
             if str(value).strip()
         )
+    for row in active_items or []:
+        for field in ("item_id", "source_candidate_id"):
+            value = str(row.get(field) or "").strip()
+            if value:
+                identities.add(value)
+    for row in active_pairs or []:
+        for field in ("pair_id", "id", "source_candidate_id"):
+            value = str(row.get(field) or "").strip()
+            if value:
+                identities.add(value)
     return identities
 
 
@@ -320,7 +335,15 @@ def build_plan(
     manifest = read_jsonl(root / "manifest.jsonl")
     pair_docs = manifest_pair_docs(manifest)
     active_rows = read_jsonl(root / "eng_bench.jsonl")
-    active_candidate_ids = active_candidate_identities(active_rows)
+    active_candidate_ids = active_candidate_identities(
+        active_rows,
+        active_items=read_jsonl(
+            root / "microtext" / "annotations" / "microtext_items.jsonl"
+        ),
+        active_pairs=read_jsonl(
+            root / "visualdiff" / "annotations" / "visualdiff_pairs.jsonl"
+        ),
+    )
 
     affected_rows: list[dict[str, Any]] = []
     demand: Counter[tuple[str, str, str]] = Counter()

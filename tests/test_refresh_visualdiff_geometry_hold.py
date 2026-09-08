@@ -16,7 +16,9 @@ class RefreshVisualDiffGeometryHoldTests(unittest.TestCase):
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text("".join(json.dumps(row) + "\n" for row in rows), encoding="utf-8")
 
-    def build_fixture(self, root: Path, *, overlap: bool = False) -> tuple[Path, str]:
+    def build_fixture(
+        self, root: Path, *, overlap: bool = False, microtext_only: bool = False
+    ) -> tuple[Path, str]:
         pair_id = "vdiff__fixture__old__to__new__held"
         correction_id = pair_id if overlap else "vdiff__fixture__old__to__new__localized"
         pair_path = root / "visualdiff/annotations/visualdiff_pairs.jsonl"
@@ -51,16 +53,30 @@ class RefreshVisualDiffGeometryHoldTests(unittest.TestCase):
             "report_sha256": holds.file_hash(prior_report_path),
         })
         corrections_path = root / "derived/quality/transaction/corrections.jsonl"
-        self.write_jsonl(corrections_path, [{"pair_id": correction_id}])
+        if not microtext_only:
+            self.write_jsonl(corrections_path, [{"pair_id": correction_id}])
+        before = dict(current)
+        if microtext_only:
+            self.write_jsonl(unified_path, [{"id": "q_held"}, {"id": "q_microtext"}])
+            current = {path: holds.file_hash(root / path) for path in holds.ACTIVE_PATHS}
         transaction_path = root / "derived/quality/transaction/report.json"
-        self.write_json(transaction_path, {
+        transaction = {
             "applied": True,
             "rolled_back": False,
-            "before_hashes": current,
+            "before_hashes": before,
             "after_hashes": current,
-            "corrections_artifact": corrections_path.relative_to(root).as_posix(),
-            "corrections_artifact_sha256": holds.file_hash(corrections_path),
-        })
+        }
+        if microtext_only:
+            transaction.update({
+                "mode": "reviewed_gold_promotion_transaction",
+                "validation": {"promoted_visualdiff_rows": 0},
+            })
+        else:
+            transaction.update({
+                "corrections_artifact": corrections_path.relative_to(root).as_posix(),
+                "corrections_artifact_sha256": holds.file_hash(corrections_path),
+            })
+        self.write_json(transaction_path, transaction)
         return transaction_path, holds.file_hash(transaction_path)
 
     def test_re_pins_disjoint_description_transaction(self):
@@ -77,6 +93,15 @@ class RefreshVisualDiffGeometryHoldTests(unittest.TestCase):
             transaction, digest = self.build_fixture(root, overlap=True)
             with self.assertRaisesRegex(ValueError, "overlaps active geometry holds"):
                 refresh.refresh(root, transaction, digest, root / "derived/quality/refreshed")
+
+    def test_re_pins_microtext_only_gold_transaction(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            transaction, digest = self.build_fixture(root, microtext_only=True)
+            report = refresh.refresh(root, transaction, digest, root / "derived/quality/refreshed")
+            self.assertEqual("non_visualdiff_gold_transaction", report["transaction_kind"])
+            self.assertEqual(0, report["description_correction_rows"])
+            self.assertEqual(1, len(holds.current_hold_ids(root)))
 
 
 if __name__ == "__main__":

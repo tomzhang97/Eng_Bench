@@ -34,24 +34,24 @@
     },
     "homepage": "not yet released",
     "license": "mixed public-source candidate; see DATACARD.md and SOURCE_INVENTORY.csv",
-    "source_count": 100,
+    "source_count": 477,
     "splits": {
       "dev": {
         "name": "dev",
-        "num_examples": 768
+        "num_examples": 1121
       },
       "test": {
         "name": "test",
-        "num_examples": 1230
+        "num_examples": 1784
       },
       "train": {
         "name": "train",
-        "num_examples": 1691
+        "num_examples": 2789
       }
     },
     "task_counts": {
-      "microtext": 2235,
-      "visualdiff": 1454
+      "microtext": 4098,
+      "visualdiff": 1596
     },
     "version": "0.95-package-clean-candidate"
   }

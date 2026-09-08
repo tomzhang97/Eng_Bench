@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Re-pin an active VisualDiff geometry hold after a disjoint description transaction."""
+"""Re-pin an active VisualDiff geometry hold after a disjoint Gold transaction."""
 from __future__ import annotations
 
 import argparse
@@ -75,14 +75,33 @@ def refresh(
         if current_hashes[path] != after_hashes.get(path):
             raise ValueError(f"active file does not match transaction output: {path}")
 
-    corrections_path = (root / str(transaction.get("corrections_artifact") or "")).resolve()
-    if not corrections_path.is_file() or holds.file_hash(corrections_path) != str(
-        transaction.get("corrections_artifact_sha256") or ""
-    ):
-        raise ValueError("transaction corrections are missing or stale")
-    correction_ids = {str(row.get("pair_id") or "") for row in holds.read_jsonl(corrections_path)}
-    if "" in correction_ids or correction_ids & hold_ids:
-        raise ValueError("description transaction overlaps active geometry holds")
+    correction_ids: set[str] = set()
+    transaction_kind = "visualdiff_description_correction"
+    corrections_text = str(transaction.get("corrections_artifact") or "").strip()
+    if corrections_text:
+        corrections_path = (root / corrections_text).resolve()
+        if not corrections_path.is_file() or holds.file_hash(corrections_path) != str(
+            transaction.get("corrections_artifact_sha256") or ""
+        ):
+            raise ValueError("transaction corrections are missing or stale")
+        correction_ids = {
+            str(row.get("pair_id") or "") for row in holds.read_jsonl(corrections_path)
+        }
+        if "" in correction_ids or correction_ids & hold_ids:
+            raise ValueError("description transaction overlaps active geometry holds")
+    else:
+        transaction_kind = "non_visualdiff_gold_transaction"
+        if transaction.get("mode") != "reviewed_gold_promotion_transaction":
+            raise ValueError("transaction corrections are missing or stale")
+        validation = transaction.get("validation") or {}
+        if int(validation.get("promoted_visualdiff_rows") or 0) != 0:
+            raise ValueError("gold transaction includes VisualDiff rows")
+        for path in (
+            "visualdiff/annotations/visualdiff_pairs.jsonl",
+            "visualdiff/annotations/visualdiff_questions.jsonl",
+        ):
+            if before_hashes.get(path) != after_hashes.get(path):
+                raise ValueError(f"gold transaction changed VisualDiff content: {path}")
 
     active_pairs = {
         str(row.get("pair_id") or ""): row
@@ -118,6 +137,7 @@ def refresh(
         "prior_hold_report_sha256": holds.file_hash(prior_report_path),
         "description_transaction": transaction_report.relative_to(root).as_posix(),
         "description_transaction_sha256": holds.file_hash(transaction_report),
+        "transaction_kind": transaction_kind,
         "description_correction_rows": len(correction_ids),
         "description_correction_overlap_with_holds": 0,
         "geometry_rows_verified": len(ledger_rows),

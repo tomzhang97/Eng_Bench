@@ -107,7 +107,8 @@ class ProvenanceReplacementReviewBatchTests(unittest.TestCase):
             ) as handle:
                 visual_checklist = list(csv.DictReader(handle))
             self.assertEqual(visual_checklist[0]["description_rewrite_required"], "True")
-            self.assertIn("必须选择 2", visual_checklist[0]["description_task"])
+            self.assertIn("确有工程变化时选择 2", visual_checklist[0]["description_task"])
+            self.assertIn("无变化选择 3", visual_checklist[0]["description_task"])
             with Image.open(output / "review_packs/visualdiff_1/panels/vd_001.png") as panel:
                 self.assertEqual(panel.getpixel((4, 4)), (153, 27, 27))
                 self.assertEqual(panel.getpixel((panel.width - 5, 4)), (15, 107, 111))
@@ -128,6 +129,7 @@ class ProvenanceReplacementReviewBatchTests(unittest.TestCase):
             self.assertIn("02_VisualDiff_1.xlsx", steps)
             self.assertIn("## MicroText 规则", steps)
             self.assertIn("## VisualDiff 规则", steps)
+            self.assertIn("位置不对应", steps)
             self.assertIn("VisualDiff 强制描述任务", steps)
             self.assertIn("有 `1` 条机器描述", steps)
             self.assertIn("只交回上述 2 个填写后的 XLSX", steps)

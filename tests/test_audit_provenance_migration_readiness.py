@@ -249,6 +249,31 @@ class ProvenanceMigrationReadinessTest(unittest.TestCase):
                 {issue["code"] for issue in report["structural_issues"]},
             )
 
+    def test_promoted_source_candidate_identity_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            plan, affected, candidates, _ = self.build_fixture(root)
+            write_jsonl(
+                root / "microtext" / "annotations" / "microtext_items.jsonl",
+                [
+                    {
+                        "item_id": "generated_item",
+                        "source_candidate_id": "candidate_1",
+                    }
+                ],
+            )
+            report = auditor.build_report(
+                root=root,
+                plan_path=plan,
+                affected_path=affected,
+                candidates_path=candidates,
+            )
+            self.assertFalse(report["plan_structurally_ready"])
+            self.assertIn(
+                "replacement_candidates_already_active_gold",
+                {issue["code"] for issue in report["structural_issues"]},
+            )
+
     def test_reviewed_row_with_changed_evidence_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

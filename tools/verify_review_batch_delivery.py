@@ -163,7 +163,10 @@ def workbook_evidence_report(data: bytes) -> dict[str, Any]:
                 for value in ("#REF!", "#DIV/0!", "#VALUE!", "#NAME?")
                 if value in xml_text
             ]
-            mandatory_rewrite_formula_count = xml_text.count("必须选2并重写")
+            mandatory_rewrite_formula_count = (
+                xml_text.count("必须选2并重写")
+                + xml_text.count("不能直接选1")
+            )
     except (OSError, zipfile.BadZipFile, ET.ParseError, ValueError) as exc:
         issues.append(f"invalid workbook evidence: {exc}")
     if formula_errors:

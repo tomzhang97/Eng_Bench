@@ -240,6 +240,87 @@ class ProvenanceReplacementPlanTests(unittest.TestCase):
             self.assertEqual(summary["preferred_issued_retired_active_gold"], 1)
             self.assertEqual(summary["preferred_issued_missing"], 0)
 
+    def test_promoted_microtext_source_candidate_identity_is_excluded(self):
+        mod = load_module()
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            write_jsonl(root / "manifest.jsonl", [])
+            write_jsonl(
+                root / "eng_bench.jsonl",
+                [
+                    {
+                        "id": "q_blocked",
+                        "task": "microtext",
+                        "split": "dev",
+                        "metadata": {"doc_id": "blocked", "category": "pin_label"},
+                    },
+                    {
+                        "id": "q_generated_item",
+                        "task": "microtext",
+                        "split": "dev",
+                        "metadata": {
+                            "doc_id": "open",
+                            "category": "pin_label",
+                            "item_id": "generated_item",
+                        },
+                    },
+                ],
+            )
+            write_jsonl(
+                root / "microtext" / "annotations" / "microtext_items.jsonl",
+                [
+                    {
+                        "item_id": "generated_item",
+                        "source_candidate_id": "promoted_candidate",
+                    }
+                ],
+            )
+            (root / "SOURCE_INVENTORY.csv").write_text(
+                "doc_id,task,public_status\nopen,microtext,public_domain_candidate\n",
+                encoding="utf-8-sig",
+            )
+            (root / "provenance.json").write_text(
+                json.dumps({"documents": [{"doc_id": "blocked", "paper_ready": False}]}),
+                encoding="utf-8",
+            )
+            candidates = [
+                {
+                    "candidate_id": "promoted_candidate",
+                    "task": "microtext",
+                    "doc_id": "open",
+                    "category": "pin_label",
+                    "reserved_split": "dev",
+                    "source_public_status": "public_domain_candidate",
+                    "safe_to_merge_gold": False,
+                },
+                {
+                    "candidate_id": "fresh_candidate",
+                    "task": "microtext",
+                    "doc_id": "open",
+                    "category": "pin_label",
+                    "reserved_split": "dev",
+                    "source_public_status": "public_domain_candidate",
+                    "safe_to_merge_gold": False,
+                },
+            ]
+            write_jsonl(root / "current.jsonl", candidates)
+            write_jsonl(root / "future.jsonl", [])
+            write_jsonl(root / "preferred.jsonl", [candidates[0]])
+
+            summary, _, selected, _ = mod.build_plan(
+                root=root,
+                provenance_report=root / "provenance.json",
+                current_assignment=root / "current.jsonl",
+                future_capacity=root / "future.jsonl",
+                date_label="fixture",
+                max_per_source=50,
+                preferred_issued=[root / "preferred.jsonl"],
+            )
+
+            self.assertEqual([row["candidate_id"] for row in selected], ["fresh_candidate"])
+            self.assertEqual(summary["candidate_pool_rejections"]["already_active_gold_identity"], 1)
+            self.assertEqual(summary["preferred_issued_retired_active_gold"], 1)
+
     def test_builds_split_preserving_nonmergeable_replacement_plan(self):
         mod = load_module()
         with tempfile.TemporaryDirectory() as temp_dir:

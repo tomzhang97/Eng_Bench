@@ -624,6 +624,277 @@ class MachineFirstResponsibilityTest(unittest.TestCase):
             self.assertEqual(1, report["machine_owned"]["eligible_after_one_calibration"])
             self.assertEqual(1, report["machine_owned"]["calibration_rows_remaining"])
 
+    def test_reuse_can_bind_to_full_cohort_with_nonpin_report_supplied(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            eligibility, agreement = self.fixture(root)
+            nonpin_rows = root / "nonpin.jsonl"
+            nonpin_checklist = root / "nonpin.csv"
+            write_jsonl(
+                nonpin_rows,
+                [
+                    {
+                        "candidate_id": "a",
+                        "task": "microtext",
+                        "reserved_split": "train",
+                        "category": "component_value",
+                    },
+                    {
+                        "candidate_id": "b",
+                        "task": "microtext",
+                        "reserved_split": "train",
+                        "category": "component_value",
+                    },
+                ],
+            )
+            nonpin_checklist.write_text(
+                "candidate_id,category,reviewer_decision\na,component_value,\n",
+                encoding="utf-8",
+            )
+            nonpin_report = root / "nonpin_report.json"
+            nonpin_report.write_text(
+                json.dumps(
+                    {
+                        "counts": {
+                            "auto_eligible_pending_calibration": 2,
+                            "auto_eligible_deferred_pin": 0,
+                        },
+                        "calibration_sample": {"rows": 1},
+                        "artifacts": {
+                            "auto_eligible": {
+                                "path": nonpin_rows.name,
+                                "sha256": sha(nonpin_rows),
+                            },
+                            "calibration_checklist": {
+                                "path": nonpin_checklist.name,
+                                "sha256": sha(nonpin_checklist),
+                            },
+                        },
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            pending = root / "pending.jsonl"
+            already_active = root / "already_active.jsonl"
+            conflicts = root / "conflicts.jsonl"
+            remaining = root / "remaining.csv"
+            write_jsonl(
+                pending,
+                [
+                    {
+                        "candidate_id": "a",
+                        "task": "microtext",
+                        "reserved_split": "train",
+                    },
+                    {
+                        "candidate_id": "b",
+                        "task": "microtext",
+                        "reserved_split": "train",
+                    },
+                ],
+            )
+            write_jsonl(already_active, [])
+            write_jsonl(conflicts, [])
+            remaining.write_text(
+                "candidate_id,reviewer_decision\na,\n", encoding="utf-8"
+            )
+            gold = root / "eng_bench.jsonl"
+            write_jsonl(gold, [{"id": "gold"}])
+            active_hashes = {"eng_bench.jsonl": sha(gold)}
+            reuse = root / "reuse.json"
+            reuse.write_text(
+                json.dumps(
+                    {
+                        "schema": "eng_bench_machine_calibration_review_reuse_v1",
+                        "active_gold_modified": False,
+                        "safe_to_merge_gold": False,
+                        "cohort": {
+                            "eligibility_report_sha256": sha(eligibility)
+                        },
+                        "counts": {
+                            "calibration_rows": 1,
+                            "reused_correct_rows": 0,
+                            "remaining_rows": 1,
+                            "eligible_rows_original": 2,
+                            "eligible_rows_current_pending": 2,
+                            "eligible_rows_already_active": 0,
+                            "conflict_rows": 0,
+                        },
+                        "active_file_hashes_before": active_hashes,
+                        "active_file_hashes_after": active_hashes,
+                        "artifacts": {
+                            "current_pending_auto_eligible": {
+                                "path": pending.name,
+                                "sha256": sha(pending),
+                            },
+                            "already_active_auto_eligible": {
+                                "path": already_active.name,
+                                "sha256": sha(already_active),
+                            },
+                            "conflicts": {
+                                "path": conflicts.name,
+                                "sha256": sha(conflicts),
+                            },
+                            "remaining_checklist": {
+                                "path": remaining.name,
+                                "sha256": sha(remaining),
+                            },
+                        },
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            report = build_report(
+                root,
+                eligibility,
+                agreement,
+                date_label="test",
+                nonpin_eligibility_report_path=nonpin_report,
+                calibration_reuse_report_path=reuse,
+            )
+
+            self.assertTrue(report["structurally_valid"], report["issues"])
+            self.assertEqual(
+                "full", report["inputs"]["calibration_reuse"]["eligibility_scope"]
+            )
+
+    def test_readiness_accepts_active_duplicates_when_all_are_held(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            eligibility, agreement = self.fixture(root)
+            gold = root / "eng_bench.jsonl"
+            write_jsonl(gold, [{"id": "active_duplicate"}])
+
+            pending = root / "pending.jsonl"
+            already_active = root / "already_active.jsonl"
+            conflicts = root / "conflicts.jsonl"
+            remaining = root / "remaining.csv"
+            pending_row = {
+                "candidate_id": "a",
+                "task": "microtext",
+                "reserved_split": "train",
+                "category": "component_value",
+                "machine_certification_origin_cohort": "current",
+            }
+            write_jsonl(pending, [pending_row])
+            write_jsonl(
+                already_active,
+                [
+                    {
+                        "candidate_id": "b",
+                        "task": "microtext",
+                        "reserved_split": "train",
+                        "category": "component_value",
+                        "machine_certification_origin_cohort": "future",
+                    }
+                ],
+            )
+            write_jsonl(conflicts, [])
+            remaining.write_text(
+                "candidate_id,reviewer_decision\n", encoding="utf-8"
+            )
+            active_hashes = {"eng_bench.jsonl": sha(gold)}
+            reuse = {
+                "schema": "eng_bench_machine_calibration_review_reuse_v1",
+                "active_gold_modified": False,
+                "safe_to_merge_gold": False,
+                "cohort": {"eligibility_report_sha256": sha(eligibility)},
+                "counts": {
+                    "calibration_rows": 1,
+                    "reused_correct_rows": 1,
+                    "remaining_rows": 0,
+                    "eligible_rows_original": 2,
+                    "eligible_rows_current_pending": 1,
+                    "eligible_rows_already_active": 1,
+                    "eligible_rows_current_pending_nonpin": 1,
+                    "eligible_rows_current_pending_pin": 0,
+                    "conflict_rows": 0,
+                },
+                "active_file_hashes_before": active_hashes,
+                "active_file_hashes_after": active_hashes,
+                "artifacts": {
+                    "current_pending_auto_eligible": {
+                        "path": pending.name,
+                        "sha256": sha(pending),
+                    },
+                    "already_active_auto_eligible": {
+                        "path": already_active.name,
+                        "sha256": sha(already_active),
+                    },
+                    "conflicts": {"path": conflicts.name, "sha256": sha(conflicts)},
+                    "remaining_checklist": {
+                        "path": remaining.name,
+                        "sha256": sha(remaining),
+                    },
+                },
+            }
+            reuse_path = root / "reuse.json"
+            reuse_path.write_text(json.dumps(reuse), encoding="utf-8")
+
+            strict_ready = root / "strict_ready.jsonl"
+            structural_holds = root / "structural_holds.jsonl"
+            near_holds = root / "near_holds.jsonl"
+            duplicate_holds = root / "duplicate_holds.jsonl"
+            write_jsonl(strict_ready, [])
+            write_jsonl(structural_holds, [])
+            write_jsonl(near_holds, [])
+            duplicate_row = dict(pending_row)
+            duplicate_row["precalibration_collides_with"] = "active_duplicate"
+            duplicate_row["precalibration_hold_reasons"] = [
+                "strict_duplicate_qa_key"
+            ]
+            write_jsonl(duplicate_holds, [duplicate_row])
+            readiness_artifacts = {
+                "strict_ready": strict_ready,
+                "structural_holds": structural_holds,
+                "near_region_holds": near_holds,
+                "strict_duplicate_holds": duplicate_holds,
+            }
+            readiness = {
+                "schema": "eng_bench_nonpin_precalibration_readiness_v1",
+                "precalibration_forecast_valid": True,
+                "active_gold_modified": False,
+                "calibration_required": True,
+                "ready_for_promotion": False,
+                "safe_to_merge_gold": False,
+                "gates": {"strict": True},
+                "inputs": {"reuse_report_sha256": sha(reuse_path)},
+                "counts": {
+                    "current_pending_input_rows": 1,
+                    "nonpin_input_rows": 1,
+                    "strict_ready_if_calibrated": 0,
+                    "held_rows": 1,
+                    "strict_duplicate_holds": 1,
+                    "strict_duplicate_collisions_with_active_gold": 1,
+                    "strict_duplicate_collisions_within_forecast": 0,
+                },
+                "artifacts": {
+                    name: path.name for name, path in readiness_artifacts.items()
+                },
+                "artifact_sha256": {
+                    name: sha(path) for name, path in readiness_artifacts.items()
+                },
+            }
+            readiness_path = root / "readiness.json"
+            readiness_path.write_text(json.dumps(readiness), encoding="utf-8")
+
+            report = build_report(
+                root,
+                eligibility,
+                agreement,
+                date_label="test",
+                calibration_reuse_report_path=reuse_path,
+                nonpin_readiness_report_path=readiness_path,
+            )
+
+            self.assertTrue(report["structurally_valid"], report["issues"])
+            self.assertEqual(
+                1,
+                report["machine_owned"]["precalibration_strict_duplicate_holds"],
+            )
+
 
 if __name__ == "__main__":
     unittest.main()

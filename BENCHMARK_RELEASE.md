@@ -2,18 +2,29 @@
 
 **Date:** 2026-09-08
 **Status:** v0.9 Silver lineage, working dataset; not a publishable Gold v2.0 Global release
-**Current Active Samples:** 1596 Visual-Diff Questions, 2986 Microtext Questions (4582 total)
+**Current Active Samples:** 1596 Visual-Diff Questions, 4098 Microtext Questions (5694 total)
 **License:** Mixed public-source candidate; see [DATACARD.md](DATACARD.md) and `SOURCE_INVENTORY.csv`
 
 ## Current Verified Checkpoint
 
-Gold v2.0 Global remains **5/9 gates PASS**. Row scale (4582/25000 minimum),
-frozen challenge scale (1600/5000), formal agreement (0/185), and complete source provenance
-(204/213 paper-ready documents) remain OPEN. Category balance, 338
-machine-detectable nonfinal VisualDiff descriptions, 526 BBB rows with corrected
-geometry but unverified semantics, and 49 unresolved active
-audit flags also block release. Current gate:
-`derived/quality/v2_0_gate_audit_2026-09-08-wave2202-bbb-geometry-current.json`.
+Gold v2.0 Global remains **5/9 gates PASS**. Row scale (5694/25000 minimum),
+frozen challenge scale (1600/5000), formal agreement (0/185), and complete source
+provenance (298/307 paper-ready documents) remain OPEN. Six MicroText category
+floors, 336 machine-detectable nonfinal VisualDiff descriptions, 526 BBB rows
+with corrected geometry but unverified semantics, and 49 unresolved active audit
+flags also block release. Current gate:
+`results/health/v2_0_gate_audit_2026-09-08-wave2295-machine-readiness.json`.
+The 29 counted baseline reports remain bound to the existing 1,600-row frozen
+challenge. Active test now contains 1,784 rows, so the 184 rows outside that
+freeze are not yet part of the public/private challenge or its baseline scores.
+
+The post-promotion machine lane is now current and fail-closed. Twenty-five of
+the frozen 300 calibration decisions are reusable from exact accepted human
+reviews, leaving 275 independent calibration decisions. After removing 385
+rows already active through human review, pin rows, and 26 duplicate-QA holds,
+799 non-pin train MicroText rows pass the combined-Gold forecast. They remain
+outside Gold until calibration succeeds and the normal promotion transaction
+passes; this readiness evidence is not row-count or release-gate credit.
 
 The formal agreement preparation blocker is now closed. A quality-filtered,
 release-safe 185-row sample (95 MicroText and 90 VisualDiff) is packaged for two
@@ -34,16 +45,15 @@ generator descriptions, and two non-English descriptions. This replaces v5
 and all earlier routine audit ZIPs; v5 contains pre-repair BBB evidence and
 must not be distributed.
 
-The current MicroText balance path is now hash-bound and split-safe. After a
-passing 293-row calibration, 1,112 non-pin rows are strict-ready. Exactly 547
-already assigned primary-review rows plus 407 release-safe future rows close
-all category floors and lower modeled pin concentration to 34.78% at full
-acceptance. A conservative 65%-acceptance buffer contains 629 rows across 162
-documents and still closes every floor; 12 row-specific split-plan files,
-source payload hashes, images, and bounding boxes are verified. These are
-non-Gold readiness rows (`safe_to_merge_gold=false`), not release progress.
-Reports: `derived/quality/v2_0_microtext_balance_lanes_2026-09-08-wave2163-current-category-capacity.json`
-and `derived/quality/v2_0_release_safe_microtext_category_closure_buffered_2026-09-08-wave2166.json`.
+The current MicroText balance path is hash-bound and split-safe. Wave2285
+promoted 1,112 completed primary-reviewed rows only after active-Gold collision,
+split-reservation, duplicate-QA, answer-leakage, evidence-hold, provenance, and
+strict combined-Gold checks. The active pin-label share is now 43.66%, below the
+45% ceiling, and open category floors fell from eight to six. The remaining
+shortfalls are dimension value 194, equipment tag 72, instrument tag 222,
+pipe/line tag 69, process value 91, and tolerance value 78. No VisualDiff row
+from the returned primary workbook was promoted because its alignment evidence
+requires correction or rereview.
 
 The existing 1600-row challenge export is a historical freeze, not evidence of
 current release eligibility. New export generation now refuses known unresolved
@@ -478,7 +488,8 @@ and question leakage pass.
 ## 14. Same-Slot Text Replacement Finality (2026-09-08)
 
 A third fail-closed description-finality lane corrected three existing
-human-reviewed answers from tentative wording to exact same-slot replacement wording. Held-out answer text is omitted from the public release notes.
+human-reviewed answers from tentative removal wording to exact same-slot
+replacement wording: `ADC0 -> A0`, `GPIO1 -> G1`, and `0.22uF -> 2.2uF`.
 Eligibility required a unique related opposite-side span within the reviewed
 gap, matching page, font, size, flags, left edge and baseline, clean source
 rights, and no audit or evidence hold. All three evidence panels were visually
@@ -521,3 +532,34 @@ frozen challenge 1,600/5,000, formal agreement 0/185, and provenance 204/213
 remain open. Additional release constraints include 338 nonfinal VisualDiff
 descriptions, 526 BBB semantic holds, 49 active audit flags, and MicroText
 category imbalance. No unreviewed row entered Gold.
+
+## 16. Provenance-Safe Primary Continuation (2026-09-09)
+
+Active Gold remains **5,694 rows** and **5/9 Gold v2.0 Global gates PASS**.
+The provenance replacement planner and readiness auditor now treat the
+`source_candidate_id` retained by promoted MicroText rows as an active identity.
+This prevents a reviewed staging candidate from being counted again after it
+has already entered Gold.
+
+The refreshed contract provides exact one-for-one replacement capacity for all
+1,430 Gold rows tied to nine blocked active documents, with matching task/split
+counts and 1,430 unique evidence fingerprints. Of these replacements, 1,171
+accepted/edited human reviews remain reusable and 259 are outstanding: 46
+MicroText and 213 VisualDiff. The contract is structurally ready but not ready
+for atomic migration; no source-bound row has been retired or inserted.
+
+The current primary delivery is
+`outputs/019e1bc5-9ba4-7ac0-b67b-631b6a8208a7/Eng_Bench_Gold_v2_Primary_Next_Action_533_2026-09-09.zip`.
+It contains four flat XLSX workbooks totaling 533 actions: 34 continuation,
+254 corrected-evidence VisualDiff rereviews, 46 provenance MicroText
+replacements, and 199 provenance VisualDiff replacements. Its archive has no
+nested ZIP, passes CRC and clean extraction, and all manifest hashes match.
+
+The primary reviewer's VisualDiff warning is now part of the release contract:
+red-box displacement or whole-crop offset is not an engineering change, and
+OLD/NEW evidence from different locations cannot support a change claim. All
+292 returned VisualDiff rows remain held pending corrected evidence or explicit
+human resolution. No unreviewed row entered Gold.
+
+The authoritative formal report is
+`results/health/v2_0_gate_audit_2026-09-09-wave2305-primary-handoff.json`.
