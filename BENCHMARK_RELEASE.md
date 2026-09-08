@@ -13,7 +13,7 @@ provenance (298/307 paper-ready documents) remain OPEN. Six MicroText category
 floors, 336 machine-detectable nonfinal VisualDiff descriptions, 526 BBB rows
 with corrected geometry but unverified semantics, and 49 unresolved active audit
 flags also block release. Current gate:
-`results/health/v2_0_gate_audit_2026-09-08-wave2295-machine-readiness.json`.
+`results/health/v2_0_gate_audit_2026-09-09-wave2324-nasa-engineering-systems.json`.
 The 29 counted baseline reports remain bound to the existing 1,600-row frozen
 challenge. Active test now contains 1,784 rows, so the 184 rows outside that
 freeze are not yet part of the public/private challenge or its baseline scores.
@@ -582,3 +582,29 @@ PASS, not a provenance-release PASS: active provenance remains 298/307 until
 the 1,430 affected Gold rows are atomically replaced by completed reviewed
 rows, or document-specific permission is obtained. No Gold file or rights
 status was changed.
+
+## 18. NASA Engineering-System Review Capacity (2026-09-09)
+
+Three additional NASA NTRS sources were imported from records `19740012479`,
+`19860020490`, and `19820008612`. Their official metadata records public
+distribution, government public-use permission, no third-party material or
+permissions, and no EAR/ITAR/export restriction. PDF and metadata SHA-256 values
+are pinned in `derived/source_specs/v2_0_wave2309_nasa_engineering_systems_source.json`.
+
+Only five visually useful pages were selected: two turbine-vane test and fuel-
+control schematics, two ultra-high-vacuum test-system schematics, and one
+rotated silicon-process flowsheet. OCR proposed 128 review rows. A complete
+machine visual pass retained 37 readable engineering targets and held 91 chart
+ticks, captions, fragments, ambiguous crops, and taxonomy mismatches. The kept
+set contains 2 dimension values, 18 equipment tags, 3 instrument tags, and 14
+process labels across three distinct source payloads.
+
+All 37 retained rows pass active-Gold collision, cross-cohort identity and
+near-region suppression, payload-alias filtering, and evidence materialization.
+They are registered as validated future review capacity at
+`derived/quality/v2_0_staged_capacity_2026-09-09-wave2322-nasa-engineering-systems.json`.
+They are not human-reviewed and are not Gold. Current Gold remains 5,694 rows;
+the all-staged upper bound is 5,731. Wave2324 remains **5/9 Gold v2.0 Global
+gates PASS**. The release-safe inventory rises to 555 unique documents, while
+row scale, frozen challenge scale, formal agreement, and complete active
+provenance remain OPEN.

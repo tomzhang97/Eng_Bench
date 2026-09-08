@@ -40,12 +40,20 @@ challenge scale, formal agreement, and complete provenance are still open. See
 All nine blocked active documents now have dated, authoritative-policy,
 hash-bound rights decisions covering 2,333 active source references. Every
 decision remains a hold, so this evidence closes ambiguity rather than the
-provenance gate. Wave2307 is the current formal gate report.
+provenance gate. Wave2324 is the current formal gate report.
 The post-promotion machine audit reuses 25 exact calibration decisions and
 identifies 799 non-pin train MicroText rows that pass every strict forecast gate
 but remain outside Gold until the remaining 275-row calibration is complete.
 The current primary-review handoff is the verified flat 533-action ZIP recorded
 in `AUDITOR_RETURN_STATUS.md`; it supersedes the earlier 288-action package.
+Three additional release-safe NASA engineering-system sources are now imported
+as review-only capacity. Five selected turbine-test, vacuum-system, and silicon-
+process pages produced 128 OCR candidates; machine visual curation retained 37
+complete engineering labels and held 91 fragments, chart ticks, captions, and
+taxonomy mismatches. All 37 retained rows have complete crop evidence and zero
+active-Gold, assignment-history, payload-alias, or near-region collision, but
+remain outside Gold pending human review. The validated staged upper bound is
+5,731 rows, not the current Gold count.
 
 ### Unified Loader
 
