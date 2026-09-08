@@ -31,6 +31,85 @@ def write_jsonl(path: Path, rows: list[dict]) -> None:
 
 
 class ProvenanceReplacementPlanTests(unittest.TestCase):
+    def test_excluded_preferred_candidate_is_replaced_without_missing_error(self):
+        mod = load_module()
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            write_jsonl(root / "manifest.jsonl", [])
+            write_jsonl(
+                root / "eng_bench.jsonl",
+                [
+                    {
+                        "id": "active",
+                        "task": "microtext",
+                        "split": "dev",
+                        "metadata": {"doc_id": "blocked", "category": "pin_label"},
+                    }
+                ],
+            )
+            (root / "SOURCE_INVENTORY.csv").write_text(
+                "doc_id,task,public_status\n"
+                "open_a,microtext,public_domain_candidate\n"
+                "open_b,microtext,public_domain_candidate\n",
+                encoding="utf-8-sig",
+            )
+            (root / "provenance.json").write_text(
+                json.dumps({"documents": [{"doc_id": "blocked", "paper_ready": False}]}),
+                encoding="utf-8",
+            )
+            candidates = [
+                {
+                    "candidate_id": "human_rejected",
+                    "task": "microtext",
+                    "doc_id": "open_a",
+                    "category": "pin_label",
+                    "reserved_split": "dev",
+                    "source_public_status": "public_domain_candidate",
+                    "safe_to_merge_gold": False,
+                },
+                {
+                    "candidate_id": "fresh_alternate",
+                    "task": "microtext",
+                    "doc_id": "open_b",
+                    "category": "pin_label",
+                    "reserved_split": "dev",
+                    "source_public_status": "public_domain_candidate",
+                    "safe_to_merge_gold": False,
+                },
+            ]
+            write_jsonl(root / "current.jsonl", candidates)
+            write_jsonl(root / "future.jsonl", [])
+            write_jsonl(root / "issued.jsonl", [candidates[0]])
+
+            summary, _, selected, _ = mod.build_plan(
+                root=root,
+                provenance_report=root / "provenance.json",
+                current_assignment=root / "current.jsonl",
+                future_capacity=root / "future.jsonl",
+                date_label="fixture",
+                max_per_source=50,
+                preferred_issued=[root / "issued.jsonl"],
+                excluded_candidate_ids={"human_rejected"},
+            )
+
+            self.assertEqual([row["candidate_id"] for row in selected], ["fresh_alternate"])
+            self.assertEqual(summary["candidate_pool_rejections"]["excluded_candidate_identity"], 1)
+            self.assertEqual(summary["preferred_issued_excluded"], 1)
+            self.assertEqual(summary["preferred_issued_missing"], 0)
+
+    def test_read_identity_file_supports_csv_and_jsonl(self):
+        mod = load_module()
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            (root / "holds.csv").write_text(
+                "record_id,status\nfrom_csv,rejected\n",
+                encoding="utf-8-sig",
+            )
+            write_jsonl(root / "holds.jsonl", [{"pair_id": "from_jsonl"}])
+
+            self.assertEqual(mod.read_identity_file(root / "holds.csv"), {"from_csv"})
+            self.assertEqual(mod.read_identity_file(root / "holds.jsonl"), {"from_jsonl"})
+
     def test_active_underlying_identity_is_excluded_and_preferred_is_retired(self):
         mod = load_module()
         with tempfile.TemporaryDirectory() as temp_dir:

@@ -42,6 +42,26 @@ def read_csv(path: Path) -> list[dict[str, str]]:
         return list(csv.DictReader(handle))
 
 
+def identity_from_row(row: dict[str, Any]) -> str:
+    return str(
+        row.get("candidate_id")
+        or row.get("pair_id")
+        or row.get("record_id")
+        or row.get("item_id")
+        or row.get("id")
+        or ""
+    ).strip()
+
+
+def read_identity_file(path: Path) -> set[str]:
+    rows: list[dict[str, Any]]
+    if path.suffix.lower() == ".csv":
+        rows = read_csv(path)
+    else:
+        rows = read_jsonl(path)
+    return {identity_from_row(row) for row in rows if identity_from_row(row)}
+
+
 def write_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -148,7 +168,7 @@ def active_source_docs(row: dict[str, Any], pair_docs: dict[str, set[str]]) -> s
 
 
 def candidate_identity(row: dict[str, Any]) -> str:
-    return str(row.get("candidate_id") or row.get("pair_id") or row.get("id") or "").strip()
+    return identity_from_row(row)
 
 
 def active_candidate_identities(active_rows: list[dict[str, Any]]) -> set[str]:
@@ -287,6 +307,7 @@ def build_plan(
     date_label: str,
     max_per_source: int,
     preferred_issued: list[Path] | None = None,
+    excluded_candidate_ids: set[str] | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
     load_rgb_image.cache_clear()
     provenance = read_json(provenance_report)
@@ -339,6 +360,7 @@ def build_plan(
         for row in read_jsonl(path)
         if candidate_identity(row)
     }
+    excluded_candidate_ids = set(excluded_candidate_ids or set())
 
     candidate_rows: list[dict[str, Any]] = []
     rejected_candidates: Counter[str] = Counter()
@@ -350,6 +372,9 @@ def build_plan(
                 rejected_candidates["missing_or_duplicate_identity"] += 1
                 continue
             seen_identities.add(identity)
+            if identity in excluded_candidate_ids:
+                rejected_candidates["excluded_candidate_identity"] += 1
+                continue
             if identity in active_candidate_ids:
                 rejected_candidates["already_active_gold_identity"] += 1
                 continue
@@ -515,7 +540,13 @@ def build_plan(
     candidate_identities = {str(row["_replacement_identity"]) for row in candidate_rows}
     selected_preferred_issued = len(selected_ids & preferred_issued_ids)
     retired_active_preferred = preferred_issued_ids & active_candidate_ids
-    missing_preferred_issued = preferred_issued_ids - retired_active_preferred - candidate_identities
+    excluded_preferred_issued = preferred_issued_ids & excluded_candidate_ids
+    missing_preferred_issued = (
+        preferred_issued_ids
+        - retired_active_preferred
+        - excluded_preferred_issued
+        - candidate_identities
+    )
     summary = {
         "date_label": date_label,
         "blocked_active_source_docs": sorted(blocked_docs),
@@ -554,7 +585,12 @@ def build_plan(
         "preferred_issued_available": len(preferred_issued_ids & candidate_identities),
         "preferred_issued_selected": selected_preferred_issued,
         "preferred_issued_retired_active_gold": len(retired_active_preferred),
+        "preferred_issued_excluded": len(excluded_preferred_issued),
         "preferred_issued_missing": len(missing_preferred_issued),
+        "excluded_candidate_identities_requested": len(excluded_candidate_ids),
+        "excluded_candidate_identities_present": len(
+            excluded_candidate_ids & (seen_identities | active_candidate_ids)
+        ),
         "all_replacement_capacity_available": all(row["remaining_gap"] == 0 for row in gap_rows),
         "reviewed_replacements_promoted": 0,
         "active_gold_rows_modified": 0,
@@ -588,6 +624,16 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="Fail when any preferred-issued identity is absent from the validated candidate pool.",
     )
+    parser.add_argument(
+        "--exclude-candidates",
+        type=Path,
+        action="append",
+        default=[],
+        help=(
+            "CSV or JSONL containing candidate identities that must not be selected; "
+            "repeat for human holds, evidence holds, or superseded candidates."
+        ),
+    )
     parser.add_argument("--output-json", type=Path, required=True)
     parser.add_argument("--affected-jsonl", type=Path, required=True)
     parser.add_argument("--candidates-jsonl", type=Path, required=True)
@@ -606,6 +652,12 @@ def main(argv: list[str] | None = None) -> int:
     root = args.root.resolve()
     if args.max_per_source <= 0:
         raise ValueError("--max-per-source must be positive")
+    excluded_paths = [resolve(root, path) for path in args.exclude_candidates]
+    excluded_candidate_ids = {
+        identity
+        for path in excluded_paths
+        for identity in read_identity_file(path)
+    }
     summary, affected, candidates, gaps = build_plan(
         root=root,
         provenance_report=resolve(root, args.provenance_report),
@@ -614,7 +666,15 @@ def main(argv: list[str] | None = None) -> int:
         date_label=args.date_label,
         max_per_source=args.max_per_source,
         preferred_issued=[resolve(root, path) for path in args.preferred_issued],
+        excluded_candidate_ids=excluded_candidate_ids,
     )
+    summary["excluded_candidate_sources"] = [
+        {
+            "path": path.as_posix(),
+            "identities": len(read_identity_file(path)),
+        }
+        for path in excluded_paths
+    ]
     if args.require_all_preferred_issued and summary["preferred_issued_missing"]:
         raise ValueError(
             f"{summary['preferred_issued_missing']} preferred-issued rows are absent from the candidate pool"
