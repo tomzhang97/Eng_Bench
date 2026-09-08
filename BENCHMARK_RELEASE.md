@@ -8,9 +8,9 @@
 ## Current Verified Checkpoint
 
 Gold v2.0 Global remains **5/9 gates PASS**. Row scale (4560/25000 minimum),
-test scale (1613/5000), formal agreement (0/185), and complete source provenance
+frozen challenge scale (1600/5000), formal agreement (0/185), and complete source provenance
 (201/210 paper-ready documents) remain OPEN. Category balance, 92 tentative
-VisualDiff descriptions and 48 unresolved active audit flags also block release.
+VisualDiff descriptions and 49 unresolved active audit flags also block release.
 Current gate: `results/health/v2_0_gate_audit_2026-09-08-github-sync-preflight.json`.
 
 The existing 1600-row challenge export is a historical freeze, not evidence of
@@ -311,7 +311,7 @@ The current verified release state is 5/9 formal gates PASS. Active Gold remains
 4,560 rows, including 1,613 test rows. Distinct paper-ready source payloads
 (199/150), release-safe inventory (552/150), VisualDiff families (43/30), counted
 baselines (29/20), and leaderboard infrastructure (7/7) pass. Total scale
-(4,560/25,000), test scale (1,613/5,000), formal agreement (0/185), and complete
+(4,560/25,000), frozen challenge scale (1,600/5,000), formal agreement (0/185), and complete
 provenance (201/210) remain open.
 
 The 12-auditor history now contains 528 validated quality-control observations
