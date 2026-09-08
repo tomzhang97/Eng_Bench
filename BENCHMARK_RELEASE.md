@@ -9,9 +9,10 @@
 
 Gold v2.0 Global remains **5/9 gates PASS**. Row scale (4582/25000 minimum),
 frozen challenge scale (1600/5000), formal agreement (0/185), and complete source provenance
-(204/213 paper-ready documents) remain OPEN. Category balance, 39 tentative
-VisualDiff descriptions and 49 unresolved active audit flags also block release.
-Current gate: `derived/quality/v2_0_gate_audit_2026-09-08-wave2175-auditor-v4-current.json`.
+(204/213 paper-ready documents) remain OPEN. Category balance, 338
+machine-detectable nonfinal VisualDiff descriptions and 49 unresolved active
+audit flags also block release. Current gate:
+`derived/quality/v2_0_gate_audit_2026-09-08-wave2183-description-contract-current.json`.
 
 The formal agreement preparation blocker is now closed. A quality-filtered,
 release-safe 185-row sample (95 MicroText and 90 VisualDiff) is packaged for two
@@ -21,14 +22,14 @@ Review completion is still 0/185, so this preparation does not pass the
 agreement gate or alter Gold.
 
 The current routine quality-control handoff is
-`derived/human_adjudication/Eng_Bench_Gold_v2_AUDITORS_12x24_GOLD_RECHECK_2026-09-08_v4.zip`.
+`derived/human_adjudication/Eng_Bench_Gold_v2_AUDITORS_12x24_GOLD_RECHECK_2026-09-08_v5.zip`.
 It assigns 144 active-Gold identities to two independent auditors each (288
 blank judgments total). Historical assignments, completed decisions, the 185
-formal-agreement rows, 49 active audit flags, and all 39 known tentative
-VisualDiff descriptions are excluded. It also excludes 146 descriptions with
-machine-provable release debt: 125 TODO placeholders, 19 generic highlight
-templates, and two non-English descriptions. This replaces v3 and every
-earlier routine audit ZIP; no audit packet is a Gold-promotion path.
+formal-agreement rows, 49 active audit flags, and all 338 machine-detectable
+nonfinal VisualDiff descriptions are excluded. The latter comprise 125 TODO
+placeholders, 172 unvalidated machine visual descriptions, 39 tentative
+generator descriptions, and two non-English descriptions. This replaces v4
+and every earlier routine audit ZIP; no audit packet is a Gold-promotion path.
 
 The current MicroText balance path is now hash-bound and split-safe. After a
 passing 293-row calibration, 1,112 non-pin rows are strict-ready. Exactly 547
