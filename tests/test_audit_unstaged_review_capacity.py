@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 import csv
 import hashlib
 import json
@@ -14,7 +15,7 @@ TOOLS = ROOT / "tools"
 if str(TOOLS) not in sys.path:
     sys.path.insert(0, str(TOOLS))
 
-from audit_unstaged_review_capacity import build_report
+from audit_unstaged_review_capacity import build_report, parse_tier_output, write_outputs
 
 
 def write_jsonl(path: Path, rows: list[dict]) -> None:
@@ -64,6 +65,44 @@ def candidate(root: Path, doc_id: str, suffix: str, bbox: list[int]) -> dict:
 
 
 class UnstagedReviewCapacityTest(unittest.TestCase):
+    def test_parse_tier_output_requires_named_path(self) -> None:
+        self.assertEqual(
+            parse_tier_output("manual_transcription_or_taxonomy=manual.jsonl"),
+            ("manual_transcription_or_taxonomy", Path("manual.jsonl")),
+        )
+        with self.assertRaisesRegex(argparse.ArgumentTypeError, "TIER=PATH"):
+            parse_tier_output("manual_transcription_or_taxonomy")
+
+    def test_write_outputs_can_export_a_named_tier(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            manual_path = root / "manual.jsonl"
+            write_outputs(
+                {
+                    "goal": "Gold v2.0 Global",
+                    "review_files": [],
+                    "terminal_review_files": [],
+                    "current_paths": [],
+                    "future_paths": [],
+                    "reserved_paths": [],
+                    "totals": {},
+                    "documents": [],
+                    "interpretation": "fixture",
+                },
+                [],
+                json_path=root / "report.json",
+                md_path=root / "report.md",
+                csv_path=root / "report.csv",
+                samples_path=root / "samples.jsonl",
+                ranked_rows=[
+                    {"candidate_id": "manual", "unstaged_capacity_tier": "manual_transcription_or_taxonomy"},
+                    {"candidate_id": "machine", "unstaged_capacity_tier": "machine_prequalified_needs_visual_qa"},
+                ],
+                tier_paths={"manual_transcription_or_taxonomy": manual_path},
+            )
+            rows = [json.loads(line) for line in manual_path.read_text(encoding="utf-8").splitlines()]
+            self.assertEqual([row["candidate_id"] for row in rows], ["manual"])
+
     def setUpFixture(self, root: Path) -> dict[str, dict]:
         good = source(root, "good")
         blocked = source(root, "blocked", "restricted_reference_only")
@@ -254,6 +293,37 @@ class UnstagedReviewCapacityTest(unittest.TestCase):
             row = candidate(root, "good", "svg_coordinate_upper", [10, 10, 30, 30])
             row["proposed_text"] = '1.587500"'
             row["raw_text"] = '<TSPAN x="0" y="1.587500">BMEx80 Digital Sensor</TSPAN>'
+            review = root / "review.jsonl"
+            write_jsonl(review, [row])
+
+            report, samples, ranked = build_report(
+                root,
+                review_paths=[review],
+                current_paths=[current],
+                future_paths=[future],
+                date_label="fixture",
+            )
+
+            self.assertEqual(report["totals"]["machine_semantic_hold_rows"], 1)
+            self.assertEqual(len(ranked), 1)
+            self.assertEqual(samples[0]["unstaged_capacity_tier_reasons"], [
+                "textlayer_target_not_in_visible_text"
+            ])
+
+    def test_visible_text_contradiction_precedes_unresolved_version(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            self.setUpFixture(root)
+            write_jsonl(root / "microtext" / "annotations" / "microtext_items.jsonl", [])
+            write_jsonl(root / "visualdiff" / "annotations" / "visualdiff_pairs.jsonl", [])
+            current = root / "current.jsonl"
+            future = root / "future.jsonl"
+            write_jsonl(current, [])
+            write_jsonl(future, [])
+            row = candidate(root, "good", "svg_coordinate_unknown_version", [10, 10, 30, 30])
+            row["version_id"] = "unknown"
+            row["proposed_text"] = '1.587500"'
+            row["raw_text"] = '<tspan x="0" y="1.587500">BMEx80 Digital Sensor</tspan>'
             review = root / "review.jsonl"
             write_jsonl(review, [row])
 

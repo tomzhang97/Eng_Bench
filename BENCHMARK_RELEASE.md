@@ -13,7 +13,7 @@ provenance (298/307 paper-ready documents) remain OPEN. Six MicroText category
 floors, 336 machine-detectable nonfinal VisualDiff descriptions, 526 BBB rows
 with corrected geometry but unverified semantics, and 49 unresolved active audit
 flags also block release. Current gate:
-`results/health/v2_0_gate_audit_2026-09-09-wave2403-nonpin-calibration-corrected.json`.
+`results/health/v2_0_gate_audit_2026-09-09-wave2453-semantic-precedence-final.json`.
 The 29 counted baseline reports remain bound to the existing 1,600-row frozen
 challenge. Active test now contains 1,784 rows, so the 184 rows outside that
 freeze are not yet part of the public/private challenge or its baseline scores.
@@ -775,3 +775,32 @@ corrected second pass selects zero rows: the only apparent residual was the
 already-held beam callout. Further test growth therefore requires new source
 families or explicit human triage of lower-confidence taxonomy/transcription
 rows; current high-confidence rows will not be recycled to inflate capacity.
+
+## 24. Manifest Version And Taxonomy Recovery Pass (2026-09-09)
+
+Waves2433-2451 remove two machine-fixable blockers from the unstaged review
+reservoir without changing active Gold. Manifest enrichment now falls back to
+an exact source-payload SHA-256 when a registered document lacks a semantic
+revision label. All 614 targeted unresolved-version rows received deterministic
+lineage, with zero unresolved hold. A reusable `--tier-jsonl TIER=PATH` export
+also replaces ad hoc extraction of readiness lanes.
+
+The final refreshed reservoir contains 3,759 machine-prequalified candidates,
+187 semantic holds, and 525 manual transcription/taxonomy rows after staging
+five rows and making the partial label hold terminal. Conservative pattern
+filtering advanced only three manual rows;
+authoritative-bbox review held partial `VENT` text and retained complete
+`ACCUMULATOR` and `ORIFICE` labels. The manifest-version lane separately retained
+the complete `90`, `180`, and `270` degree cryofill angle labels. All other
+ambiguous, malformed, or unsupported rows remain held.
+
+The Wave2445 connected-family plan preserves every prior assignment and reserves
+34 staged rows to train, two to dev, and 817 to test. Wave2447 verifies 853
+unique staged rows, zero unassigned/provisional rows, a 6,547 all-staged upper
+bound, and 2,601 explicit staged test rows. All five newly retained rows remain
+`safe_to_merge_gold=false` pending the normal human and strict promotion gates.
+
+Wave2453 is the authoritative formal checkpoint: **Gold v2.0 Global remains
+5/9 gates PASS** at 5,694 active rows. The complete 1,470-test suite, legacy and
+strict-v2 validators, split and question leakage checks, source-payload hash
+audit, and all five frozen release hashes pass.

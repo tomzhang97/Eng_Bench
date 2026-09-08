@@ -44,6 +44,15 @@ def resolve_path(root: Path, value: str | Path) -> Path:
     return path if path.is_absolute() else root / path
 
 
+def parse_tier_output(value: str) -> tuple[str, Path]:
+    tier, separator, path = value.partition("=")
+    tier = tier.strip()
+    path = path.strip()
+    if not separator or not tier or not path:
+        raise argparse.ArgumentTypeError("tier output must use TIER=PATH")
+    return tier, Path(path)
+
+
 def valid_bbox(value: Any) -> bool:
     if not isinstance(value, (list, tuple)) or len(value) != 4:
         return False
@@ -125,12 +134,12 @@ def prequalification(row: dict[str, Any], domain: str) -> tuple[str, list[str]]:
         return "manual_transcription_or_taxonomy", ["noncanonical_or_missing_category"]
     if not microtext_selector.domain_category_compatible(domain, category):
         return "machine_semantic_hold", ["domain_category_mismatch"]
-    if not microtext_selector.resolved_version_id(row):
-        return "manual_transcription_or_taxonomy", ["unresolved_version"]
     raw = row.get("raw_text") or row.get("text_context") or ""
     visible = textlayer_visible_text(raw)
     if visible and normalized_text(text) not in normalized_text(visible):
         return "machine_semantic_hold", ["textlayer_target_not_in_visible_text"]
+    if not microtext_selector.resolved_version_id(row):
+        return "manual_transcription_or_taxonomy", ["unresolved_version"]
     return "machine_prequalified_needs_visual_qa", []
 
 
@@ -447,6 +456,7 @@ def write_outputs(
     actionable_path: Path | None = None,
     actionable_microtext_path: Path | None = None,
     actionable_visualdiff_path: Path | None = None,
+    tier_paths: dict[str, Path] | None = None,
 ) -> None:
     paths = [json_path, md_path, csv_path, samples_path]
     if ranked_path is not None:
@@ -457,6 +467,7 @@ def write_outputs(
         paths.append(actionable_microtext_path)
     if actionable_visualdiff_path is not None:
         paths.append(actionable_visualdiff_path)
+    paths.extend((tier_paths or {}).values())
     for path in paths:
         path.parent.mkdir(parents=True, exist_ok=True)
     json_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
@@ -494,6 +505,11 @@ def write_outputs(
         with actionable_visualdiff_path.open("w", encoding="utf-8") as handle:
             for row in ranked_rows or []:
                 if row.get("unstaged_capacity_tier") == "visualdiff_alignment_candidate":
+                    handle.write(json.dumps(row, sort_keys=True) + "\n")
+    for tier, tier_path in (tier_paths or {}).items():
+        with tier_path.open("w", encoding="utf-8") as handle:
+            for row in ranked_rows or []:
+                if row.get("unstaged_capacity_tier") == tier:
                     handle.write(json.dumps(row, sort_keys=True) + "\n")
     totals = report["totals"]
     lines = [
@@ -565,6 +581,14 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--actionable-microtext-jsonl", type=Path)
     parser.add_argument("--actionable-visualdiff-jsonl", type=Path)
+    parser.add_argument(
+        "--tier-jsonl",
+        action="append",
+        type=parse_tier_output,
+        default=[],
+        metavar="TIER=PATH",
+        help="Write all ranked rows from a named readiness tier; repeatable.",
+    )
     args = parser.parse_args(argv)
     root = args.root.resolve()
     review_paths = args.review_path or default_review_paths(root)
@@ -595,6 +619,11 @@ def main(argv: list[str] | None = None) -> int:
         if args.actionable_visualdiff_jsonl
         else None
     )
+    tier_paths: dict[str, Path] = {}
+    for tier, path in args.tier_jsonl:
+        if tier in tier_paths:
+            parser.error(f"duplicate --tier-jsonl tier: {tier}")
+        tier_paths[tier] = resolve_path(root, path)
     write_outputs(
         report,
         samples,
@@ -607,6 +636,7 @@ def main(argv: list[str] | None = None) -> int:
         actionable_path=actionable_path,
         actionable_microtext_path=actionable_microtext_path,
         actionable_visualdiff_path=actionable_visualdiff_path,
+        tier_paths=tier_paths,
     )
     print(json.dumps(report["totals"], indent=2, sort_keys=True))
     return 0

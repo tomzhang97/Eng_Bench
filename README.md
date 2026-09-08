@@ -40,7 +40,7 @@ challenge scale, formal agreement, and complete provenance are still open. See
 All nine blocked active documents now have dated, authoritative-policy,
 hash-bound rights decisions covering 2,333 active source references. Every
 decision remains a hold, so this evidence closes ambiguity rather than the
-provenance gate. Wave2430 is the current formal gate report.
+provenance gate. Wave2453 is the current formal gate report.
 The corrected non-pin machine audit reuses 88 exact calibration decisions and
 identifies 799 non-pin train MicroText rows that pass every strict forecast gate
 but remain outside Gold until the remaining 212-row calibration is complete.
@@ -54,7 +54,7 @@ and held 214 fragments, stamps, title-block text, captions, overlaps, and
 taxonomy mismatches. All 84 retained rows have complete crop evidence and zero
 active-Gold, assignment-history, payload-alias, or near-region collision, but
 remain outside Gold pending human review. That tranche is now included in the
-current 6,542-row all-staged upper bound, not the current Gold count. The
+current 6,547-row all-staged upper bound, not the current Gold count. The
 source-conversion readiness ledger
 now recognizes all machine-held, duplicate-held, superseded, and explicitly
 excluded review rows. This removes 39,201 stale or already resolved
@@ -262,20 +262,23 @@ readable engineering targets and held one structural beam callout whose
 `dimension_value` taxonomy was not defensible.
 
 The latest clean staged-capacity ledger is
-`derived/quality/v2_0_staged_capacity_2026-09-09-wave2418-test-scale-visual-pass-capacity-final.json`:
-848 unique future rows, a 6,542 all-staged row upper bound, 2,598 explicit
-staged test rows, and zero unassigned or provisional capacity rows. Current
-Gold remains 5,694 rows. Every new row is still review-only and
-`safe_to_merge_gold=false`.
+`derived/quality/v2_0_staged_capacity_2026-09-09-wave2447-manual-taxonomy-capacity-final.json`:
+853 unique future rows, a 6,547 all-staged row upper bound, 2,601 explicit
+staged test rows, and zero unassigned or provisional capacity rows. Manifest
+version repair unlocked 604 net-new machine-prequalified candidates; strict
+diversity and visual review admitted three complete cryofill angle labels to
+test staging and two complete Brayton equipment labels to train staging while
+holding every ambiguous or partial row. Current Gold remains 5,694 rows. Every
+new row is still review-only and `safe_to_merge_gold=false`.
 
-The latest verified **Gold v2.0 Global** checkpoint is Wave2430 at 5/9 gates
-PASS. All 1,464 tests, both dataset validators, split/question leakage checks,
+The latest verified **Gold v2.0 Global** checkpoint is Wave2453 at 5/9 gates
+PASS. All 1,470 tests, both dataset validators, split/question leakage checks,
 source-payload hash checks, and the frozen release-hash check pass without
 changing active Gold. The
 corrected machine-responsibility ledger assigns 7,862 rows to machine ownership
 after one calibration and avoids 7,650 row-by-row human decisions. The formal
 report is
-`results/health/v2_0_gate_audit_2026-09-09-wave2430-test-scale-exhaustion.json`.
+`results/health/v2_0_gate_audit_2026-09-09-wave2453-semantic-precedence-final.json`.
 
 ## License
 
