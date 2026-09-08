@@ -37,6 +37,10 @@ split leakage, question leakage, provenance regression, or source-hash
 mismatches. Gold v2.0 Global remains 5/9 gates PASS: total scale, frozen
 challenge scale, formal agreement, and complete provenance are still open. See
 [`BENCHMARK_RELEASE.md`](BENCHMARK_RELEASE.md) for the exact gate counts.
+All nine blocked active documents now have dated, authoritative-policy,
+hash-bound rights decisions covering 2,333 active source references. Every
+decision remains a hold, so this evidence closes ambiguity rather than the
+provenance gate. Wave2307 is the current formal gate report.
 The post-promotion machine audit reuses 25 exact calibration decisions and
 identifies 799 non-pin train MicroText rows that pass every strict forecast gate
 but remain outside Gold until the remaining 275-row calibration is complete.

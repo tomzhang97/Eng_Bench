@@ -562,4 +562,23 @@ OLD/NEW evidence from different locations cannot support a change claim. All
 human resolution. No unreviewed row entered Gold.
 
 The authoritative formal report is
-`results/health/v2_0_gate_audit_2026-09-09-wave2305-primary-handoff.json`.
+`results/health/v2_0_gate_audit_2026-09-09-wave2307-rights-evidence.json`.
+
+## 17. Active Rights Evidence Coverage (2026-09-09)
+
+The nine blocked active documents have now been reviewed against current
+official publisher policies. The evidence set is stored under
+`derived/rights_evidence/2026-09-09_wave2306/` and binds every decision to the
+exact local source SHA-256. Toradex does not state an open redistribution
+license on the relevant hardware-document pages, WSDOT recommends requesting
+permission for site content, the City of San Diego policy is restricted to
+non-commercial/non-profit use with additional mirroring limits, and Peel
+Region asserts copyright unless otherwise stated.
+
+All nine decisions therefore remain `hold`. The new coverage validator reports
+9/9 blocked documents and 2,333/2,333 active source references covered, with no
+missing or stale decision and no source-hash mismatch. This is a release-safety
+PASS, not a provenance-release PASS: active provenance remains 298/307 until
+the 1,430 affected Gold rows are atomically replaced by completed reviewed
+rows, or document-specific permission is obtained. No Gold file or rights
+status was changed.
