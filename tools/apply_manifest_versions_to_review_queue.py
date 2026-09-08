@@ -11,6 +11,7 @@ from typing import Any
 
 
 UNKNOWN_VERSION_IDS = {"", "unknown", "n/a", "na", "none", "null"}
+SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
 VERSION_KEYS = (
     "version_id",
     "sch_rev",
@@ -67,7 +68,22 @@ def manifest_version_id(row: dict[str, Any]) -> tuple[str, str]:
             normalized = normalize_version_id(version.get(key))
             if normalized:
                 return normalized, f"manifest.version.{key}"
+
+    source_sha256 = str(row.get("sha256") or "").strip().lower()
+    if SHA256_PATTERN.fullmatch(source_sha256):
+        return f"sha256_{source_sha256}", "manifest.sha256"
     return "", ""
+
+
+def unresolved_version_tier_rows(
+    rows: list[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], int]:
+    selected = [
+        row
+        for row in rows
+        if "unresolved_version" in (row.get("unstaged_capacity_tier_reasons") or [])
+    ]
+    return selected, len(rows) - len(selected)
 
 
 def enrich_rows(
@@ -92,6 +108,7 @@ def enrich_rows(
     output: list[dict[str, Any]] = []
     status_counts: Counter[str] = Counter()
     resolved_versions: Counter[str] = Counter()
+    resolution_sources: Counter[str] = Counter()
     unresolved_docs: Counter[str] = Counter()
 
     for original in rows:
@@ -121,7 +138,11 @@ def enrich_rows(
         row["version_id"] = version_id
         row["machine_version_enriched"] = True
         row["machine_version_source"] = source
+        manifest_sha256 = str(manifest_row.get("sha256") or "").strip().lower()
+        if SHA256_PATTERN.fullmatch(manifest_sha256):
+            row["machine_version_manifest_sha256"] = manifest_sha256
         status_counts["enriched"] += 1
+        resolution_sources[source] += 1
         resolved_versions[version_id] += 1
         output.append(row)
 
@@ -137,6 +158,7 @@ def enrich_rows(
                 len(values) == 1 for values in gold_versions_by_doc.values()
             ),
         },
+        "resolution_sources": dict(sorted(resolution_sources.items())),
         "resolved_versions": dict(sorted(resolved_versions.items())),
         "unresolved_documents": dict(sorted(unresolved_docs.items())),
         "valid": status_counts["unresolved"] == 0,
@@ -214,6 +236,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--report-md", type=Path, required=True)
     parser.add_argument("--strict", action="store_true")
     parser.add_argument(
+        "--only-unresolved-version-tier",
+        action="store_true",
+        help=(
+            "Process only ranked-capacity rows whose tier reasons include "
+            "unresolved_version."
+        ),
+    )
+    parser.add_argument(
         "--passing-only",
         action="store_true",
         help="Write only rows with a resolved version ID to --output.",
@@ -235,11 +265,23 @@ def main(argv: list[str] | None = None) -> int:
     report_json = args.report_json if args.report_json.is_absolute() else root / args.report_json
     report_md = args.report_md if args.report_md.is_absolute() else root / args.report_md
 
+    input_rows = read_jsonl(input_path)
+    excluded_by_input_filter = 0
+    if args.only_unresolved_version_tier:
+        input_rows, excluded_by_input_filter = unresolved_version_tier_rows(input_rows)
     output, report = enrich_rows(
-        read_jsonl(input_path),
+        input_rows,
         read_jsonl(manifest_path),
         read_jsonl(active_gold_path) if active_gold_path.is_file() else [],
     )
+    report["input_selection"] = {
+        "mode": (
+            "unresolved_version_tier_only"
+            if args.only_unresolved_version_tier
+            else "all_rows"
+        ),
+        "excluded_rows": excluded_by_input_filter,
+    }
     resolved_rows, unresolved_rows = partition_rows_by_version(output)
     report["output_selection"] = {
         "mode": "passing_only" if args.passing_only else "all_rows",

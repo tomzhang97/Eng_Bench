@@ -155,6 +155,66 @@ class ApplyManifestVersionsToReviewQueueTests(unittest.TestCase):
         self.assertEqual(output[0]["machine_version_source"], "manifest.version.ntrs_id")
         self.assertTrue(report["valid"])
 
+    def test_uses_manifest_sha256_when_no_semantic_version_exists(self):
+        digest = "ab" * 32
+        rows = [{"candidate_id": "a", "doc_id": "drawing", "version_id": "unknown"}]
+        manifest = [
+            {
+                "type": "doc",
+                "doc_id": "drawing",
+                "version": {"imported": "2026-06-16"},
+                "sha256": digest,
+            }
+        ]
+
+        output, report = MODULE.enrich_rows(rows, manifest)
+
+        self.assertEqual(output[0]["version_id"], f"sha256_{digest}")
+        self.assertEqual(output[0]["machine_version_source"], "manifest.sha256")
+        self.assertEqual(output[0]["machine_version_manifest_sha256"], digest)
+        self.assertEqual(report["resolution_sources"], {"manifest.sha256": 1})
+        self.assertTrue(report["valid"])
+
+    def test_invalid_manifest_sha256_does_not_resolve_version(self):
+        rows = [{"candidate_id": "a", "doc_id": "drawing", "version_id": "unknown"}]
+        manifest = [
+            {
+                "type": "doc",
+                "doc_id": "drawing",
+                "version": {"imported": "2026-06-16"},
+                "sha256": "not-a-sha256",
+            }
+        ]
+
+        output, report = MODULE.enrich_rows(rows, manifest)
+
+        self.assertEqual(output[0]["version_id"], "unknown")
+        self.assertFalse(report["valid"])
+
+    def test_filters_only_unresolved_version_capacity_tier(self):
+        selected, excluded = MODULE.unresolved_version_tier_rows(
+            [
+                {
+                    "candidate_id": "a",
+                    "unstaged_capacity_tier_reasons": ["unresolved_version"],
+                },
+                {
+                    "candidate_id": "b",
+                    "unstaged_capacity_tier_reasons": ["missing_proposed_text"],
+                },
+                {
+                    "candidate_id": "c",
+                    "unstaged_capacity_tier_reasons": [
+                        "unresolved_version",
+                        "secondary_reason",
+                    ],
+                },
+            ]
+        )
+
+        self.assertEqual([row["candidate_id"] for row in selected], ["a", "c"])
+        self.assertEqual(excluded, 1)
+
     def test_uses_one_known_active_gold_version_as_fallback(self):
         rows = [{"candidate_id": "a", "doc_id": "board", "version_id": "unknown"}]
         active_gold = [
