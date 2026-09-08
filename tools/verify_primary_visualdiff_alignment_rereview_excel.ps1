@@ -143,12 +143,14 @@ try {
     }
 
     $stage = 'export native Excel previews'
+    $middleRow = $startRow + [math]::Floor($ExpectedRows / 2)
+    $tailStart = [math]::Max($startRow, $lastRow - 2)
     $previewSpecs = @(
         @{ Sheet = $instructions; Range = 'A1:J22'; File = 'excel_00_instructions.png' },
         @{ Sheet = $review; Range = 'A1:J9'; File = 'excel_01_review_header.png' },
         @{ Sheet = $review; Range = 'A8:D10'; File = 'excel_02_review_start_evidence.png' },
-        @{ Sheet = $review; Range = 'A135:D137'; File = 'excel_03_review_middle_evidence.png' },
-        @{ Sheet = $review; Range = 'A260:D262'; File = 'excel_04_review_end_evidence.png' },
+        @{ Sheet = $review; Range = "A${middleRow}:D$([math]::Min($lastRow, $middleRow + 2))"; File = 'excel_03_review_middle_evidence.png' },
+        @{ Sheet = $review; Range = "A${tailStart}:D${lastRow}"; File = 'excel_04_review_end_evidence.png' },
         @{ Sheet = $review; Range = 'E8:J10'; File = 'excel_05_review_inputs.png' },
         @{ Sheet = $machine; Range = 'A1:S8'; File = 'excel_06_machine_data.png' }
     )

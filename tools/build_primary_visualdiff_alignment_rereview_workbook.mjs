@@ -133,6 +133,7 @@ function addStatusFormatting(range) {
 
 function writeInstructions(workbook, payload) {
   const counts = payload.counts;
+  const placeholderMode = payload.mode === "active_visualdiff_placeholder_semantic_review";
   const sheet = workbook.worksheets.add("00说明");
   sheet.showGridLines = false;
   sheet.mergeCells("A2:J2");
@@ -144,9 +145,12 @@ function writeInstructions(workbook, payload) {
 
   sheet.getRange("A5:J5").values = [[
     "本轮需复审", counts.total,
-    "机器安全关闭", counts.machine_confirmed_no_engineering_change,
-    "人工已确认无变化", counts.human_confirmed_no_change,
-    "无需再做人审", counts.machine_closed_no_more_human,
+    placeholderMode ? "双边文本建议" : "机器安全关闭",
+    placeholderMode ? counts.text_grounded_proposals : counts.machine_confirmed_no_engineering_change,
+    placeholderMode ? "单边文本需核对" : "人工已确认无变化",
+    placeholderMode ? counts.unilateral_text_review_required : counts.human_confirmed_no_change,
+    placeholderMode ? "纯图形判断" : "无需再做人审",
+    placeholderMode ? counts.graphic_review_required : counts.machine_closed_no_more_human,
     "当前正式门禁", `${counts.formal_gate_pass} / ${counts.formal_gate_total}`,
   ]];
   headerStyle(sheet.getRange("A5:J5"));
@@ -157,7 +161,9 @@ function writeInstructions(workbook, payload) {
 
   sheet.mergeCells("A7:J7");
   sheet.getRange("A7").values = [[
-    "背景：旧工作簿中的部分 OLD/NEW 红框不是同一位置，可能把错位误判成变化。本文件已经用页级单应性重新对齐证据。旧判断不直接沿用，请按校正后的同坐标图片重新判断。",
+    placeholderMode
+      ? "背景：这些训练集 VisualDiff 行的当前描述仍是占位符，而且旧红框映射存在错位风险。本文件按当前几何持有清单重建四联证据。机器文字建议只是线索，不能直接当作答案。"
+      : "背景：旧工作簿中的部分 OLD/NEW 红框不是同一位置，可能把错位误判成变化。本文件已经用页级单应性重新对齐证据。旧判断不直接沿用，请按校正后的同坐标图片重新判断。",
   ]];
   sheet.getRange("A7:J7").format = {
     fill: COLORS.amber,
@@ -167,7 +173,14 @@ function writeInstructions(workbook, payload) {
   };
   sheet.getRange("A7:J7").format.rowHeightPx = 48;
 
-  const steps = [
+  const steps = placeholderMode ? [
+    ["1", "打开复审表", "进入“VisualDiff校正复审”。每行有四联证据和机器建议。当前 Gold 描述是占位符，因此每行都需要独立判断。"],
+    ["2", "核对同一工程位置", "先比较第2栏 OLD corrected region 与第3栏 NEW corresponding region；第1栏显示原 OLD 映射，第4栏是 NEW 更大上下文。若第2、3栏不是同一工程对象，选4并说明需要重新定位。"],
+    ["3", "核对机器建议", "只有 OLD 和 NEW 都抽到文字时，机器才给双边文字变化建议。单边文字统一标为 unclear，因为可能只是裁剪或对齐漂移；必须看图确认。"],
+    ["4", "填判断代码", "1=真实工程变化且机器类型、描述都正确；2=真实变化但类型或描述需改；3=无工程变化、仅版式/字体/轻微偏移；4=证据不足或不是同一位置。"],
+    ["5", "补全必填项", "所有判断都要写至少6个字的工程依据。选2必须填写正确类型和完整描述；选4必须在备注中写明缺少什么范围、页码或定位信息。"],
+    ["6", "检查并交回", "J列必须全部显示“完成”。不要删除、插入、排序或复制行，不要改“机器数据_勿改”。保持原文件名和 .xlsx 格式交回。"],
+  ] : [
     ["1", "打开复审表", "进入“VisualDiff校正复审”。每行证据图有四栏。不要只看第一栏，也不要复制旧答案。"],
     ["2", "只比第2和第3栏", "第2栏 OLD aligned at NEW 是校正后的旧图同坐标；第3栏 NEW crop 是新图。主要比较这两栏。第1栏和第4栏仅帮助诊断原红框为什么错位。"],
     ["3", "填判断代码", "1=确有工程变化且机器类型、描述都正确；2=确有工程变化但类型或描述错误；3=无工程变化、两图相同、仅渲染/字体/轻微偏移；4=校正后仍证据不足。"],
@@ -212,7 +225,9 @@ function writeInstructions(workbook, payload) {
 
   sheet.mergeCells("E20:J22");
   sheet.getRange("E20").values = [[
-    "关键规则：第2栏与第3栏完全一样或只有极小偏移时选3。第2栏为空、第3栏有内容，可能是真新增；第2栏有内容、第3栏为空，可能是真删除，不能因为一边空白就直接选3。差异只发生在红框外也选3。",
+    placeholderMode
+      ? "关键规则：先确认第2栏和第3栏是同一工程对象。完全相同、仅旋转/字体/渲染/轻微偏移，或差异只在红框外，选3。两栏不是同一位置或框内信息不完整，选4。单边文字绝不能自动当作新增或删除。"
+      : "关键规则：第2栏与第3栏完全一样或只有极小偏移时选3。第2栏为空、第3栏有内容，可能是真新增；第2栏有内容、第3栏为空，可能是真删除，不能因为一边空白就直接选3。差异只发生在红框外也选3。",
   ]];
   sheet.getRange("E20:J22").format = {
     fill: COLORS.amberLight,
@@ -234,9 +249,17 @@ function writeInstructions(workbook, payload) {
   sheet.tabColor = COLORS.teal;
 }
 
-function machineSummary(row) {
+function machineSummary(row, placeholderMode) {
   const description = row.change_description || "(机器未提供描述)";
   const oldBasis = row.original_reviewer_basis || "(原主审未写依据)";
+  if (placeholderMode) {
+    return [
+      `机器建议类型：${row.change_type}`,
+      `机器建议描述：${description}`,
+      `证据分流：${row.triage_lane}`,
+      "当前状态：未审核占位符，不能直接进入 Gold",
+    ].join("\n");
+  }
   return [
     `机器类型：${row.change_type}`,
     `机器描述：${description}`,
@@ -275,7 +298,9 @@ async function addEvidenceImages(sheet, rows, startRow) {
   }
 }
 
-async function writeReviewSheet(workbook, rows) {
+async function writeReviewSheet(workbook, payload) {
+  const rows = payload.rows;
+  const placeholderMode = payload.mode === "active_visualdiff_placeholder_semantic_review";
   const sheet = workbook.worksheets.add("VisualDiff校正复审");
   sheet.showGridLines = false;
   sheet.tabColor = COLORS.teal;
@@ -298,7 +323,9 @@ async function writeReviewSheet(workbook, rows) {
 
   sheet.mergeCells("A6:J6");
   sheet.getRange("A6").values = [[
-    "每行只把第2栏 OLD aligned at NEW 与第3栏 NEW crop 当作正式对比证据。第1栏 OLD current crop 和第4栏 OLD proposed crop 只用于解释旧红框错位。",
+    placeholderMode
+      ? "正式比较第2栏 OLD corrected region 与第3栏 NEW corresponding region；第1栏是原 OLD 映射，第4栏是 NEW 更大上下文。若第2、3栏不是同一工程对象，选4。"
+      : "每行只把第2栏 OLD aligned at NEW 与第3栏 NEW crop 当作正式对比证据。第1栏 OLD current crop 和第4栏 OLD proposed crop 只用于解释旧红框错位。",
   ]];
   sheet.getRange("A6:J6").format = {
     fill: COLORS.amber,
@@ -322,7 +349,7 @@ async function writeReviewSheet(workbook, rows) {
   sheet.getRange("A8:J8").values = [[
     "#",
     "四联校正证据图片",
-    "机器答案 + 原主审反馈",
+    placeholderMode ? "机器建议 + 占位符状态" : "机器答案 + 原主审反馈",
     "校正文字层",
     "判断 1/2/3/4",
     "正确变化类型（仅2）",
@@ -337,7 +364,7 @@ async function writeReviewSheet(workbook, rows) {
   const values = rows.map((row) => [
     row.review_index,
     "",
-    machineSummary(row),
+    machineSummary(row, placeholderMode),
     correctedTextSummary(row),
     "",
     "",
@@ -478,7 +505,7 @@ async function main() {
 
   const workbook = Workbook.create();
   writeInstructions(workbook, payload);
-  await writeReviewSheet(workbook, rows);
+  await writeReviewSheet(workbook, payload);
   writeMachineSheet(workbook, rows);
   workbook.recalculate();
 

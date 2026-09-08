@@ -52,6 +52,13 @@ from visualdiff_multispan_finality import (
     normalized_text as normalized_multispan_text,
     validate_qualifying_cluster,
 )
+from visualdiff_human_localization import (
+    DESC_SOURCE as LOCALIZATION_DESC_SOURCE,
+    METHOD as LOCALIZATION_METHOD,
+    POLICY_VERSION as LOCALIZATION_POLICY_VERSION,
+    PREVIEW_MODE as LOCALIZATION_PREVIEW_MODE,
+    localized_description,
+)
 
 
 TEXTLAYER_POLICY_VERSION = "active_visualdiff_textlayer_finality_v1"
@@ -62,18 +69,21 @@ SUPPORTED_PREVIEW_MODES = {
     RELOCATION_POLICY_VERSION: "read_only_active_visualdiff_relocation_correction_preview",
     REPLACEMENT_POLICY_VERSION: "read_only_active_visualdiff_replacement_correction_preview",
     MULTISPAN_POLICY_VERSION: "read_only_active_visualdiff_multispan_correction_preview",
+    LOCALIZATION_POLICY_VERSION: LOCALIZATION_PREVIEW_MODE,
 }
 DESC_SOURCE_BY_POLICY = {
     TEXTLAYER_POLICY_VERSION: DESC_SOURCE,
     RELOCATION_POLICY_VERSION: "human_reviewed_machine_unique_text_relocation",
     REPLACEMENT_POLICY_VERSION: "human_reviewed_machine_same_slot_text_replacement",
     MULTISPAN_POLICY_VERSION: "human_reviewed_machine_exact_multispan_finalized",
+    LOCALIZATION_POLICY_VERSION: LOCALIZATION_DESC_SOURCE,
 }
 METHOD_BY_POLICY = {
     TEXTLAYER_POLICY_VERSION: "human_semantics_machine_textlayer_finalization",
     RELOCATION_POLICY_VERSION: "machine_unique_textlayer_relocation_of_human_reviewed_gap",
     REPLACEMENT_POLICY_VERSION: "machine_same_slot_textlayer_replacement_of_human_reviewed_gap",
     MULTISPAN_POLICY_VERSION: "machine_exact_multispan_textlayer_finalization_of_human_reviewed_gap",
+    LOCALIZATION_POLICY_VERSION: LOCALIZATION_METHOD,
 }
 MUTABLE_PATHS = (
     "visualdiff/annotations/visualdiff_pairs.jsonl",
@@ -178,9 +188,13 @@ def changed_keys(before: dict[str, Any], after: dict[str, Any]) -> set[str]:
 
 
 def deterministic_final_description(
-    correction: dict[str, Any], details: dict[str, str]
+    correction: dict[str, Any], details: dict[str, str] | None
 ) -> str:
     policy_version = str(correction.get("policy_version") or "")
+    if policy_version == LOCALIZATION_POLICY_VERSION:
+        return localized_description(str(correction.get("original_description") or ""))
+    if details is None:
+        raise ValueError("tentative_description_details_missing")
     if policy_version == TEXTLAYER_POLICY_VERSION:
         return definitive_description(details)
     if policy_version == MULTISPAN_POLICY_VERSION:
@@ -297,7 +311,10 @@ def apply_corrections_to_rows(
         if str(question.get("answer_text") or "") != original:
             raise ValueError(f"active_question_answer_mismatch:{pair_id}")
         details = tentative_description_details(original)
-        if not details or details.get("kind") not in {"text_added", "text_removed"}:
+        if policy_version == LOCALIZATION_POLICY_VERSION:
+            if str(correction.get("kind") or "") != "human_reviewed_deletion_localization":
+                raise ValueError(f"invalid_localization_kind:{pair_id}")
+        elif not details or details.get("kind") not in {"text_added", "text_removed"}:
             raise ValueError(f"original_description_not_supported_tentative_text:{pair_id}")
         if deterministic_final_description(correction, details) != final:
             raise ValueError(f"final_description_not_deterministic:{pair_id}")
@@ -340,6 +357,12 @@ def apply_corrections_to_rows(
                 "new_probe": correction["new_probe"],
                 "movement": correction["movement"],
                 "revision_target_count": correction["revision_target_count"],
+            })
+        elif policy_version == LOCALIZATION_POLICY_VERSION:
+            certification.update({
+                "original_language": "zh",
+                "localized_language": "en",
+                "translation_scope": "exact reviewed sentence only",
             })
         else:
             certification.update({
@@ -444,13 +467,15 @@ def validate_staged(
         raise ValueError("split_leakage:" + ";".join(split_issues[:10]))
     before_finality = visualdiff_description_finality(old_pairs)
     after_finality = visualdiff_description_finality(new_pairs)
-    if before_finality["tentative_rows"] - after_finality["tentative_rows"] != len(corrected_ids):
-        raise ValueError("tentative_description_delta_mismatch")
+    if before_finality["nonfinal_rows"] - after_finality["nonfinal_rows"] != len(corrected_ids):
+        raise ValueError("nonfinal_description_delta_mismatch")
     return jsonl_bytes(unified), {
         "active_rows": len(unified),
         "corrected_visualdiff_rows": len(corrected_ids),
         "tentative_before": before_finality["tentative_rows"],
         "tentative_after": after_finality["tentative_rows"],
+        "nonfinal_before": before_finality["nonfinal_rows"],
+        "nonfinal_after": after_finality["nonfinal_rows"],
         "strict_errors": 0,
         "question_leaks": 0,
         "split_leaks": 0,

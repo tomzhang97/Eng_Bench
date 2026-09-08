@@ -105,6 +105,16 @@ def render_pair(root: Path, out: Path, finding: dict) -> dict:
         draw = ImageDraw.Draw(panel)
         draw.text((8, 5), f"{side.upper()} - {'nearby exact text' if best else 'original region'}", fill="black")
         draw.text((8, 23), str([round(v, 1) for v in b]), fill="black")
+        draw.rectangle(
+            (
+                round(b[0] - bounds[0]),
+                round(b[1] - bounds[1] + 55),
+                round(b[2] - bounds[0]),
+                round(b[3] - bounds[1] + 55),
+            ),
+            outline="#d7191c",
+            width=2,
+        )
         panels.append(panel)
         coordinates[side] = {"crop_bbox_px": bounds, "target_bbox_px": b, "scale": 1}
     combined = Image.new("RGB", (sum(p.width for p in panels) + 12, max(p.height for p in panels)), "#dddddd")
