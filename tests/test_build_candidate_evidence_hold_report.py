@@ -54,6 +54,25 @@ class BuildCandidateEvidenceHoldReportTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     build_report(root, source, root / "derived/quality/holds", [])
 
+    def test_task_falls_back_to_review_row_task_field(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            self.root_fixture(root)
+            source = root / "holds.jsonl"
+            source.write_text(json.dumps({
+                "pair_id": "visual-1",
+                "task": "visualdiff",
+                "hold_reason": "cross_location_evidence",
+                "safe_to_merge_gold": False,
+            }) + "\n")
+            report = build_report(
+                root,
+                source,
+                root / "derived/quality/holds",
+                [],
+            )
+            self.assertEqual({"visualdiff": 1}, report["holds_by_task"])
+
 
 if __name__ == "__main__":
     unittest.main()

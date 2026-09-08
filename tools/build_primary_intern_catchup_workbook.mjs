@@ -568,7 +568,7 @@ async function writeVisualSheet(workbook, rows) {
   const formulas = rows.map((row, offset) => {
     const excelRow = startRow + offset;
     if (row.mandatory_description_rewrite) {
-      return [`=IF(E${excelRow}="","未完成",IF(E${excelRow}<>2,"必须选2重写",IF(F${excelRow}="","需填写类型",IF(G${excelRow}="","需填写描述",IF(I${excelRow}="","需填工程依据","完成")))))`];
+      return [`=IF(E${excelRow}="","未完成",IF(OR(E${excelRow}=3,E${excelRow}=4),IF(I${excelRow}="","需填工程依据","完成"),IF(E${excelRow}<>2,"必须选2重写",IF(F${excelRow}="","需填写类型",IF(G${excelRow}="","需填写描述",IF(I${excelRow}="","需填工程依据","完成"))))))`];
     }
     return [`=IF(E${excelRow}="","未完成",IF(AND(E${excelRow}=2,COUNTA(F${excelRow}:G${excelRow})=0),"需填写修改",IF(AND(H${excelRow}<>"",I${excelRow}=""),"需填工程依据","完成")))`];
   });

@@ -194,6 +194,26 @@ class PrimaryInternCatchupReturnTests(unittest.TestCase):
         )
         self.assertTrue(ready["ready"])
 
+    def test_mandatory_visual_rewrite_allows_reject_or_context_hold(self) -> None:
+        payload = visual_payload(
+            description="A localized graphic difference may be present.",
+            engineering=True,
+            mandatory_rewrite=True,
+        )
+        rejected = interpret_decision(
+            payload,
+            {4: "3", 8: "红框内工程内容一致，差异仅来自裁剪位置。"},
+        )
+        self.assertTrue(rejected["ready"])
+        self.assertEqual(rejected["status"], "rejected_no_change")
+
+        held = interpret_decision(
+            payload,
+            {4: "4", 8: "两张图不是同一对象，无法判断真实工程变化。"},
+        )
+        self.assertTrue(held["ready"])
+        self.assertEqual(held["status"], "needs_context")
+
     def test_visual_machine_type_aliases_are_normalized(self) -> None:
         self.assertEqual(original_visual_type("addition+text"), "addition")
         self.assertEqual(original_visual_type("symbol"), "symbol_component_change")

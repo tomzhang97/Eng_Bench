@@ -86,7 +86,9 @@ def build_report(
         "status": "PASS",
         "hold_rows_artifact": HOLD_ROWS,
         "hold_count": len(rows),
-        "holds_by_task": dict(Counter(str(row.get("task_type") or "unknown") for row in rows)),
+        "holds_by_task": dict(
+            Counter(str(row.get("task_type") or row.get("task") or "unknown") for row in rows)
+        ),
         "evidence_artifacts": evidence,
         "active_gold_hashes_before": before,
         "active_gold_hashes_after": after,

@@ -493,8 +493,8 @@ def interpret_decision(payload_row: dict[str, Any], cells: dict[int, str]) -> di
                 reasons.append("needs_context_has_corrections")
         if corrected_type and corrected_type not in VISUAL_TYPES:
             reasons.append("invalid_corrected_change_type")
-        if mandatory_description_rewrite:
-            if code is not None and code != 2:
+        if mandatory_description_rewrite and code in {1, 2}:
+            if code != 2:
                 reasons.append("mandatory_description_rewrite_requires_code_2")
             if code == 2 and not corrected_type:
                 reasons.append("mandatory_description_rewrite_requires_type")
