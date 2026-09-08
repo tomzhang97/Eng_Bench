@@ -21,10 +21,12 @@ try:
     from . import prepare_fresh_auditor_round as fresh
     from . import prepare_paired_auditor_round as paired
     from . import visualdiff_description_finality as finality
+    from . import visualdiff_geometry_holds as geometry_holds
 except ImportError:  # Direct script execution from tools/.
     import prepare_fresh_auditor_round as fresh
     import prepare_paired_auditor_round as paired
     import visualdiff_description_finality as finality
+    import visualdiff_geometry_holds as geometry_holds
 
 
 UNIQUE_ROWS = paired.UNIQUE_ROWS
@@ -189,6 +191,7 @@ def eligible_rows(root: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     nonrelease_ids, nonrelease_reasons = machine_known_nonrelease_visualdiff(
         active_rows
     )
+    geometry_hold_ids = geometry_holds.current_hold_ids(root)
     excluded_ids = (
         assigned_ids
         | completed_ids
@@ -196,6 +199,7 @@ def eligible_rows(root: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
         | recheck_ids
         | tentative_ids
         | nonrelease_ids
+        | geometry_hold_ids
     )
     eligible = [
         row
@@ -212,6 +216,7 @@ def eligible_rows(root: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
         "machine_known_nonrelease_visualdiff_reasons": dict(
             sorted(nonrelease_reasons.items())
         ),
+        "active_visualdiff_geometry_hold_ids": len(geometry_hold_ids),
         "historical_payloads": assignment_files,
         "completed_decision_files": decision_files,
     }
@@ -417,6 +422,7 @@ def build(
         "active_audit_recheck_overlap": 0,
         "tentative_visualdiff_overlap": 0,
         "machine_known_nonrelease_visualdiff_overlap": 0,
+        "active_visualdiff_geometry_hold_overlap": 0,
         "intentional_cross_auditor_replication": paired.REVIEWERS_PER_ROW,
         "prefilled_answers": 0,
         "safe_to_merge_gold": False,

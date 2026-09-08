@@ -7,10 +7,12 @@ from pathlib import Path
 
 try:
     from . import audit_active_gold_provenance as provenance
+    from . import visualdiff_geometry_holds as geometry_holds
     from .reconcile_auditor_active_links import release_constraint
     from .visualdiff_description_finality import description_release_issue
 except ImportError:
     import audit_active_gold_provenance as provenance
+    import visualdiff_geometry_holds as geometry_holds
     from reconcile_auditor_active_links import release_constraint
     from visualdiff_description_finality import description_release_issue
 
@@ -26,13 +28,15 @@ def unique_index(rows: list[dict], key: str) -> dict[str, dict]:
 
 
 def classify_rows(rows: list[dict], active: list[dict], items: list[dict], pairs: list[dict],
-                  holds: list[dict], source_report: dict, docs: dict, manifest_pairs: dict) -> list[dict]:
+                  holds: list[dict], source_report: dict, docs: dict, manifest_pairs: dict,
+                  geometry_hold_ids: set[str] | None = None) -> list[dict]:
     """Return reason codes for canonical current test rows; never adjudicate a hold."""
     unified = unique_index(active, "id")
     unique_index(rows, "id")
     micro = unique_index(items, "item_id")
     visual = unique_index(pairs, "pair_id")
     held = {(h["task_type"], h["active_gold_identity"]) for h in holds}
+    geometry_held = geometry_hold_ids or set()
     ready_docs = {d["doc_id"] for d in source_report["documents"] if d["paper_ready"]}
     unresolved = {(r["task"], r["id"]) for r in source_report["unresolved_rows"]}
     assessments = []
@@ -62,6 +66,8 @@ def classify_rows(rows: list[dict], active: list[dict], items: list[dict], pairs
         if (task, identity) in held:
             reasons.append("unresolved_independent_audit")
         if task == "visualdiff":
+            if identity in geometry_held:
+                reasons.append("visualdiff_geometry_semantic_hold")
             description_issue = description_release_issue(annotation)
             if description_issue:
                 reason = description_issue["reason"]
@@ -95,10 +101,11 @@ def assess(root: Path, rows: list[dict]) -> dict:
         "microtext/annotations/microtext_items.jsonl", "visualdiff/annotations/visualdiff_pairs.jsonl")}
     source_report = provenance.build_report(root)
     docs, manifest_pairs = provenance.manifest_maps(root)
+    geometry_hold_ids = geometry_holds.current_hold_ids(root)
     assessments = classify_rows(rows, provenance.read_jsonl(root / "eng_bench.jsonl"),
         provenance.read_jsonl(root / "microtext/annotations/microtext_items.jsonl"),
         provenance.read_jsonl(root / "visualdiff/annotations/visualdiff_pairs.jsonl"),
-        holds, source_report, docs, manifest_pairs)
+        holds, source_report, docs, manifest_pairs, geometry_hold_ids)
     if before != {name: provenance.file_sha256(root / name) for name in before}:
         raise ValueError("release inputs changed during assessment")
     after_audit = release_constraint(root)
@@ -112,6 +119,7 @@ def assess(root: Path, rows: list[dict]) -> dict:
             "assessments": assessments, "input_hashes": before,
             "source_provenance": source_report,
             "audit_report_path": audit["report_path"], "audit_report_sha256": provenance.file_sha256(path),
+            "active_visualdiff_geometry_hold_rows": len(geometry_hold_ids),
             "gold_certified": False,
             "limitation": "Known-hold screening only, not semantic certification or a Gold v2.0 release gate pass."}
 

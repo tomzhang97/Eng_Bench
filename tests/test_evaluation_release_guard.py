@@ -65,6 +65,16 @@ class ReleaseGuardTests(unittest.TestCase):
             result[1]["reason_codes"],
         )
 
+    def test_geometry_semantic_hold_blocks_visualdiff(self):
+        rows, items, pairs, source, manifest_pairs = fixture()
+        result = guard.classify_rows(
+            rows, rows, items, pairs, [], source, {}, manifest_pairs, {"v1"}
+        )
+        self.assertEqual(
+            ["visualdiff_geometry_semantic_hold"],
+            result[1]["reason_codes"],
+        )
+
     def test_input_cannot_hide_held_identity_or_answer(self):
         for field in ("answer", "metadata"):
             rows = fixture()[0]

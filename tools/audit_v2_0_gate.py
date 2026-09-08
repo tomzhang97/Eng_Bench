@@ -18,6 +18,7 @@ from audit_source_payload_duplicates import build_report as build_source_payload
 from evaluation_registry import baseline_registry, submission_registry
 from source_rights import is_release_safe_status
 from visualdiff_description_finality import visualdiff_description_finality
+from visualdiff_geometry_holds import current_hold_ids as current_visualdiff_geometry_hold_ids
 from reconcile_auditor_active_links import release_constraint as auditor_return_release_constraint
 
 
@@ -351,6 +352,7 @@ def collect_status(
     registry = baseline_registry(root)
     submissions = submission_registry(root)
     counted_baselines_or_submissions = baseline_or_submission_names(root, registry, submissions)
+    geometry_hold_ids = current_visualdiff_geometry_hold_ids(root)
     gates = {
         "total_rows": {
             "current": len(unified),
@@ -394,6 +396,15 @@ def collect_status(
     release_constraints = {
         "microtext_category_balance": microtext_category_balance(microtext_items),
         "visualdiff_description_finality": visualdiff_description_finality(pairs),
+        "visualdiff_geometry_semantic_holds": {
+            "current": len(geometry_hold_ids),
+            "target": 0,
+            "passes": not geometry_hold_ids,
+            "meaning": (
+                "Rows with corrected evidence geometry remain held until their descriptions "
+                "are semantically revalidated."
+            ),
+        },
         "active_auditor_return_holds": auditor_return_release_constraint(root),
     }
     machine_certification = machine_certification_status(
