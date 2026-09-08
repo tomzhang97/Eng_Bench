@@ -225,6 +225,7 @@ def build_tranche(
     max_same_text_per_doc: int,
     max_same_text_global: int,
     gate_report: Path | None = None,
+    prior_selection_paths: Iterable[Path] = (),
     date_label: str,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
     if min(
@@ -239,9 +240,20 @@ def build_tranche(
     root = root.resolve()
     input_path = resolve(root, input_path).resolve()
     gate_report = resolve(root, gate_report).resolve() if gate_report else None
+    prior_selection_paths = [resolve(root, path).resolve() for path in prior_selection_paths]
     locks = source_family_split_locks(root)
     shortfalls = category_shortfalls(gate_report)
     inputs = read_jsonl(input_path)
+    prior_rows: list[dict[str, Any]] = []
+    prior_ids: set[str] = set()
+    for prior_path in prior_selection_paths:
+        for row in read_jsonl(prior_path):
+            row_id = candidate_id(row)
+            if row_id and row_id in prior_ids:
+                continue
+            if row_id:
+                prior_ids.add(row_id)
+            prior_rows.append(row)
     eligible: list[dict[str, Any]] = []
     holds: list[dict[str, Any]] = []
     exclusion_counts: Counter[str] = Counter()
@@ -256,6 +268,8 @@ def build_tranche(
         image_value = str(row.get("image_path") or row.get("page_image_path") or "").strip()
         if not row_id:
             reasons.append("candidate_id_missing")
+        elif row_id in prior_ids:
+            reasons.append("already_in_prior_selection")
         elif row_id in seen_ids:
             reasons.append("duplicate_candidate_id")
         if row.get("pair_id") or str(row.get("task") or "microtext").strip().lower() == "visualdiff":
@@ -310,6 +324,18 @@ def build_tranche(
     text_doc_counts: Counter[tuple[str, str]] = Counter()
     text_counts: Counter[str] = Counter()
     cap_reasons: Counter[str] = Counter()
+
+    for row in prior_rows:
+        source_doc = doc_id(row)
+        page = page_index(row)
+        text = normalized_text(row)
+        if not source_doc or not text:
+            continue
+        doc_counts[source_doc] += 1
+        if page is not None:
+            page_counts[(source_doc, page)] += 1
+        text_doc_counts[(source_doc, text)] += 1
+        text_counts[text] += 1
 
     def take(row: dict[str, Any]) -> bool:
         source_doc = doc_id(row)
@@ -389,13 +415,16 @@ def build_tranche(
         output_rows.append(prepared)
 
     report = {
-        "schema": "eng_bench_test_scale_microtext_tranche_v1",
+        "schema": "eng_bench_test_scale_microtext_tranche_v2",
         "goal": "Gold v2.0 Global",
         "date_label": date_label,
         "status": "PASS",
         "active_gold_modified": False,
         "safe_to_merge_gold": False,
         "input_path": input_path.relative_to(root).as_posix(),
+        "prior_selection_paths": [
+            path.relative_to(root).as_posix() for path in prior_selection_paths
+        ],
         "gate_report": gate_report.relative_to(root).as_posix() if gate_report else "",
         "policy": {
             "task": "microtext",
@@ -416,7 +445,9 @@ def build_tranche(
             "eligible_rows": len(eligible),
             "selected_rows": len(output_rows),
             "held_rows": len(holds),
-            "selected_documents": len(doc_counts),
+            "selected_documents": len({doc_id(row) for row in output_rows}),
+            "prior_selection_rows": len(prior_rows),
+            "prior_selection_candidate_ids": len(prior_ids),
             "selected_unseen_source_rows": sum(
                 row.get("test_scale_source_lock_before") == "unseen" for row in output_rows
             ),
@@ -466,6 +497,16 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--root", type=Path, default=Path("."))
     parser.add_argument("--input", type=Path, required=True)
     parser.add_argument("--gate-report", type=Path)
+    parser.add_argument(
+        "--prior-selection",
+        type=Path,
+        action="append",
+        default=[],
+        help=(
+            "Previously selected tranche whose document, page, and repeated-text counts "
+            "seed the cumulative diversity caps; may be repeated."
+        ),
+    )
     parser.add_argument("--date-label", required=True)
     parser.add_argument("--row-target", type=int, default=900)
     parser.add_argument("--max-rows-per-doc", type=int, default=100)
@@ -487,6 +528,7 @@ def main(argv: list[str] | None = None) -> int:
         max_same_text_per_doc=args.max_same_text_per_doc,
         max_same_text_global=args.max_same_text_global,
         gate_report=args.gate_report,
+        prior_selection_paths=args.prior_selection,
         date_label=args.date_label,
     )
     write_jsonl(resolve(root, args.output), selected)

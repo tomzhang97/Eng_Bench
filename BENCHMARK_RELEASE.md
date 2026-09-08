@@ -737,3 +737,41 @@ Wave2403 supersedes Wave2399 as the authoritative formal gate report. Both
 dataset validators, split and question leakage, the frozen five-file hash
 check, and the full test suite pass. Active Gold remains 5,694 rows at **5/9
 Gold v2.0 Global gates PASS**; no calibration or staged row was promoted.
+
+## 23. Test-Scale MicroText Capacity Pass (2026-09-09)
+
+Waves2406-2418 audited the current local source and review reservoir. Every
+release-safe local source is already represented, exhausted, blocked, or has
+review history, so the pass selected fresh rows from existing evidence rather
+than duplicating source intake. Source-family identity propagation excludes
+train/dev aliases from the new test tranche, including aliases connected only
+through manifest payload identity.
+
+The selector considered 3,846 machine-prequalified non-pin MicroText rows and
+retained 688 under per-document, per-page, and repeated-text diversity caps.
+Twelve authoritative-bbox contact sheets contain all evidence with zero
+missing crop or context image. Full visual QA explicitly passed 687 rows and
+held one structural beam callout misclassified as `dimension_value`. The
+passing mix is 50 component values, 147 dimensions, 146 equipment tags, 150
+instrument tags, four pipe/line tags, 110 process labels, 32 process values,
+36 room labels, and 12 tolerances.
+
+The Wave2416 connected-family split plan is valid and Wave2417 reserves all
+687 passing rows to test. Wave2418 verifies 848 unique staged expansion rows,
+zero active-Gold or cross-cohort collision, zero provisional split, a 6,542
+all-staged Gold upper bound, and 2,598 explicit staged test rows. These rows
+remain `safe_to_merge_gold=false` pending human review.
+
+Wave2430 is the authoritative formal checkpoint. Active Gold remains 5,694
+rows and **Gold v2.0 Global remains 5/9 gates PASS**. The full 1,464-test suite,
+legacy and strict-v2 validators, split and question leakage checks, source-
+payload hash audit, and frozen five-file release comparison pass. No active
+Gold file changed.
+
+The selector and unstaged-capacity audit were then hardened for repeated runs.
+Prior tranches now seed cumulative document/page/text caps, and terminal-ledger
+discovery recognizes both `_visual_held` and `_visual_holds` names. The
+corrected second pass selects zero rows: the only apparent residual was the
+already-held beam callout. Further test growth therefore requires new source
+families or explicit human triage of lower-confidence taxonomy/transcription
+rows; current high-confidence rows will not be recycled to inflate capacity.

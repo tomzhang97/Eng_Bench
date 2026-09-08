@@ -40,7 +40,7 @@ challenge scale, formal agreement, and complete provenance are still open. See
 All nine blocked active documents now have dated, authoritative-policy,
 hash-bound rights decisions covering 2,333 active source references. Every
 decision remains a hold, so this evidence closes ambiguity rather than the
-provenance gate. Wave2403 is the current formal gate report.
+provenance gate. Wave2430 is the current formal gate report.
 The corrected non-pin machine audit reuses 88 exact calibration decisions and
 identifies 799 non-pin train MicroText rows that pass every strict forecast gate
 but remain outside Gold until the remaining 212-row calibration is complete.
@@ -53,8 +53,9 @@ candidates; machine visual curation retained 84 complete engineering labels
 and held 214 fragments, stamps, title-block text, captions, overlaps, and
 taxonomy mismatches. All 84 retained rows have complete crop evidence and zero
 active-Gold, assignment-history, payload-alias, or near-region collision, but
-remain outside Gold pending human review. The validated staged upper bound is
-5,778 rows, not the current Gold count. The source-conversion readiness ledger
+remain outside Gold pending human review. That tranche is now included in the
+current 6,542-row all-staged upper bound, not the current Gold count. The
+source-conversion readiness ledger
 now recognizes all machine-held, duplicate-held, superseded, and explicitly
 excluded review rows. This removes 39,201 stale or already resolved
 representations from the apparent fresh queue, leaving 22,108 genuinely fresh
@@ -253,26 +254,28 @@ At this point, the visualdiff slice is family-split for Track B work and the mic
 
 ### Current Gold v2.0 Expansion Capacity
 
-The September 9 source-provenance pass cleared the pinned Pixhawk debug-adapter
-schematic and retained Antmicro mechanical SVG for review selection. A complete
-authoritative-box machine pass retained nine Pixhawk MicroText rows and held
-three unusable crops. A family-connected reservation pass then assigned those
-nine rows to train and all 84 NASA rows to test without changing active Gold.
+The September 9 test-scale pass audited the complete local review reservoir,
+found no unused release-safe local source, and selected a diverse non-pin
+MicroText tranche from existing fresh review evidence. Twelve authoritative-
+bbox contact sheets cover all 688 selected rows. Full visual QA retained 687
+readable engineering targets and held one structural beam callout whose
+`dimension_value` taxonomy was not defensible.
 
 The latest clean staged-capacity ledger is
-`derived/quality/v2_0_staged_capacity_2026-09-09-wave2398-floor-closure-capacity-final.json`:
-161 future rows, a 5,855 all-staged row upper bound, 1,911 explicit staged test
-rows, and zero unassigned or provisional capacity rows. Current Gold remains
-5,694 rows. The added 31-row tranche targets underfilled MicroText categories
-and remains human-review capacity, not Gold.
+`derived/quality/v2_0_staged_capacity_2026-09-09-wave2418-test-scale-visual-pass-capacity-final.json`:
+848 unique future rows, a 6,542 all-staged row upper bound, 2,598 explicit
+staged test rows, and zero unassigned or provisional capacity rows. Current
+Gold remains 5,694 rows. Every new row is still review-only and
+`safe_to_merge_gold=false`.
 
-The latest verified **Gold v2.0 Global** checkpoint is Wave2403 at 5/9 gates
-PASS. All 1,459 tests, both dataset validators, split/question leakage checks,
-and the frozen release-hash check pass without changing active Gold. The
+The latest verified **Gold v2.0 Global** checkpoint is Wave2430 at 5/9 gates
+PASS. All 1,464 tests, both dataset validators, split/question leakage checks,
+source-payload hash checks, and the frozen release-hash check pass without
+changing active Gold. The
 corrected machine-responsibility ledger assigns 7,862 rows to machine ownership
 after one calibration and avoids 7,650 row-by-row human decisions. The formal
 report is
-`results/health/v2_0_gate_audit_2026-09-09-wave2403-nonpin-calibration-corrected.json`.
+`results/health/v2_0_gate_audit_2026-09-09-wave2430-test-scale-exhaustion.json`.
 
 ## License
 

@@ -293,7 +293,7 @@ class UnstagedReviewCapacityTest(unittest.TestCase):
                 root
                 / "derived"
                 / "review_queues"
-                / "wave_visual_held.jsonl"
+                / "wave_visual_holds.jsonl"
             )
             write_jsonl(terminal, [held])
 
@@ -314,7 +314,7 @@ class UnstagedReviewCapacityTest(unittest.TestCase):
             self.assertEqual(ranked[0]["candidate_id"], "candidate_fresh")
             self.assertEqual(
                 report["terminal_review_files"],
-                ["derived/review_queues/wave_visual_held.jsonl"],
+                ["derived/review_queues/wave_visual_holds.jsonl"],
             )
 
 

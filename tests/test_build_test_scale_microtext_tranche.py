@@ -122,6 +122,43 @@ class TestBuildTestScaleMicrotextTranche(unittest.TestCase):
             1,
         )
 
+    def test_prior_selection_seeds_caps_and_excludes_existing_identity(self) -> None:
+        prior_path = self.root / "prior.jsonl"
+        prior_path.write_text(
+            "".join(
+                json.dumps(row) + "\n"
+                for row in [
+                    self.row("prior-1", "new_doc", page=0, text="10 mm"),
+                    self.row("prior-2", "new_doc", page=1, text="20 mm"),
+                ]
+            ),
+            encoding="utf-8",
+        )
+        rows = [
+            self.row("prior-1", "new_doc", page=2, text="30 mm"),
+            self.row("new-row", "new_doc", page=2, text="30 mm"),
+            self.row("other-row", "test_doc", page=0, text="40 mm"),
+        ]
+        selected, holds, report = tranche.build_tranche(
+            self.root,
+            self.write_input(rows),
+            row_target=3,
+            max_rows_per_doc=2,
+            max_rows_per_page=2,
+            max_same_text_per_doc=2,
+            max_same_text_global=3,
+            prior_selection_paths=[prior_path],
+            date_label="fixture",
+        )
+        self.assertEqual(["other-row"], [row["candidate_id"] for row in selected])
+        reasons = {reason for row in holds for reason in row["test_scale_hold_reasons"]}
+        self.assertIn("already_in_prior_selection", reasons)
+        self.assertGreaterEqual(
+            report["counts"]["selection_cap_rejections"]["per_document_cap"],
+            1,
+        )
+        self.assertEqual(2, report["counts"]["prior_selection_rows"])
+
     def test_rejects_conflicting_active_split_locks(self) -> None:
         (self.root / "splits" / "microtext_dev.txt").write_text(
             "dev_doc\ntest_doc\n", encoding="utf-8"

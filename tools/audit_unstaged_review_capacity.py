@@ -175,6 +175,7 @@ def default_terminal_review_paths(root: Path) -> list[Path]:
     """Return derived decision ledgers that contain terminal machine holds."""
     queue_root = root / "derived" / "review_queues"
     paths = list(queue_root.glob("*_visual_held.jsonl"))
+    paths.extend(queue_root.glob("*_visual_holds.jsonl"))
     paths.extend(queue_root.glob("*_machine_held.jsonl"))
     return sorted({path.resolve() for path in paths if path.is_file()})
 
@@ -530,7 +531,8 @@ def main(argv: list[str] | None = None) -> int:
         default=[],
         help=(
             "Optional terminal decision ledger; repeatable. By default, derived "
-            "*_visual_held.jsonl and *_machine_held.jsonl files are used."
+            "*_visual_held.jsonl, *_visual_holds.jsonl, and *_machine_held.jsonl "
+            "files are used."
         ),
     )
     parser.add_argument("--current", type=Path, action="append", required=True)
