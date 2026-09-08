@@ -343,4 +343,10 @@ VisualDiff descriptions, and MicroText category imbalance. The 614-row filtered
 view under `derived/quality/filtered_evaluation_2026-09-08-wave2047-current/`
 is suitable only for internal TraceRAG diagnostics; it is not a Gold release or
 an unbiased benchmark. The authoritative gate report is
-`derived/quality/v2_0_gate_audit_2026-09-08-wave2050-machine-side-refresh.md`.
+`derived/quality/v2_0_gate_audit_2026-09-08-wave2052-regression-verified.md`.
+
+The complete repository regression suite passes all 1,321 tests in the full
+imaging/PDF runtime. This is infrastructure evidence only and does not convert
+unreviewed candidates, unresolved audits, or rights-blocked records into Gold.
+Legacy, strict unified, and split-leakage validation pass after the suite, and
+all six active release-data hashes remain unchanged.

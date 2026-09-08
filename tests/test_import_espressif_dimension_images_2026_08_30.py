@@ -4,8 +4,7 @@ import csv
 import importlib.util
 import json
 from pathlib import Path
-
-import pytest
+import unittest
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -54,7 +53,7 @@ def test_append_manifest_is_idempotent_and_conflict_safe(tmp_path: Path) -> None
 
     conflict = dict(docs[0])
     conflict["sha256"] = "0" * 64
-    with pytest.raises(ValueError, match="manifest conflict"):
+    with unittest.TestCase().assertRaisesRegex(ValueError, "manifest conflict"):
         MODULE.append_manifest(path, [conflict])
 
 
@@ -78,5 +77,5 @@ def test_append_inventory_is_idempotent_and_conflict_safe(tmp_path: Path) -> Non
 
     conflict = dict(inventory[0])
     conflict["source_url"] = "https://example.invalid/conflict"
-    with pytest.raises(ValueError, match="inventory conflict"):
+    with unittest.TestCase().assertRaisesRegex(ValueError, "inventory conflict"):
         MODULE.append_inventory(path, [conflict])
