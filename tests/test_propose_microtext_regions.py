@@ -58,9 +58,9 @@ def test_proposes_regions_on_small_line_drawing_sheet(tmp_path: Path) -> None:
 
 def test_component_text_metrics_separate_clean_text_from_point_noise(tmp_path: Path) -> None:
     clean_path = tmp_path / "clean.png"
-    clean = Image.new("L", (360, 90), "white")
-    ImageDraw.Draw(clean).text((20, 25), "GAME ROOM", fill="black")
-    clean.save(clean_path)
+    clean = np.full((90, 360), 255, dtype=np.uint8)
+    cv2.putText(clean, "GAME ROOM", (20, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.2, 0, 2)
+    cv2.imwrite(str(clean_path), clean)
     clean_region = cv2.imread(str(clean_path), cv2.IMREAD_GRAYSCALE)
 
     noisy = np.full((90, 360), 255, dtype=np.uint8)

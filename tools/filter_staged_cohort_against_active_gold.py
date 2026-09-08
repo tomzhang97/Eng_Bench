@@ -23,6 +23,7 @@ from build_canonical_staged_capacity import (
     alias_identities,
     near_overlap_origin,
     payload_alias_geometry,
+    payload_alias_label_key,
     payload_alias_label_overlap_origin,
     payload_alias_overlap_origin,
 )
@@ -136,7 +137,11 @@ def sanitize_cohort(
                 reason = "active_gold_payload_alias_text_category_overlap"
             elif label_overlap == "current_active_safe":
                 reason = "within_cohort_payload_alias_text_category_overlap"
-            elif doc_id in alias_map and not payload_alias_geometry(root, row, alias_map):
+            elif (
+                doc_id in alias_map
+                and not payload_alias_geometry(root, row, alias_map)
+                and not payload_alias_label_key(row, alias_map)
+            ):
                 reason = "payload_alias_region_unresolved"
 
         if reason:

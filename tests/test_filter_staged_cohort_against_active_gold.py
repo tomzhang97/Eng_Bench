@@ -116,3 +116,38 @@ def test_sanitize_cohort_holds_shifted_same_payload_label(tmp_path: Path) -> Non
     assert report["hold_reasons"] == {
         "active_gold_payload_alias_text_category_overlap": 1
     }
+
+
+def test_sanitize_cohort_holds_unresolved_alias_without_label(tmp_path: Path) -> None:
+    write_jsonl(
+        tmp_path / "microtext" / "annotations" / "microtext_items.jsonl",
+        [],
+    )
+    write_jsonl(
+        tmp_path / "visualdiff" / "annotations" / "visualdiff_pairs.jsonl",
+        [],
+    )
+    alias_report = tmp_path / "payload_aliases.json"
+    alias_report.write_text(
+        json.dumps(
+            {
+                "duplicate_groups": [
+                    {
+                        "canonical_doc_id": "canonical_doc",
+                        "doc_ids": ["canonical_doc", "legacy_alias"],
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    unresolved = microtext("unresolved", [100, 300, 180, 340])
+    unresolved["doc_id"] = "legacy_alias"
+
+    kept, held, report = sanitize_cohort(
+        tmp_path, [unresolved], payload_alias_report=alias_report
+    )
+
+    assert kept == []
+    assert [row["candidate_id"] for row in held] == ["unresolved"]
+    assert report["hold_reasons"] == {"payload_alias_region_unresolved": 1}

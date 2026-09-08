@@ -2,16 +2,16 @@
 
 **Date:** 2026-09-03
 **Status:** v0.9 Silver lineage, working dataset; not a publishable Gold v2.0 Global release
-**Current Active Samples:** 1574 Visual-Diff Questions, 2986 Microtext Questions (4560 total)
+**Current Active Samples:** 1596 Visual-Diff Questions, 2986 Microtext Questions (4582 total)
 **License:** Mixed public-source candidate; see [DATACARD.md](DATACARD.md) and `SOURCE_INVENTORY.csv`
 
 ## Current Verified Checkpoint
 
-Gold v2.0 Global remains **5/9 gates PASS**. Row scale (4560/25000 minimum),
+Gold v2.0 Global remains **5/9 gates PASS**. Row scale (4582/25000 minimum),
 frozen challenge scale (1600/5000), formal agreement (0/185), and complete source provenance
-(201/210 paper-ready documents) remain OPEN. Category balance, 92 tentative
+(204/213 paper-ready documents) remain OPEN. Category balance, 43 tentative
 VisualDiff descriptions and 49 unresolved active audit flags also block release.
-Current gate: `results/health/v2_0_gate_audit_2026-09-08-github-sync-preflight.json`.
+Current gate: `derived/quality/v2_0_gate_audit_2026-09-08-wave2111-relocation4-current.json`.
 
 The existing 1600-row challenge export is a historical freeze, not evidence of
 current release eligibility. New export generation now refuses known unresolved
@@ -372,3 +372,51 @@ The current exact evidence package for 49 active audit flags is
 `derived/quality/active_audit_evidence_2026-09-08-wave2079-current49/`.
 The 614-row Wave2080 evaluation view remains internal-only and is not the full
 publishable benchmark.
+
+## 11. VisualDiff Description Finality Checkpoint (2026-09-08)
+
+Active Gold remains **4,582 rows** and **5/9 Gold v2.0 Global gates PASS**. A
+snapshot-backed transaction updated 45 existing VisualDiff descriptions from
+tentative templates to evidence-bound final wording. Every affected row already
+had human-reviewed semantics; machine acceptance additionally required aligned
+boxes, one exact nearby source-text match on the claimed revision, no match on
+the opposite revision, paper-ready source provenance, no active audit flag, and
+no duplicate or replacement-text ambiguity. No new row was promoted.
+
+The tentative VisualDiff queue is now 47 rows: 17 text removals, 26 text
+additions, and four graphical changes, all in test. These remain excluded from
+a publishable finality claim. The other open release constraints are 49 active
+audit flags, 0/185 formal agreement completion, nine rights-blocked active
+documents, insufficient total/test scale, and eight MicroText category floors.
+
+All 1,465 tests and 241 subtests pass. Legacy validation passes at 1,596 VisualDiff and 2,986
+MicroText records; strict unified validation covers all 4,582 rows; split and
+question leakage both report zero failures. The authoritative report is
+`derived/quality/v2_0_gate_audit_2026-09-08-wave2097-finality45-current.md`.
+
+## 12. Unique-Text Relocation Finality Checkpoint (2026-09-08)
+
+Active Gold remains **4,582 rows** and **5/9 Gold v2.0 Global gates PASS**.
+Four additional existing VisualDiff answers were finalized without changing
+release membership. Each row already had a high-confidence human `edit`
+decision; the machine transaction required a unique exact target on both
+revision pages, matching font and span shape, binding to the reviewed gap on at
+least one side, a material 40-200 pixel displacement, paper-ready provenance,
+and no active audit or evidence hold. The final descriptions report only the
+deterministic movement direction: down, up and left, left, or right.
+
+The preview selected 4 of the 47 remaining tentative rows and withheld 43.
+The snapshot-backed transaction reduced the queue to **43**: 15 removals, 24
+additions, and four graphical changes, all in test. Repeated labels, replacement
+text, audit-held rows, graphical changes, and unbound source spans remain held.
+No unreviewed row was promoted and no human or auditor decision was overwritten.
+
+All **1,473 tests and 241 subtests** pass. Legacy validation passes at 1,596
+VisualDiff and 2,986 MicroText records; strict unified validation covers all
+4,582 rows; split leakage and question leakage both report zero failures. The
+authoritative gate report is
+`derived/quality/v2_0_gate_audit_2026-09-08-wave2111-relocation4-current.md`.
+The applied transaction is
+`derived/quality/active_visualdiff_relocation_correction_transaction_2026-09-08-wave2107-applied.json`,
+and the current unified SHA-256 is
+`1403a10c0e0ba0f8e7e65f880966811a9b19e764efd1266c6c1a380b10c863e7`.
