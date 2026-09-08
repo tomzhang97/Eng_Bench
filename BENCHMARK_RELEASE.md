@@ -1,6 +1,6 @@
 # Eng_Bench v0.9 (Silver) Release Notes
 
-**Date:** 2026-09-08
+**Date:** 2026-09-09
 **Status:** v0.9 Silver lineage, working dataset; not a publishable Gold v2.0 Global release
 **Current Active Samples:** 1596 Visual-Diff Questions, 4098 Microtext Questions (5694 total)
 **License:** Mixed public-source candidate; see [DATACARD.md](DATACARD.md) and `SOURCE_INVENTORY.csv`
@@ -13,18 +13,20 @@ provenance (298/307 paper-ready documents) remain OPEN. Six MicroText category
 floors, 336 machine-detectable nonfinal VisualDiff descriptions, 526 BBB rows
 with corrected geometry but unverified semantics, and 49 unresolved active audit
 flags also block release. Current gate:
-`results/health/v2_0_gate_audit_2026-09-09-wave2356-actionable-source-ledger.json`.
+`results/health/v2_0_gate_audit_2026-09-09-wave2403-nonpin-calibration-corrected.json`.
 The 29 counted baseline reports remain bound to the existing 1,600-row frozen
 challenge. Active test now contains 1,784 rows, so the 184 rows outside that
 freeze are not yet part of the public/private challenge or its baseline scores.
 
-The post-promotion machine lane is now current and fail-closed. Twenty-five of
-the frozen 300 calibration decisions are reusable from exact accepted human
-reviews, leaving 275 independent calibration decisions. After removing 385
-rows already active through human review, pin rows, and 26 duplicate-QA holds,
-799 non-pin train MicroText rows pass the combined-Gold forecast. They remain
-outside Gold until calibration succeeds and the normal promotion transaction
-passes; this readiness evidence is not row-count or release-gate credit.
+The post-promotion machine lane is now current and fail-closed. Eighty-eight of
+the frozen 300 non-pin calibration decisions are reusable from exact accepted
+human reviews, leaving 212 independent calibration decisions. Of 825 current
+pending non-pin rows, 799 pass the combined-Gold forecast and 26 duplicate-QA
+collisions remain held. Another 324 eligible non-pin rows are already active
+through human review, and 7,098 historical pin rows remain covered by their
+separate completed calibration. No pending row enters Gold until calibration
+succeeds and the normal promotion transaction passes; readiness is not row-
+count or release-gate credit.
 
 The formal agreement preparation blocker is now closed. A quality-filtered,
 release-safe 185-row sample (95 MicroText and 90 VisualDiff) is packaged for two
@@ -656,3 +658,82 @@ Final Wave2377 verification passes all 1,459 tests, both dataset validators,
 split and question leakage checks, and the frozen five-file release-hash check.
 The formal **Gold v2.0 Global** status remains 5/9 gates PASS. The latest report
 is `results/health/v2_0_gate_audit_2026-09-09-wave2377-pixhawk-capacity-final.json`.
+
+## 20. Rights-Safe Reservation And Finality Triage (2026-09-09)
+
+Waves2378-2385 preserved active Gold while reducing ambiguity in three release
+lanes. A strict text-layer finality preview examined all 39 tentative
+VisualDiff descriptions and prepared zero automatic corrections. Every row was
+withheld because of distant or non-unique evidence, related text on the
+opposite sheet, active audit flags, or unsupported graphic changes. This is a
+successful fail-closed audit, not a finality promotion.
+
+All 130 clean staged rows now have family-safe reservations. The comprehensive
+plan assigns nine Pixhawk rows to train because their source family already
+exists there and assigns 121 rows to test. The all-staged Gold upper bound
+remains 5,824, but explicit staged test capacity rises from 1,821 to 1,905 and
+unassigned capacity falls from 93 rows to zero. These remain review capacity,
+not Gold.
+
+A read-only rights recheck keeps all nine inherited source documents blocked.
+Their provenance is known, but no affirmative benchmark-compatible
+redistribution grant was established. The existing 1,430-row replacement
+contract is structurally valid: 1,171 replacements are reviewed and 259 remain
+outstanding. All 259 are already included in the current 533-row primary
+package, so no duplicate packet was issued and no unreviewed row was promoted.
+
+Wave2387 is the authoritative post-pass gate report. All 1,459 tests, legacy
+and strict-v2 validators, split and question leakage checks, and the frozen
+five-file hash check pass. The unified SHA-256 remains
+`D17A107C2BAD86868FC07265C6CF521884541B0008406C880963A2CC393AE19E`.
+**Gold v2.0 Global remains 5/9 gates PASS** at 5,694 active rows.
+
+## 21. MicroText Floor-Closure Machine Triage (2026-09-09)
+
+Waves2388-2398 refreshed the source ledger and MicroText balance plan against
+the current 5,694-row Gold set. Raw material is not the immediate source
+bottleneck: 368 local source units are already represented in staged-future
+capacity. The current category plan identifies 150 still-relevant rows in the
+existing primary assignment and 465 future candidates that could close the six
+open MicroText category floors after normal review.
+
+Strict source, history, existing-capacity, and evidence filters reduced that
+future projection to 37 immediately actionable rows from 13 paper-ready source
+documents. Exact-bbox contact-sheet inspection held six SVG/XML source-code
+attributes that had been mistaken for dimensions. The remaining 31 readable
+engineering targets include 16 instrument tags, six tolerances, three
+dimensions, three equipment tags, and three process values. They remain
+`safe_to_merge_gold=false` and require human acceptance.
+
+The Wave2396 family-connected split plan preserves 23 train, two dev, and six
+test reservations for those 31 rows. The final Wave2398 capacity audit is clean
+across all 161 staged identities, with no active-Gold, cross-cohort,
+payload-alias, provenance, encoding, or split-plan issue. The all-staged upper
+bound rises to 5,855 and explicit staged test capacity to 1,911. No active Gold
+row or issued human package changed.
+
+Wave2399 was the authoritative post-triage gate report. The focused 103-test
+tool suite, frozen five-file hash check, and formal gate audit pass. Active Gold
+remains 5,694 rows with the same unified SHA-256, and **Gold v2.0 Global remains
+5/9 gates PASS**.
+
+## 22. Corrected Non-Pin Calibration Accounting (2026-09-09)
+
+Wave2399 accidentally paired the current non-pin eligibility cohort with a
+legacy mixed-cohort calibration-reuse report. Wave2400 reruns reuse against the
+correct 300-row non-pin sample and all available completed-review evidence: 88
+exact accepted decisions are reusable, 212 remain, and there are zero
+conflicts. Wave2401 verifies 799 strict-ready current rows and holds 26 exact
+duplicate collisions.
+
+The machine-responsibility auditor now records the reuse cohort explicitly and
+keeps the separately calibrated historical pin lane in overall accounting.
+Wave2402 passes with zero issues: 7,862 rows are machine-owned after the one-time
+calibration, 7,650 row-by-row human decisions are avoided, and 20,250 machine
+decisions are avoided when source intake is included. The regression is covered
+by the 1,459-test repository suite.
+
+Wave2403 supersedes Wave2399 as the authoritative formal gate report. Both
+dataset validators, split and question leakage, the frozen five-file hash
+check, and the full test suite pass. Active Gold remains 5,694 rows at **5/9
+Gold v2.0 Global gates PASS**; no calibration or staged row was promoted.

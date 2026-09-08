@@ -623,6 +623,69 @@ class MachineFirstResponsibilityTest(unittest.TestCase):
             self.assertTrue(report["structurally_valid"], report["issues"])
             self.assertEqual(1, report["machine_owned"]["eligible_after_one_calibration"])
             self.assertEqual(1, report["machine_owned"]["calibration_rows_remaining"])
+            self.assertEqual(
+                "nonpin", report["machine_owned"]["calibration_reuse_scope"]
+            )
+
+            historical_rows = root / "historical.jsonl"
+            write_jsonl(
+                historical_rows,
+                [
+                    {
+                        "candidate_id": "a",
+                        "task": "microtext",
+                        "reserved_split": "train",
+                        "category": "pin_label",
+                        "machine_certification_origin_cohort": "future",
+                    }
+                ],
+            )
+            historical_report = root / "historical_report.json"
+            historical_report.write_text(
+                json.dumps(
+                    {
+                        "release_ready": True,
+                        "active_gold_modified": False,
+                        "artifacts": {
+                            "certified_balance_deferred": {
+                                "path": historical_rows.name,
+                                "sha256": sha(historical_rows),
+                            }
+                        },
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            combined_report = build_report(
+                root,
+                eligibility,
+                agreement,
+                date_label="test-with-historical-pin",
+                historical_finalization_path=historical_report,
+                nonpin_eligibility_report_path=nonpin_report,
+                calibration_reuse_report_path=reuse,
+            )
+
+            self.assertTrue(
+                combined_report["structurally_valid"], combined_report["issues"]
+            )
+            self.assertEqual(
+                2,
+                combined_report["machine_owned"]["eligible_after_one_calibration"],
+            )
+            self.assertEqual(
+                1,
+                combined_report["machine_owned"][
+                    "human_row_by_row_decisions_avoided_net"
+                ],
+            )
+            self.assertEqual(
+                2,
+                combined_report["machine_owned"][
+                    "future_rows_machine_owned_after_calibration"
+                ],
+            )
 
     def test_reuse_can_bind_to_full_cohort_with_nonpin_report_supplied(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -758,6 +821,9 @@ class MachineFirstResponsibilityTest(unittest.TestCase):
             self.assertTrue(report["structurally_valid"], report["issues"])
             self.assertEqual(
                 "full", report["inputs"]["calibration_reuse"]["eligibility_scope"]
+            )
+            self.assertEqual(
+                "full", report["machine_owned"]["calibration_reuse_scope"]
             )
 
     def test_readiness_accepts_active_duplicates_when_all_are_held(self) -> None:

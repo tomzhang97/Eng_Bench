@@ -40,10 +40,10 @@ challenge scale, formal agreement, and complete provenance are still open. See
 All nine blocked active documents now have dated, authoritative-policy,
 hash-bound rights decisions covering 2,333 active source references. Every
 decision remains a hold, so this evidence closes ambiguity rather than the
-provenance gate. Wave2356 is the current formal gate report.
-The post-promotion machine audit reuses 25 exact calibration decisions and
+provenance gate. Wave2403 is the current formal gate report.
+The corrected non-pin machine audit reuses 88 exact calibration decisions and
 identifies 799 non-pin train MicroText rows that pass every strict forecast gate
-but remain outside Gold until the remaining 275-row calibration is complete.
+but remain outside Gold until the remaining 212-row calibration is complete.
 The current primary-review handoff is the verified flat 533-action ZIP recorded
 in `AUDITOR_RETURN_STATUS.md`; it supersedes the earlier 288-action package.
 Four additional release-safe NASA engineering-system sources are now imported
@@ -256,17 +256,23 @@ At this point, the visualdiff slice is family-split for Track B work and the mic
 The September 9 source-provenance pass cleared the pinned Pixhawk debug-adapter
 schematic and retained Antmicro mechanical SVG for review selection. A complete
 authoritative-box machine pass retained nine Pixhawk MicroText rows and held
-three unusable crops. These rows remain unassigned review capacity with
-`safe_to_merge_gold=false`; they are not part of active Gold.
+three unusable crops. A family-connected reservation pass then assigned those
+nine rows to train and all 84 NASA rows to test without changing active Gold.
 
 The latest clean staged-capacity ledger is
-`derived/quality/v2_0_staged_capacity_2026-09-09-wave2375-pixhawk-review-capacity.json`:
-130 future rows, a 5,824 all-staged row upper bound, and 1,821 explicit staged
-test rows. Current Gold remains 5,694 rows.
+`derived/quality/v2_0_staged_capacity_2026-09-09-wave2398-floor-closure-capacity-final.json`:
+161 future rows, a 5,855 all-staged row upper bound, 1,911 explicit staged test
+rows, and zero unassigned or provisional capacity rows. Current Gold remains
+5,694 rows. The added 31-row tranche targets underfilled MicroText categories
+and remains human-review capacity, not Gold.
 
-The latest verified **Gold v2.0 Global** checkpoint is Wave2377 at 5/9 gates
+The latest verified **Gold v2.0 Global** checkpoint is Wave2403 at 5/9 gates
 PASS. All 1,459 tests, both dataset validators, split/question leakage checks,
-and the frozen release-hash check pass without changing active Gold.
+and the frozen release-hash check pass without changing active Gold. The
+corrected machine-responsibility ledger assigns 7,862 rows to machine ownership
+after one calibration and avoids 7,650 row-by-row human decisions. The formal
+report is
+`results/health/v2_0_gate_audit_2026-09-09-wave2403-nonpin-calibration-corrected.json`.
 
 ## License
 

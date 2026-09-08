@@ -229,6 +229,7 @@ def build_report(
     precalibration_other_holds = 0
     verified_calibration_reuse: dict[str, Any] = {}
     verified_nonpin_readiness: dict[str, Any] = {}
+    calibration_reuse_scope = ""
     if historical_finalization_path is not None:
         historical_finalization_path = resolve(root, historical_finalization_path)
         if not historical_finalization_path.is_file():
@@ -527,6 +528,7 @@ def build_report(
             current_eligible_rows = pending_rows
             eligible_already_active = len(already_active_rows)
             if len(issues) == reuse_issue_start:
+                calibration_reuse_scope = reuse_eligibility_scope
                 verified_calibration_reuse = {
                     "path": relative(root, calibration_reuse_report_path),
                     "sha256": file_sha256(calibration_reuse_report_path),
@@ -660,9 +662,28 @@ def build_report(
                     "strict_duplicate_holds": precalibration_duplicate_holds,
                     "other_holds": precalibration_other_holds,
                 }
-    current_machine = sum(origin(row) == "current" for row in current_eligible_rows)
-    future_machine = sum(origin(row) == "future" for row in current_eligible_rows)
-    net_saved = max(0, len(current_eligible_rows) - calibration_rows_remaining)
+    accounted_machine_rows = list(current_eligible_rows)
+    accounted_already_active = eligible_already_active
+    if calibration_reuse_scope == "nonpin":
+        # The non-pin reuse partition intentionally excludes the historically
+        # certified pin lane. Add only its still-future rows so the machine
+        # ownership ledger remains complete without double-counting active
+        # human-reviewed pins or a full-cohort reuse partition.
+        historical_pending_rows = [
+            row for row in historically_certified_rows if origin(row) == "future"
+        ]
+        accounted_ids = {row_id(row) for row in accounted_machine_rows}
+        historical_pending_ids = {row_id(row) for row in historical_pending_rows}
+        if accounted_ids & historical_pending_ids:
+            issues.append("nonpin_reuse_historical_pending_overlap")
+        else:
+            accounted_machine_rows.extend(historical_pending_rows)
+        accounted_already_active += sum(
+            origin(row) == "current" for row in historically_certified_rows
+        )
+    current_machine = sum(origin(row) == "current" for row in accounted_machine_rows)
+    future_machine = sum(origin(row) == "future" for row in accounted_machine_rows)
+    net_saved = max(0, len(accounted_machine_rows) - calibration_rows_remaining)
     current_human = sum(origin(row) == "current" for row in human_rows)
     future_human = sum(origin(row) == "future" for row in human_rows)
     historical_current = sum(origin(row) == "current" for row in historically_certified_rows)
@@ -681,8 +702,8 @@ def build_report(
         "active_gold_modified": False,
         "issues": issues,
         "machine_owned": {
-            "eligible_after_one_calibration": len(current_eligible_rows),
-            "eligible_rows_already_active_through_human_review": eligible_already_active,
+            "eligible_after_one_calibration": len(accounted_machine_rows),
+            "eligible_rows_already_active_through_human_review": accounted_already_active,
             "current_primary_rows_reclaimable_after_calibration": current_machine,
             "future_rows_machine_owned_after_calibration": future_machine,
             "human_row_by_row_decisions_avoided_net": net_saved,
@@ -711,6 +732,7 @@ def build_report(
             "nonpin_rows_pending_calibration": nonpin_pending,
             "nonpin_calibration_sample_rows": nonpin_calibration_rows,
             "nonpin_calibration_sample_contains_pin_rows": 0,
+            "calibration_reuse_scope": calibration_reuse_scope or "none",
         },
         "human_owned": {
             "human_required_rows": len(human_rows),
@@ -726,7 +748,7 @@ def build_report(
         },
         "breakdowns": {
             "machine_by_origin_task_split": count_by(
-                current_eligible_rows, ("origin", "task", "split")
+                accounted_machine_rows, ("origin", "task", "split")
             ),
             "human_by_origin_task_split": count_by(human_rows, ("origin", "task", "split")),
         },
