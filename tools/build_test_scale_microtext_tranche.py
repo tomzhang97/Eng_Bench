@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build a diverse, review-only MicroText tranche for the test-scale gate."""
+"""Build a diverse, review-only MicroText tranche for a split-scale gate."""
 from __future__ import annotations
 
 import argparse
@@ -22,6 +22,14 @@ NONPIN_CATEGORIES = {
     "tolerance_value",
 }
 SPLITS = ("train", "dev", "test")
+
+
+def allowed_source_locks(target_split: str) -> set[str]:
+    if target_split not in SPLITS:
+        raise ValueError(f"unsupported target split: {target_split}")
+    if target_split == "test":
+        return {"test", "unseen"}
+    return {target_split}
 
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -226,6 +234,7 @@ def build_tranche(
     max_same_text_global: int,
     gate_report: Path | None = None,
     prior_selection_paths: Iterable[Path] = (),
+    target_split: str = "test",
     date_label: str,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
     if min(
@@ -238,6 +247,7 @@ def build_tranche(
         raise ValueError("all row and diversity limits must be positive")
 
     root = root.resolve()
+    allowed_locks = allowed_source_locks(target_split)
     input_path = resolve(root, input_path).resolve()
     gate_report = resolve(root, gate_report).resolve() if gate_report else None
     prior_selection_paths = [resolve(root, path).resolve() for path in prior_selection_paths]
@@ -265,6 +275,7 @@ def build_tranche(
         source_doc = doc_id(row)
         row_category = category(row)
         source_lock = locks.get(source_doc, "unseen")
+        explicit_split = str(row.get("reserved_split") or row.get("split") or "").strip()
         image_value = str(row.get("image_path") or row.get("page_image_path") or "").strip()
         if not row_id:
             reasons.append("candidate_id_missing")
@@ -282,8 +293,10 @@ def build_tranche(
             reasons.append("not_machine_prequalified")
         if str(row.get("machine_qa_status") or "").strip() != "selected_for_human_review":
             reasons.append("not_selected_for_human_review")
-        if source_lock not in {"test", "unseen"}:
+        if source_lock not in allowed_locks:
             reasons.append(f"source_locked_{source_lock}")
+        if explicit_split in SPLITS and explicit_split != target_split:
+            reasons.append("row_split_conflicts_target_split")
         if not text_value(row):
             reasons.append("proposed_text_missing")
         if page_index(row) is None:
@@ -302,15 +315,20 @@ def build_tranche(
 
         if reasons:
             held = dict(row)
-            held["test_scale_disposition"] = "held"
-            held["test_scale_hold_reasons"] = sorted(set(reasons))
+            held["scale_disposition"] = "held"
+            held["scale_hold_reasons"] = sorted(set(reasons))
+            if target_split == "test":
+                held["test_scale_disposition"] = "held"
+                held["test_scale_hold_reasons"] = held["scale_hold_reasons"]
             held["safe_to_merge_gold"] = False
             holds.append(held)
             exclusion_counts.update(set(reasons))
             continue
         seen_ids.add(row_id)
         prepared = dict(row)
-        prepared["test_scale_source_lock_before"] = source_lock
+        prepared["scale_source_lock_before"] = source_lock
+        if target_split == "test":
+            prepared["test_scale_source_lock_before"] = source_lock
         eligible.append(prepared)
 
     ordered_by_category = {
@@ -393,8 +411,11 @@ def build_tranche(
         if candidate_id(row) in selected_ids:
             continue
         held = dict(row)
-        held["test_scale_disposition"] = "held"
-        held["test_scale_hold_reasons"] = ["not_selected_by_target_or_diversity_policy"]
+        held["scale_disposition"] = "held"
+        held["scale_hold_reasons"] = ["not_selected_by_target_or_diversity_policy"]
+        if target_split == "test":
+            held["test_scale_disposition"] = "held"
+            held["test_scale_hold_reasons"] = held["scale_hold_reasons"]
         held["safe_to_merge_gold"] = False
         holds.append(held)
 
@@ -403,19 +424,23 @@ def build_tranche(
         prepared = dict(row)
         prepared.update(
             {
-                "reserved_split": "test",
-                "split": "test",
-                "test_scale_tranche_only": True,
-                "test_scale_tranche_date_label": date_label,
+                "reserved_split": target_split,
+                "split": target_split,
+                "scale_tranche_only": True,
+                "scale_tranche_target_split": target_split,
+                "scale_tranche_date_label": date_label,
                 "promotion_state": "unreviewed_candidate",
                 "review_status": "needs_review",
                 "safe_to_merge_gold": False,
             }
         )
+        if target_split == "test":
+            prepared["test_scale_tranche_only"] = True
+            prepared["test_scale_tranche_date_label"] = date_label
         output_rows.append(prepared)
 
     report = {
-        "schema": "eng_bench_test_scale_microtext_tranche_v2",
+        "schema": "eng_bench_split_scale_microtext_tranche_v3",
         "goal": "Gold v2.0 Global",
         "date_label": date_label,
         "status": "PASS",
@@ -428,8 +453,8 @@ def build_tranche(
         "gate_report": gate_report.relative_to(root).as_posix() if gate_report else "",
         "policy": {
             "task": "microtext",
-            "target_split": "test",
-            "allowed_source_locks": ["test", "unseen"],
+            "target_split": target_split,
+            "allowed_source_locks": sorted(allowed_locks),
             "source_lock_scope": "manifest identity-connected source family",
             "allowed_categories": sorted(NONPIN_CATEGORIES),
             "required_unstaged_tier": "machine_prequalified_needs_visual_qa",
@@ -449,10 +474,13 @@ def build_tranche(
             "prior_selection_rows": len(prior_rows),
             "prior_selection_candidate_ids": len(prior_ids),
             "selected_unseen_source_rows": sum(
-                row.get("test_scale_source_lock_before") == "unseen" for row in output_rows
+                row.get("scale_source_lock_before") == "unseen" for row in output_rows
             ),
             "selected_existing_test_source_rows": sum(
-                row.get("test_scale_source_lock_before") == "test" for row in output_rows
+                row.get("scale_source_lock_before") == "test" for row in output_rows
+            ),
+            "selected_source_lock_counts": dict(
+                sorted(Counter(str(row.get("scale_source_lock_before")) for row in output_rows).items())
             ),
             "selected_categories": dict(sorted(Counter(category(row) for row in output_rows).items())),
             "exclusion_reasons": dict(sorted(exclusion_counts.items())),
@@ -460,7 +488,8 @@ def build_tranche(
         },
         "active_category_shortfalls_used_for_priority": dict(sorted(shortfalls.items())),
         "interpretation": (
-            "Rows are review-only test-scale capacity. Test/unseen source eligibility, "
+            f"Rows are review-only {target_split}-scale capacity. Source-family split "
+            "eligibility, "
             "machine prequalification, provenance lineage, evidence existence, and diversity "
             "caps are deterministic screens; visual acceptance and all promotion gates remain required."
         ),
@@ -473,13 +502,13 @@ def write_report(path: Path, report: dict[str, Any]) -> None:
     path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     counts = report["counts"]
     lines = [
-        "# Test-Scale MicroText Tranche",
+        f"# {report['policy']['target_split'].title()}-Scale MicroText Tranche",
         "",
         f"- Goal: **{report['goal']}**",
         f"- Status: `{report['status']}`",
         f"- Input rows: `{counts['input_rows']}`",
         f"- Eligible rows: `{counts['eligible_rows']}`",
-        f"- Selected review-only test rows: `{counts['selected_rows']}`",
+        f"- Selected review-only {report['policy']['target_split']} rows: `{counts['selected_rows']}`",
         f"- Selected source documents: `{counts['selected_documents']}`",
         f"- Active Gold modified: `{str(report['active_gold_modified']).lower()}`",
         "",
@@ -508,6 +537,15 @@ def main(argv: list[str] | None = None) -> int:
         ),
     )
     parser.add_argument("--date-label", required=True)
+    parser.add_argument(
+        "--target-split",
+        choices=SPLITS,
+        default="test",
+        help=(
+            "Destination split. Train/dev require an existing source-family lock; "
+            "test also permits genuinely unseen source families."
+        ),
+    )
     parser.add_argument("--row-target", type=int, default=900)
     parser.add_argument("--max-rows-per-doc", type=int, default=100)
     parser.add_argument("--max-rows-per-page", type=int, default=15)
@@ -529,6 +567,7 @@ def main(argv: list[str] | None = None) -> int:
         max_same_text_global=args.max_same_text_global,
         gate_report=args.gate_report,
         prior_selection_paths=args.prior_selection,
+        target_split=args.target_split,
         date_label=args.date_label,
     )
     write_jsonl(resolve(root, args.output), selected)

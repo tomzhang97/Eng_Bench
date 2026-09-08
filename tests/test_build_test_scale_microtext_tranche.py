@@ -100,6 +100,85 @@ class TestBuildTestScaleMicrotextTranche(unittest.TestCase):
         self.assertIn("not_supported_nonpin_category", reasons)
         self.assertEqual(2, report["counts"]["selected_rows"])
 
+    def test_train_target_selects_only_train_locked_rows(self) -> None:
+        rows = [
+            self.row("train", "train_doc"),
+            self.row("test", "test_doc"),
+            self.row("dev", "dev_doc"),
+            self.row("new", "new_doc"),
+        ]
+        selected, holds, report = tranche.build_tranche(
+            self.root,
+            self.write_input(rows),
+            row_target=10,
+            max_rows_per_doc=10,
+            max_rows_per_page=10,
+            max_same_text_per_doc=3,
+            max_same_text_global=10,
+            target_split="train",
+            date_label="fixture",
+        )
+        self.assertEqual(["train"], [row["candidate_id"] for row in selected])
+        self.assertTrue(all(row["split"] == "train" for row in selected))
+        self.assertTrue(all(row["reserved_split"] == "train" for row in selected))
+        self.assertEqual(["train"], report["policy"]["allowed_source_locks"])
+        self.assertEqual({"train": 1}, report["counts"]["selected_source_lock_counts"])
+        reasons = {reason for row in holds for reason in row["scale_hold_reasons"]}
+        self.assertIn("source_locked_test", reasons)
+        self.assertIn("source_locked_dev", reasons)
+        self.assertIn("source_locked_unseen", reasons)
+
+    def test_dev_target_selects_only_dev_locked_rows(self) -> None:
+        selected, holds, report = tranche.build_tranche(
+            self.root,
+            self.write_input(
+                [self.row("dev", "dev_doc"), self.row("train", "train_doc")]
+            ),
+            row_target=10,
+            max_rows_per_doc=10,
+            max_rows_per_page=10,
+            max_same_text_per_doc=3,
+            max_same_text_global=10,
+            target_split="dev",
+            date_label="fixture",
+        )
+        self.assertEqual(["dev"], [row["candidate_id"] for row in selected])
+        self.assertEqual("dev", report["policy"]["target_split"])
+        self.assertIn("source_locked_train", holds[0]["scale_hold_reasons"])
+
+    def test_explicit_row_split_conflict_fails_closed(self) -> None:
+        row = self.row("train", "train_doc")
+        row["reserved_split"] = "test"
+        selected, holds, _ = tranche.build_tranche(
+            self.root,
+            self.write_input([row]),
+            row_target=1,
+            max_rows_per_doc=1,
+            max_rows_per_page=1,
+            max_same_text_per_doc=1,
+            max_same_text_global=1,
+            target_split="train",
+            date_label="fixture",
+        )
+        self.assertEqual([], selected)
+        self.assertIn(
+            "row_split_conflicts_target_split", holds[0]["scale_hold_reasons"]
+        )
+
+    def test_rejects_invalid_target_split(self) -> None:
+        with self.assertRaisesRegex(ValueError, "unsupported target split"):
+            tranche.build_tranche(
+                self.root,
+                self.write_input([self.row("train", "train_doc")]),
+                row_target=1,
+                max_rows_per_doc=1,
+                max_rows_per_page=1,
+                max_same_text_per_doc=1,
+                max_same_text_global=1,
+                target_split="invalid",
+                date_label="fixture",
+            )
+
     def test_enforces_page_and_text_diversity_caps(self) -> None:
         rows = [
             self.row(f"row-{index}", "new_doc", page=0, text="10 mm")
