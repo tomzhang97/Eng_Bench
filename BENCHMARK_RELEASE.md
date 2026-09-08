@@ -632,3 +632,27 @@ engineering-system future capacity is 84 rows across four distinct payloads.
 Current Gold remains 5,694; the all-staged upper bound is 5,778. Wave2339 remains
 **5/9 Gold v2.0 Global gates PASS**. Release-safe inventory is now 556 unique
 documents. No unreviewed row was promoted.
+
+## 19. Pixhawk Provenance-Cleared Review Capacity (2026-09-09)
+
+The Pixhawk debug-adapter schematic and retained Antmicro mechanical SVG now
+have exact local hashes, source-candidate lineage, public source URLs, and
+license evidence in `manifest.jsonl`. This makes both documents paper-ready for
+future review selection; it does not authorize their unreviewed candidates.
+
+Machine review of all 12 newly reachable regions retained nine Pixhawk targets
+and held three unusable boxes. The retained rows contain three dimension values
+and six complete connector part numbers, with non-placeholder versions and
+row-level source payload hashes. They pass strict review-queue assembly and are
+listed only as unassigned future capacity.
+
+The clean staged-capacity report is
+`derived/quality/v2_0_staged_capacity_2026-09-09-wave2375-pixhawk-review-capacity.json`.
+It raises the non-Gold upper bound to 5,824 rows across 313 source payloads.
+Explicit staged test capacity remains 1,821 because no split reservation was
+invented. Active Gold remains 5,694 rows and no new human ZIP was issued.
+
+Final Wave2377 verification passes all 1,459 tests, both dataset validators,
+split and question leakage checks, and the frozen five-file release-hash check.
+The formal **Gold v2.0 Global** status remains 5/9 gates PASS. The latest report
+is `results/health/v2_0_gate_audit_2026-09-09-wave2377-pixhawk-capacity-final.json`.

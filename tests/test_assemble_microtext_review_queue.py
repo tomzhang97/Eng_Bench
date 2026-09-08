@@ -81,7 +81,27 @@ class AssembleMicrotextReviewQueueTest(unittest.TestCase):
 
         self.assertTrue(report["passes"])
         self.assertEqual(rows[0]["source_candidate_id"], "candidate_a")
+        self.assertEqual(
+            rows[0]["source_payload_sha256"],
+            hashlib.sha256(b"source").hexdigest(),
+        )
+        self.assertEqual(rows[0]["source_payload_sha256_backfill_source"], "manifest.jsonl")
+        self.assertEqual(rows[0]["source_public_status"], "public_domain")
+        self.assertEqual(rows[0]["source_manifest_doc_id"], "doc_a")
+        self.assertEqual(rows[0]["source_provenance_manifest"], "manifest.jsonl")
         self.assertEqual(report["totals"]["paper_ready_source_documents"], 1)
+
+    def test_conflicting_source_payload_hash_fails_closed(self) -> None:
+        temp, root, input_path = self._fixture()
+        self.addCleanup(temp.cleanup)
+        row = json.loads(input_path.read_text(encoding="utf-8"))
+        row["source_payload_sha256"] = "0" * 64
+        input_path.write_text(json.dumps(row) + "\n", encoding="utf-8")
+
+        _rows, report = build_report(root, [input_path], "2026-09-09")
+
+        self.assertFalse(report["passes"])
+        self.assertEqual(report["issue_counts"]["source_payload_sha256_mismatch"], 1)
 
     def test_duplicates_and_rights_block_queue(self) -> None:
         temp, root, input_path = self._fixture(duplicate=True, blocked=True)

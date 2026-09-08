@@ -482,7 +482,12 @@ def domain_category_compatible(domain: str, row_category: str) -> bool:
         "civil_structural": "civil_architectural",
     }.get(domain.strip().lower(), domain.strip().lower())
     if domain == "pcb_schematic":
-        return row_category in {"component_value", "pin_label"}
+        return row_category in {
+            "component_value",
+            "dimension_value",
+            "pin_label",
+            "tolerance_value",
+        }
     if domain == "datasheet_spec":
         return row_category in {
             "component_value",
@@ -610,6 +615,7 @@ def select_source_rows(
     allow_active_packet_source_docs: bool = False,
     allow_active_source_docs: bool = False,
     require_resolved_version: bool = True,
+    allow_domain_category_mismatch: bool = False,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     allowed_categories = allowed_categories or DEFAULT_CATEGORIES
     excluded_source_candidate_ids = excluded_source_candidate_ids or set()
@@ -783,8 +789,10 @@ def select_source_rows(
                 continue
             domain = str(inventory[doc_id].get("domain") or "unknown")
             if not domain_category_compatible(domain, row_category):
-                counters["excluded_domain_category_mismatch"] += 1
-                continue
+                if not allow_domain_category_mismatch:
+                    counters["excluded_domain_category_mismatch"] += 1
+                    continue
+                counters["domain_category_mismatch_overrides"] += 1
             candidate_row = dict(row)
             if candidate_inferred:
                 candidate_row["source_candidate_id"] = candidate_id
@@ -866,6 +874,7 @@ def select_source_rows(
         "allow_item_audited_source_docs": allow_item_audited_source_docs,
         "allow_active_packet_source_docs": allow_active_packet_source_docs,
         "allow_active_source_docs": allow_active_source_docs,
+        "allow_domain_category_mismatch": allow_domain_category_mismatch,
         "require_resolved_version": require_resolved_version,
         "allowed_categories": sorted(allowed_categories),
         "input_review_files": [
@@ -906,6 +915,7 @@ def render_markdown(report: dict[str, Any]) -> str:
         f"- Item-audited source-document override: `{str(report.get('allow_item_audited_source_docs', False)).lower()}`",
         f"- Active-packet source docs allowed: `{str(report.get('allow_active_packet_source_docs', False)).lower()}`",
         f"- Active-gold source docs allowed: `{str(report.get('allow_active_source_docs', False)).lower()}`",
+        f"- Domain/category mismatch inspection override: `{str(report.get('allow_domain_category_mismatch', False)).lower()}`",
         f"- Split restriction: `{report.get('restricted_split') or 'none'}`",
         f"- Capacity reports excluded: `{len(report.get('capacity_exclusion_reports', []))}`",
         f"- Selected source docs: `{report['selected_source_docs']}`",
@@ -1039,6 +1049,14 @@ def main(argv: list[str] | None = None) -> int:
             "Existing gold identities remain excluded. Intended for category and row-count scale waves."
         ),
     )
+    parser.add_argument(
+        "--allow-domain-category-mismatch",
+        action="store_true",
+        help=(
+            "Admit category/domain mismatches for explicit visual correction. This inspection-only "
+            "override requires at least one --include-doc-id and does not make rows release-ready."
+        ),
+    )
     parser.add_argument("--output-jsonl", required=True)
     parser.add_argument("--output-json", required=True)
     parser.add_argument("--output-md", required=True)
@@ -1048,6 +1066,8 @@ def main(argv: list[str] | None = None) -> int:
         parser.error("--split-plan and --split must be supplied together")
     if args.include_unreserved and not args.split_plan:
         parser.error("--include-unreserved requires --split-plan and --split")
+    if args.allow_domain_category_mismatch and not args.include_doc_id:
+        parser.error("--allow-domain-category-mismatch requires --include-doc-id")
 
     root = Path(args.root).resolve()
     capacity_paths = capacity_report_review_paths(root, args.exclude_capacity_report)
@@ -1101,6 +1121,7 @@ def main(argv: list[str] | None = None) -> int:
         allow_active_packet_source_docs=args.allow_active_packet_source_docs,
         allow_active_source_docs=args.allow_active_source_docs,
         require_resolved_version=not args.allow_unresolved_version,
+        allow_domain_category_mismatch=args.allow_domain_category_mismatch,
     )
     if args.split_plan and args.split:
         rows = apply_authoritative_split_reservations(

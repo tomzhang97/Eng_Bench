@@ -29,6 +29,31 @@ def write_json(path: Path, payload: dict[str, object]) -> None:
 
 
 class CandidatePrefixLineageTests(unittest.TestCase):
+    def test_open_rows_without_paper_ready_source_route_to_provenance_repair(self) -> None:
+        review = Counter(
+            {
+                "unique_open_rows": 3,
+                "unique_fresh_open_rows": 3,
+                "unique_fresh_missing_evidence_rows": 0,
+            }
+        )
+
+        next_step = audit_source_conversion_readiness.local_next_step(
+            {
+                "doc_id": "unregistered_source",
+                "task": "microtext",
+                "public_status": "cc_by_sa_4_0_verified",
+            },
+            review,
+            Counter(),
+            pages=1,
+            spans=3,
+            mineable_candidates=3,
+            paper_ready=False,
+        )
+
+        self.assertEqual(next_step, "source_provenance_repair_or_hold")
+
     def test_machine_held_reviewed_sibling_is_not_reported_as_fresh(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             tmp_path = Path(temp_dir)

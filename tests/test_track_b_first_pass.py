@@ -2736,6 +2736,23 @@ class TrackBFirstPassTests(unittest.TestCase):
                 )
             (tmp_path / "SOURCE_INTAKE_LOG.md").write_text("Candidate: `pid_001`\n", encoding="utf-8")
 
+            manifest_rows = []
+            for doc_id in ("doc_review", "doc_ready", "doc_unmineable"):
+                source_path = tmp_path / "microtext" / "docs" / f"{doc_id}.pdf"
+                source_path.parent.mkdir(parents=True, exist_ok=True)
+                source_path.write_bytes(f"fixture:{doc_id}".encode("ascii"))
+                manifest_rows.append(
+                    {
+                        "type": "doc",
+                        "doc_id": doc_id,
+                        "path": source_path.relative_to(tmp_path).as_posix(),
+                        "sha256": hashlib.sha256(source_path.read_bytes()).hexdigest(),
+                        "source_url": f"https://example.com/{doc_id}.pdf",
+                        "public_status": "public_domain_candidate",
+                    }
+                )
+            write_jsonl(tmp_path / "manifest.jsonl", manifest_rows)
+
             report = mod.build_report(tmp_path)
             markdown = mod.render_markdown(report)
 

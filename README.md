@@ -251,6 +251,23 @@ At this point, the visualdiff slice is family-split for Track B work and the mic
 * `loader_smoke.py` - Verifies the public unified loader and image paths
 * `validate_engbench.py` - Validate JSONL files
 
+### Current Gold v2.0 Expansion Capacity
+
+The September 9 source-provenance pass cleared the pinned Pixhawk debug-adapter
+schematic and retained Antmicro mechanical SVG for review selection. A complete
+authoritative-box machine pass retained nine Pixhawk MicroText rows and held
+three unusable crops. These rows remain unassigned review capacity with
+`safe_to_merge_gold=false`; they are not part of active Gold.
+
+The latest clean staged-capacity ledger is
+`derived/quality/v2_0_staged_capacity_2026-09-09-wave2375-pixhawk-review-capacity.json`:
+130 future rows, a 5,824 all-staged row upper bound, and 1,821 explicit staged
+test rows. Current Gold remains 5,694 rows.
+
+The latest verified **Gold v2.0 Global** checkpoint is Wave2377 at 5/9 gates
+PASS. All 1,459 tests, both dataset validators, split/question leakage checks,
+and the frozen release-hash check pass without changing active Gold.
+
 ## License
 
 Provisional mixed-source candidate. See `DATACARD.md`, `SOURCE_INVENTORY.csv`, and `manifest.jsonl` before public redistribution.

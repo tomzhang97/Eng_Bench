@@ -216,6 +216,21 @@ def build_report(
             )
         if not row.get("source_candidate_id"):
             issues.append("missing_source_candidate_id")
+        source_payload_sha256 = str(row.get("source_payload_sha256") or "").strip().lower()
+        expected_payload_sha256 = str(source.get("computed_sha256") or "").strip().lower()
+        if source_payload_sha256 and expected_payload_sha256:
+            if source_payload_sha256 != expected_payload_sha256:
+                issues.append("source_payload_sha256_mismatch")
+        elif expected_payload_sha256:
+            row["source_payload_sha256"] = expected_payload_sha256
+            row["source_payload_sha256_backfill_source"] = "manifest.jsonl"
+        if not row.get("source_public_status") and source.get("public_status"):
+            row["source_public_status"] = source["public_status"]
+        if not row.get("source_url") and source.get("source_url"):
+            row["source_url"] = source["source_url"]
+        if doc_id:
+            row.setdefault("source_manifest_doc_id", doc_id)
+            row.setdefault("source_provenance_manifest", "manifest.jsonl")
         if region_counts[region_key(row)] > 1:
             issues.append("duplicate_candidate_region")
         if region_key(row) in gold_regions:

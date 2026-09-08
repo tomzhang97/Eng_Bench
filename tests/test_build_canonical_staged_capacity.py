@@ -41,7 +41,7 @@ class CanonicalStagedCapacityTest(unittest.TestCase):
                 [active_visualdiff],
             )
             write_jsonl(
-                root / "visualdiff" / "annotations" / "visualdiff_resolved_reviewed.jsonl",
+                root / "visualdiff" / "annotations" / "visualdiff_review_resolved.jsonl",
                 [{"pair_id": "vdiff__terminal__v1__to__v2__p0000__000", "review_status": "reject"}],
             )
 

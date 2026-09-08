@@ -160,6 +160,19 @@ class MicrotextSourceReviewQueueUnittest(unittest.TestCase):
             )
         self.assertIn("tolerance_value", build_microtext_source_review_queue.DEFAULT_CATEGORIES)
 
+    def test_pcb_schematic_supports_mechanical_dimensions_but_not_process_tags(self) -> None:
+        for category in ("component_value", "dimension_value", "pin_label", "tolerance_value"):
+            self.assertTrue(
+                build_microtext_source_review_queue.domain_category_compatible(
+                    "pcb_schematic", category
+                )
+            )
+        self.assertFalse(
+            build_microtext_source_review_queue.domain_category_compatible(
+                "pcb_schematic", "pipe_line_tag"
+            )
+        )
+
     def test_inventory_domain_aliases_use_canonical_category_policy(self) -> None:
         self.assertFalse(
             build_microtext_source_review_queue.domain_category_compatible(

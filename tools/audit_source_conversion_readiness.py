@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import re
 from collections import Counter, defaultdict
@@ -251,6 +252,52 @@ def candidate_ids_in_text(text: str) -> set[str]:
 
 def inventory_source_path(row: dict[str, Any]) -> str:
     return str(row.get("path") or row.get("source_path") or "").strip()
+
+
+def file_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def manifest_doc_records(root: Path) -> dict[str, dict[str, Any]]:
+    return {
+        str(row.get("doc_id") or "").strip(): row
+        for row in read_jsonl(root / "manifest.jsonl")
+        if row.get("type") == "doc" and str(row.get("doc_id") or "").strip()
+    }
+
+
+def source_document_readiness(
+    root: Path,
+    row: dict[str, Any],
+    manifest_docs: dict[str, dict[str, Any]],
+) -> tuple[bool, str, str]:
+    """Return strict source provenance readiness for a local inventory row."""
+    doc_id = str(row.get("doc_id") or "").strip()
+    manifest = manifest_docs.get(doc_id)
+    if manifest is None:
+        return False, "missing_manifest_doc", inventory_source_path(row)
+    source_path = inventory_source_path(row) or str(manifest.get("path") or "").strip()
+    if not source_path:
+        return False, "missing_source_path", ""
+    absolute = root / source_path
+    if not absolute.is_file():
+        return False, "missing_source_file", source_path
+    recorded_sha256 = str(manifest.get("sha256") or "").strip().lower()
+    if not recorded_sha256:
+        return False, "missing_manifest_sha256", source_path
+    if file_sha256(absolute) != recorded_sha256:
+        return False, "source_sha256_mismatch", source_path
+    source_url = str(row.get("source_url") or manifest.get("source_url") or "").strip()
+    if not source_url:
+        return False, "missing_source_url", source_path
+    public_status = str(row.get("public_status") or manifest.get("public_status") or "").strip()
+    if not is_release_safe_status(public_status):
+        return False, "source_rights_not_release_safe", source_path
+    return True, "", source_path
 
 
 def imported_candidate_ids(root: Path) -> set[str]:
@@ -1087,6 +1134,7 @@ def local_next_step(
     exhaustion_status: str = "",
     duplicate_payload_alias: bool = False,
     staged_future_rows: int = 0,
+    paper_ready: bool = True,
 ) -> str:
     if not is_release_safe_status(str(row.get("public_status") or "")):
         return "rights_review_or_hold"
@@ -1112,6 +1160,8 @@ def local_next_step(
             if packeted_open_rows > 0:
                 return "await_human_return"
             return "reviewed_sibling_or_active_gold"
+        if not paper_ready:
+            return "source_provenance_repair_or_hold"
         if packeted_open_rows > 0 or stale_open_rows > 0:
             return "human_review_partial_packeted"
         return "human_review"
@@ -1156,6 +1206,7 @@ def local_priority(
     exhaustion_status: str = "",
     duplicate_payload_alias: bool = False,
     staged_future_rows: int = 0,
+    paper_ready: bool = True,
 ) -> int:
     release_safe = is_release_safe_status(str(row.get("public_status") or ""))
     if duplicate_payload_alias:
@@ -1164,6 +1215,8 @@ def local_priority(
         return -50
     if is_machine_exhausted_status(exhaustion_status):
         return -100
+    if not paper_ready and int(review.get("unique_open_rows", review.get("open_rows", 0))) > 0:
+        return -60
     if (
         int(review.get("review_rows", 0)) > 0
         and int(review.get("unique_open_rows", review.get("open_rows", 0))) == 0
@@ -1210,6 +1263,7 @@ def summarize_local_sources(
     staged_by_doc, staged_capacity_paths = collect_staged_future_stats(root)
     exhaustion_by_doc = load_conversion_exhaustion(root)
     duplicate_alias_doc_ids = set(build_source_payload_duplicate_report(root).get("alias_doc_ids") or [])
+    manifest_docs = manifest_doc_records(root)
     rows: list[dict[str, Any]] = []
     for item in inventory:
         doc_id = str(item.get("doc_id") or "")
@@ -1223,6 +1277,11 @@ def summarize_local_sources(
         exhaustion = exhaustion_by_doc.get(doc_id, {})
         exhaustion_status = str(exhaustion.get("status") or "")
         duplicate_payload_alias = doc_id in duplicate_alias_doc_ids
+        paper_ready, provenance_issue, resolved_source_path = source_document_readiness(
+            root,
+            item,
+            manifest_docs,
+        )
         next_step = local_next_step(
             item,
             review,
@@ -1233,6 +1292,7 @@ def summarize_local_sources(
             exhaustion_status,
             duplicate_payload_alias,
             staged_future_rows,
+            paper_ready,
         )
         raw_fresh_open = int(review.get("fresh_open_rows", 0))
         unique_fresh_open = int(review.get("unique_fresh_open_rows", raw_fresh_open))
@@ -1243,7 +1303,9 @@ def summarize_local_sources(
                 "domain": quota_domain(item.get("domain")),
                 "task": item.get("task", ""),
                 "public_status": item.get("public_status", ""),
-                "source_path": inventory_source_path(item),
+                "source_path": resolved_source_path,
+                "paper_ready": paper_ready,
+                "source_provenance_issue": provenance_issue,
                 "rendered_pages": pages,
                 "textlayer_spans": spans,
                 "mineable_candidates": mineable_candidates,
@@ -1288,6 +1350,7 @@ def summarize_local_sources(
                     exhaustion_status,
                     duplicate_payload_alias,
                     staged_future_rows,
+                    paper_ready,
                 ),
                 "source_url": item.get("source_url", ""),
             }
