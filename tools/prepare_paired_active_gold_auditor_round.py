@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
@@ -35,6 +36,17 @@ STRATA = tuple(
 )
 ROWS_PER_STRATUM = UNIQUE_ROWS // len(STRATA)
 DEFAULT_ROUND_NAME = "paired_active_gold_recheck_2026_09_07"
+PLACEHOLDER_DESCRIPTIONS = {
+    "CHANGE_DESC_GT_TODO",
+    "CHANGE_DESC_TODO",
+    "TODO",
+    "TBD",
+}
+GENERIC_HIGHLIGHT_DESCRIPTION = re.compile(
+    r"Highlighted visual content changed(?: near .+)? from .+ to .+\.",
+    re.DOTALL,
+)
+CJK_CHARACTER = re.compile(r"[\u3400-\u4dbf\u4e00-\u9fff]")
 
 
 def active_hashes(root: Path) -> dict[str, str]:
@@ -146,6 +158,38 @@ def tentative_visualdiff_ids(rows: list[dict[str, Any]]) -> set[str]:
     }
 
 
+def machine_known_description_issue(description: str) -> str | None:
+    """Return debts that are already machine-provable and need no audit vote."""
+    text = description.strip()
+    if not text:
+        return "blank"
+    if text.upper() in PLACEHOLDER_DESCRIPTIONS:
+        return "placeholder"
+    if GENERIC_HIGHLIGHT_DESCRIPTION.fullmatch(text):
+        return "generic_highlight"
+    if CJK_CHARACTER.search(text):
+        return "non_english"
+    return None
+
+
+def machine_known_nonrelease_visualdiff(
+    rows: list[dict[str, Any]],
+) -> tuple[set[str], Counter[str]]:
+    ids: set[str] = set()
+    reasons: Counter[str] = Counter()
+    for row in rows:
+        if row.get("task") != "visualdiff":
+            continue
+        issue = machine_known_description_issue(
+            str(row.get("change_description") or "")
+        )
+        identity = str(row.get("record_id") or "").strip()
+        if issue and identity:
+            ids.add(identity)
+            reasons[issue] += 1
+    return ids, reasons
+
+
 def eligible_rows(root: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     assigned_ids, _, assignment_files = fresh.historical_assignments(root)
     completed_ids, decision_files = fresh.completed_assignments(root)
@@ -153,8 +197,16 @@ def eligible_rows(root: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     recheck_ids = current_recheck_ids(root)
     active_rows = benchmark_rows(root)
     tentative_ids = tentative_visualdiff_ids(active_rows)
+    nonrelease_ids, nonrelease_reasons = machine_known_nonrelease_visualdiff(
+        active_rows
+    )
     excluded_ids = (
-        assigned_ids | completed_ids | agreement_ids | recheck_ids | tentative_ids
+        assigned_ids
+        | completed_ids
+        | agreement_ids
+        | recheck_ids
+        | tentative_ids
+        | nonrelease_ids
     )
     eligible = [
         row
@@ -167,6 +219,10 @@ def eligible_rows(root: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
         "formal_agreement_ids": len(agreement_ids),
         "active_audit_recheck_ids": len(recheck_ids),
         "tentative_visualdiff_ids": len(tentative_ids),
+        "machine_known_nonrelease_visualdiff_ids": len(nonrelease_ids),
+        "machine_known_nonrelease_visualdiff_reasons": dict(
+            sorted(nonrelease_reasons.items())
+        ),
         "historical_payloads": assignment_files,
         "completed_decision_files": decision_files,
     }
@@ -371,6 +427,7 @@ def build(
         "formal_agreement_overlap": 0,
         "active_audit_recheck_overlap": 0,
         "tentative_visualdiff_overlap": 0,
+        "machine_known_nonrelease_visualdiff_overlap": 0,
         "intentional_cross_auditor_replication": paired.REVIEWERS_PER_ROW,
         "prefilled_answers": 0,
         "safe_to_merge_gold": False,

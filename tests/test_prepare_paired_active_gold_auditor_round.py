@@ -79,6 +79,48 @@ class PreparePairedActiveGoldAuditorRoundTests(unittest.TestCase):
             active.tentative_visualdiff_ids(rows),
         )
 
+    def test_machine_known_description_debts_are_excluded_from_audit(self) -> None:
+        rows = [
+            {
+                "task": "visualdiff",
+                "record_id": "vd_todo",
+                "change_description": "CHANGE_DESC_GT_TODO",
+            },
+            {
+                "task": "visualdiff",
+                "record_id": "vd_generic",
+                "change_description": (
+                    "Highlighted visual content changed from rev A to rev B."
+                ),
+            },
+            {
+                "task": "visualdiff",
+                "record_id": "vd_non_english",
+                "change_description": "NEW 相比 OLD 删除了工程标签。",
+            },
+            {
+                "task": "visualdiff",
+                "record_id": "vd_final",
+                "change_description": 'The engineering text "FIXTURE_R23" was added.',
+            },
+            {
+                "task": "microtext",
+                "record_id": "mt_todo",
+                "change_description": "CHANGE_DESC_GT_TODO",
+            },
+        ]
+        ids, reasons = active.machine_known_nonrelease_visualdiff(rows)
+        self.assertEqual({"vd_todo", "vd_generic", "vd_non_english"}, ids)
+        self.assertEqual(
+            {"generic_highlight": 1, "non_english": 1, "placeholder": 1},
+            dict(reasons),
+        )
+        self.assertIsNone(
+            active.machine_known_description_issue(
+                'The engineering text "FIXTURE_R23" was added.'
+            )
+        )
+
     def test_render_evidence_creates_microtext_and_visualdiff_panels(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
