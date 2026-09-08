@@ -11,7 +11,7 @@ Gold v2.0 Global remains **5/9 gates PASS**. Row scale (4582/25000 minimum),
 frozen challenge scale (1600/5000), formal agreement (0/185), and complete source provenance
 (204/213 paper-ready documents) remain OPEN. Category balance, 39 tentative
 VisualDiff descriptions and 49 unresolved active audit flags also block release.
-Current gate: `derived/quality/v2_0_gate_audit_2026-09-08-wave2156-machine-current.json`.
+Current gate: `derived/quality/v2_0_gate_audit_2026-09-08-wave2168-category-capacity-current.json`.
 
 The formal agreement preparation blocker is now closed. A quality-filtered,
 release-safe 185-row sample (95 MicroText and 90 VisualDiff) is packaged for two
@@ -27,6 +27,17 @@ blank judgments total). Historical assignments, completed decisions, the 185
 formal-agreement rows, 49 active audit flags, and all 39 known tentative
 VisualDiff descriptions are excluded. This replaces the September 7 v2 audit
 ZIP; neither packet is a Gold-promotion path.
+
+The current MicroText balance path is now hash-bound and split-safe. After a
+passing 293-row calibration, 1,112 non-pin rows are strict-ready. Exactly 547
+already assigned primary-review rows plus 407 release-safe future rows close
+all category floors and lower modeled pin concentration to 34.78% at full
+acceptance. A conservative 65%-acceptance buffer contains 629 rows across 162
+documents and still closes every floor; 12 row-specific split-plan files,
+source payload hashes, images, and bounding boxes are verified. These are
+non-Gold readiness rows (`safe_to_merge_gold=false`), not release progress.
+Reports: `derived/quality/v2_0_microtext_balance_lanes_2026-09-08-wave2163-current-category-capacity.json`
+and `derived/quality/v2_0_release_safe_microtext_category_closure_buffered_2026-09-08-wave2166.json`.
 
 The existing 1600-row challenge export is a historical freeze, not evidence of
 current release eligibility. New export generation now refuses known unresolved

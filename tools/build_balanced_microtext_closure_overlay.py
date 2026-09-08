@@ -382,6 +382,7 @@ def build_overlay(
     supplemental_future_paths: list[Path] | None = None,
     packet_index_path: Path | None = None,
     split_plan_path: Path | None = None,
+    verify_row_split_plans: bool = False,
     required_splits: set[str] | None = None,
     exclude_provenance_replacements: bool = False,
     selection_mode: str = "category_closure",
@@ -484,6 +485,8 @@ def build_overlay(
     ignored_categories: Counter[str] = Counter()
     source_cache: dict[str, tuple[bool, str, str, str]] = {}
     image_size_cache: dict[Path, tuple[int, int]] = {}
+    row_split_plan_cache: dict[Path, dict[str, str]] = {}
+    row_split_plan_hashes: dict[Path, str] = {}
 
     def source_audit(doc_id: str) -> tuple[bool, str, str, str]:
         if doc_id in source_cache:
@@ -566,6 +569,33 @@ def build_overlay(
                 reasons.append("source_doc_missing_from_split_plan")
             elif split != expected_split:
                 reasons.append(f"split_plan_mismatch:{expected_split}")
+        elif verify_row_split_plans:
+            row_plan_value = str(row.get("split_reservation_plan") or "").strip()
+            if not row_plan_value:
+                reasons.append("row_split_plan_missing")
+            else:
+                row_plan_path = resolve_path(root, row_plan_value).resolve()
+                if not row_plan_path.is_file():
+                    reasons.append("row_split_plan_file_missing")
+                else:
+                    try:
+                        if row_plan_path not in row_split_plan_cache:
+                            row_split_plan_cache[row_plan_path] = (
+                                load_microtext_split_reservations(row_plan_path)
+                            )
+                            row_split_plan_hashes[row_plan_path] = file_sha256(
+                                row_plan_path
+                            )
+                        expected_split = row_split_plan_cache[row_plan_path].get(doc_id)
+                    except (OSError, ValueError):
+                        reasons.append("row_split_plan_invalid")
+                    else:
+                        if expected_split is None:
+                            reasons.append("source_doc_missing_from_row_split_plan")
+                        elif split != expected_split:
+                            reasons.append(
+                                f"row_split_plan_mismatch:{expected_split}"
+                            )
         if not text_value(row):
             reasons.append("candidate_text_missing")
         if str(row.get("machine_qa_status") or "").strip() != "selected_for_human_review":
@@ -704,6 +734,8 @@ def build_overlay(
 
     active_microtext_rows = [row for row in active_rows if is_microtext(row)]
     active_pin_rows = sum(row_category(row) == "pin_label" for row in active_microtext_rows)
+    projected_microtext_total = sum(projected.values())
+    projected_pin_rows = int(projected.get("pin_label", 0))
     selected_pin_rows = selected_by_category.get("pin_label", 0)
     modeled_selected_rows = sum(
         math.floor(count * min_acceptance_rate) for count in selected_by_category.values()
@@ -711,13 +743,17 @@ def build_overlay(
     modeled_pin_rows = math.floor(selected_pin_rows * min_acceptance_rate)
     active_microtext_total = len(active_microtext_rows)
     minimum_total_rows_for_pin_limit = (
-        math.ceil(active_pin_rows / MICROTEXT_PIN_SHARE_LIMIT) if active_pin_rows else 0
+        math.ceil(projected_pin_rows / MICROTEXT_PIN_SHARE_LIMIT)
+        if projected_pin_rows
+        else 0
     )
     additional_full_acceptance_nonpin = max(
-        0, minimum_total_rows_for_pin_limit - (active_microtext_total + len(selected))
+        0, minimum_total_rows_for_pin_limit - (projected_microtext_total + len(selected))
     )
     additional_modeled_accepted_nonpin = max(
-        0, minimum_total_rows_for_pin_limit - (active_microtext_total + modeled_selected_rows)
+        0,
+        minimum_total_rows_for_pin_limit
+        - (projected_microtext_total + modeled_selected_rows),
     )
     balance_projection = {
         "pin_share_limit": MICROTEXT_PIN_SHARE_LIMIT,
@@ -726,23 +762,35 @@ def build_overlay(
         "active_pin_share": round(active_pin_rows / active_microtext_total, 6)
         if active_microtext_total
         else 0.0,
+        "projected_before_overlay_microtext_rows": projected_microtext_total,
+        "projected_before_overlay_pin_rows": projected_pin_rows,
+        "projected_before_overlay_pin_share": round(
+            projected_pin_rows / projected_microtext_total, 6
+        )
+        if projected_microtext_total
+        else 0.0,
         "selected_rows": len(selected),
         "selected_pin_rows": selected_pin_rows,
         "selected_known_nonpin_rows": len(selected) - selected_pin_rows,
         "pin_share_after_full_acceptance": round(
-            (active_pin_rows + selected_pin_rows) / (active_microtext_total + len(selected)), 6
+            (projected_pin_rows + selected_pin_rows)
+            / (projected_microtext_total + len(selected)),
+            6,
         )
-        if active_microtext_total + len(selected)
+        if projected_microtext_total + len(selected)
         else 0.0,
         "modeled_accepted_rows": modeled_selected_rows,
         "pin_share_after_modeled_acceptance": round(
-            (active_pin_rows + modeled_pin_rows) / (active_microtext_total + modeled_selected_rows),
+            (projected_pin_rows + modeled_pin_rows)
+            / (projected_microtext_total + modeled_selected_rows),
             6,
         )
-        if active_microtext_total + modeled_selected_rows
+        if projected_microtext_total + modeled_selected_rows
         else 0.0,
-        "improves_pin_share_at_full_acceptance": selected_pin_rows * active_microtext_total
-        <= active_pin_rows * len(selected),
+        "improves_pin_share_at_full_acceptance": (
+            selected_pin_rows * projected_microtext_total
+            <= projected_pin_rows * len(selected)
+        ),
         "additional_accepted_nonpin_rows_to_limit_after_full_acceptance": (
             additional_full_acceptance_nonpin
         ),
@@ -772,6 +820,7 @@ def build_overlay(
             "required_splits": sorted(required_splits),
             "active_packet_exclusion_required": packet_index_path is not None,
             "authoritative_split_plan_required": split_plan_path is not None,
+            "row_split_plan_verification_required": verify_row_split_plans,
             "provenance_replacements_excluded": exclude_provenance_replacements,
         },
         "inputs": {
@@ -780,6 +829,20 @@ def build_overlay(
                 "sha256": file_sha256(path),
             }
             for name, path in paths.items()
+        },
+        "row_split_plans": {
+            "count": len(row_split_plan_hashes),
+            "files": [
+                {
+                    "path": (
+                        str(path.relative_to(root))
+                        if path.is_relative_to(root)
+                        else str(path)
+                    ),
+                    "sha256": row_split_plan_hashes[path],
+                }
+                for path in sorted(row_split_plan_hashes, key=str)
+            ],
         },
         "counts": {
             "active_rows": len(active_rows),
@@ -865,7 +928,9 @@ def render_markdown(report: dict[str, Any]) -> str:
             "## Balance Projection",
             "",
             f"- Active pin share: **{report['balance_projection']['active_pin_share']:.2%}**",
+            f"- Projected pin share after machine calibration and existing primary priorities: **{report['balance_projection']['projected_before_overlay_pin_share']:.2%}**",
             f"- Pin share after full acceptance: **{report['balance_projection']['pin_share_after_full_acceptance']:.2%}**",
+            f"- Pin share at the modeled acceptance rate: **{report['balance_projection']['pin_share_after_modeled_acceptance']:.2%}**",
             f"- Selected known non-pin rows: **{report['balance_projection']['selected_known_nonpin_rows']}**",
             f"- Additional accepted non-pin rows still needed after full acceptance: **{report['balance_projection']['additional_accepted_nonpin_rows_to_limit_after_full_acceptance']}**",
             f"- Additional review rows needed at the modeled rate: **{report['balance_projection']['additional_review_rows_at_modeled_rate_to_limit']}**",
@@ -937,6 +1002,11 @@ def parse_args() -> argparse.Namespace:
         help="Require row reservations to match this authoritative family-level split plan.",
     )
     parser.add_argument(
+        "--verify-row-split-plans",
+        action="store_true",
+        help="Require every row to match its own split_reservation_plan file.",
+    )
+    parser.add_argument(
         "--exclude-provenance-replacements",
         action="store_true",
         help="Hold replacement rows so the overlay measures only net expansion capacity.",
@@ -981,6 +1051,7 @@ def main() -> int:
         supplemental_future_paths=args.supplemental_future,
         packet_index_path=args.packet_index,
         split_plan_path=args.split_plan,
+        verify_row_split_plans=args.verify_row_split_plans,
         required_splits=set(args.required_split),
         exclude_provenance_replacements=args.exclude_provenance_replacements,
         selection_mode=args.selection_mode,

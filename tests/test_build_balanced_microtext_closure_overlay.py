@@ -168,6 +168,67 @@ class BalancedMicrotextClosureOverlayTest(unittest.TestCase):
                 all("source_payload_sha256_mismatch" in row["closure_overlay_hold_reasons"] for row in holds)
             )
 
+    def test_pin_share_projection_includes_machine_and_assignment_lanes(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            paths = self.make_fixture(root)
+            active_rows = [
+                json.loads(line)
+                for line in paths["active.jsonl"].read_text(encoding="utf-8").splitlines()
+            ]
+            active_rows.append(
+                {
+                    "id": "q-pin",
+                    "task": "microtext",
+                    "metadata": {
+                        "item_id": "active-pin",
+                        "doc_id": "doc",
+                        "category": "pin_label",
+                    },
+                }
+            )
+            write_jsonl(paths["active.jsonl"], active_rows)
+            write_jsonl(
+                paths["eligible.jsonl"],
+                [
+                    {
+                        "candidate_id": "eligible-dimension",
+                        "task": "microtext",
+                        "category": "dimension_value",
+                    }
+                ],
+            )
+            write_jsonl(
+                paths["assignment.jsonl"],
+                [
+                    {
+                        "candidate_id": "assigned-dimension",
+                        "task": "microtext",
+                        "category": "dimension_value",
+                    }
+                ],
+            )
+
+            selected, holds, report = build_overlay(
+                root,
+                paths["active.jsonl"],
+                paths["assignment.jsonl"],
+                paths["eligible.jsonl"],
+                paths["future.jsonl"],
+                paths["inventory.csv"],
+                paths["manifest.jsonl"],
+                date_label="fixture",
+                min_acceptance_rate=1.0,
+                category_minimums={"dimension_value": 4},
+            )
+
+            self.assertEqual(1, len(selected))
+            self.assertEqual([], holds)
+            balance = report["balance_projection"]
+            self.assertEqual(4, balance["projected_before_overlay_microtext_rows"])
+            self.assertEqual(1, balance["projected_before_overlay_pin_rows"])
+            self.assertEqual(0.2, balance["pin_share_after_full_acceptance"])
+
     def test_accepts_separately_auditable_supplemental_capacity(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
@@ -387,6 +448,53 @@ class BalancedMicrotextClosureOverlayTest(unittest.TestCase):
             self.assertEqual(1, len(holds))
             self.assertIn("split_plan_mismatch:train", holds[0]["closure_overlay_hold_reasons"])
             self.assertEqual(1, report["exclusion_reasons"]["split_plan_mismatch:train"])
+
+    def test_row_split_plan_verification_supports_mixed_plan_capacity(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            paths = self.make_fixture(root)
+            split_plan = root / "row_split_plan.json"
+            split_plan.write_text(
+                json.dumps(
+                    {
+                        "valid": True,
+                        "reservations": [
+                            {"task": "microtext", "unit_id": "doc", "split": "train"}
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            future = [
+                json.loads(line)
+                for line in paths["future.jsonl"].read_text(encoding="utf-8").splitlines()
+            ]
+            for row in future:
+                row["split_reservation_plan"] = split_plan.name
+            write_jsonl(paths["future.jsonl"], future)
+
+            selected, holds, report = build_overlay(
+                root,
+                paths["active.jsonl"],
+                paths["assignment.jsonl"],
+                paths["eligible.jsonl"],
+                paths["future.jsonl"],
+                paths["inventory.csv"],
+                paths["manifest.jsonl"],
+                date_label="fixture",
+                min_acceptance_rate=1.0,
+                category_minimums={"dimension_value": 2},
+                verify_row_split_plans=True,
+            )
+
+            self.assertEqual(["candidate-2"], [row["candidate_id"] for row in selected])
+            self.assertEqual(1, len(holds))
+            self.assertIn(
+                "row_split_plan_mismatch:train",
+                holds[0]["closure_overlay_hold_reasons"],
+            )
+            self.assertEqual(1, report["row_split_plans"]["count"])
+            self.assertTrue(report["policy"]["row_split_plan_verification_required"])
 
 
 if __name__ == "__main__":

@@ -24,6 +24,7 @@ CANONICAL_CATEGORIES = (
     "tolerance_value",
 )
 SPLIT_PRIORITY = {"test": 0, "dev": 1, "train": 2, "": 3}
+RELEASE_SPLITS = frozenset({"train", "dev", "test"})
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -44,6 +45,17 @@ def read_jsonl(path: Path) -> list[dict[str, Any]]:
                 raise ValueError(f"expected object at {path}:{line_number}")
             rows.append(value)
     return rows
+
+
+def read_row_payload(path: Path) -> list[dict[str, Any]]:
+    if path.suffix.lower() == ".jsonl":
+        return read_jsonl(path)
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if isinstance(value, dict):
+        value = value.get("rows")
+    if not isinstance(value, list) or not all(isinstance(row, dict) for row in value):
+        raise ValueError(f"expected JSON/JSONL row payload: {path}")
+    return value
 
 
 def sha256(path: Path) -> str:
@@ -100,6 +112,11 @@ def split_counts(rows: Iterable[dict[str, Any]]) -> dict[str, int]:
         str(row.get("reserved_split") or row.get("split") or "") for row in rows
     )
     return dict(sorted(counts.items()))
+
+
+def release_split(row: dict[str, Any]) -> str:
+    split = str(row.get("reserved_split") or row.get("split") or "").strip()
+    return split if split in RELEASE_SPLITS else ""
 
 
 def projection(
@@ -197,7 +214,11 @@ def select_floor_rows(
         if need <= 0:
             continue
         available = sorted(
-            (row for row in rows if normalized_category(row) == category),
+            (
+                row
+                for row in rows
+                if normalized_category(row) == category and release_split(row)
+            ),
             key=row_sort_key,
         )
         selected.extend(available[:need])
@@ -230,7 +251,6 @@ def build_report(
 
     capacity = read_json(paths["capacity_report"])
     precalibration = read_json(paths["precalibration_report"])
-    primary = read_json(paths["primary_payload"])
     strict_value = str((precalibration.get("artifacts") or {}).get("strict_ready") or "")
     if not strict_value:
         raise ValueError("precalibration report has no artifacts.strict_ready path")
@@ -240,11 +260,7 @@ def build_report(
 
     active_rows = read_jsonl(paths["active_items"])
     strict_rows = read_jsonl(strict_path)
-    primary_rows_value = primary.get("rows")
-    if not isinstance(primary_rows_value, list) or not all(
-        isinstance(row, dict) for row in primary_rows_value
-    ):
-        raise ValueError("primary payload rows must be a list of objects")
+    primary_rows_value = read_row_payload(paths["primary_payload"])
     primary_rows = [row for row in primary_rows_value if row.get("task") == "microtext"]
     future_rows = [
         row
@@ -365,6 +381,9 @@ def build_report(
                 "missing_identity_rows": primary_missing,
                 "category_counts": category_counts(primary_unique),
                 "split_counts": split_counts(primary_unique),
+                "unassigned_or_invalid_split_rows": sum(
+                    not release_split(row) for row in primary_unique
+                ),
             },
             "future_capacity": {
                 "input_microtext_rows": len(future_rows),
@@ -374,6 +393,9 @@ def build_report(
                 "missing_identity_rows": future_missing,
                 "category_counts": category_counts(future_unique),
                 "split_counts": split_counts(future_unique),
+                "unassigned_or_invalid_split_rows": sum(
+                    not release_split(row) for row in future_unique
+                ),
             },
         },
         "projections": {
@@ -386,10 +408,16 @@ def build_report(
             "primary_priority_rows": len(primary_priority),
             "primary_priority_categories": category_counts(primary_priority),
             "primary_priority_splits": split_counts(primary_priority),
+            "primary_unsplit_rows_not_counted": sum(
+                not release_split(row) for row in primary_unique
+            ),
             "primary_category_shortages": primary_shortages,
             "future_floor_closure_rows": len(future_closure),
             "future_floor_closure_categories": category_counts(future_closure),
             "future_floor_closure_splits": split_counts(future_closure),
+            "future_unsplit_rows_not_counted": sum(
+                not release_split(row) for row in future_unique
+            ),
             "future_category_shortages": future_shortages,
         },
         "human_work_reduction": {
@@ -451,13 +479,19 @@ def write_primary_csv(rows: list[dict[str, Any]], path: Path) -> None:
             )
 
 
-def write_jsonl(rows: list[dict[str, Any]], path: Path, date_label: str) -> None:
+def write_jsonl(
+    rows: list[dict[str, Any]],
+    path: Path,
+    date_label: str,
+    *,
+    lane_status: str,
+) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="\n") as handle:
         for row in rows:
             staged = dict(row)
             staged["balance_lane_date_label"] = date_label
-            staged["balance_lane_status"] = "future_floor_closure_non_gold"
+            staged["balance_lane_status"] = lane_status
             staged["safe_to_merge_gold"] = False
             handle.write(json.dumps(staged, ensure_ascii=False, sort_keys=True) + "\n")
 
@@ -529,6 +563,7 @@ def main() -> int:
     parser.add_argument("--output-json", type=Path, required=True)
     parser.add_argument("--output-md", type=Path, required=True)
     parser.add_argument("--output-primary-csv", type=Path, required=True)
+    parser.add_argument("--output-primary-jsonl", type=Path)
     parser.add_argument("--output-future-jsonl", type=Path, required=True)
     args = parser.parse_args()
     root = args.root.resolve()
@@ -544,12 +579,27 @@ def main() -> int:
     output_json = resolve(root, args.output_json)
     output_md = resolve(root, args.output_md)
     output_primary = resolve(root, args.output_primary_csv)
+    output_primary_jsonl = (
+        resolve(root, args.output_primary_jsonl) if args.output_primary_jsonl else None
+    )
     output_future = resolve(root, args.output_future_jsonl)
     output_json.parent.mkdir(parents=True, exist_ok=True)
     output_json.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     write_markdown(report, output_md)
     write_primary_csv(primary_rows, output_primary)
-    write_jsonl(future_rows, output_future, args.date_label)
+    if output_primary_jsonl is not None:
+        write_jsonl(
+            primary_rows,
+            output_primary_jsonl,
+            args.date_label,
+            lane_status="primary_floor_priority_existing_assignment_non_gold",
+        )
+    write_jsonl(
+        future_rows,
+        output_future,
+        args.date_label,
+        lane_status="future_floor_closure_non_gold",
+    )
     print(json.dumps({
         "status": report["status"],
         "active_gold_modified": False,

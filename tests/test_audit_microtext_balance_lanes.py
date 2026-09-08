@@ -5,7 +5,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from tools.audit_microtext_balance_lanes import build_report
+from tools.audit_microtext_balance_lanes import (
+    build_report,
+    read_row_payload,
+    select_floor_rows,
+    write_jsonl as write_lane_jsonl,
+)
 
 
 def write_jsonl(path: Path, rows: list[dict]) -> None:
@@ -17,6 +22,51 @@ def write_jsonl(path: Path, rows: list[dict]) -> None:
 
 
 class AuditMicrotextBalanceLanesTest(unittest.TestCase):
+    def test_written_lane_rows_remain_non_gold(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "lane.jsonl"
+            write_lane_jsonl(
+                [{"candidate_id": "candidate", "safe_to_merge_gold": True}],
+                path,
+                "fixture",
+                lane_status="primary_floor_priority_existing_assignment_non_gold",
+            )
+            row = read_row_payload(path)[0]
+
+        self.assertEqual(
+            "primary_floor_priority_existing_assignment_non_gold",
+            row["balance_lane_status"],
+        )
+        self.assertFalse(row["safe_to_merge_gold"])
+
+    def test_reads_authoritative_jsonl_assignment(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "assignment.jsonl"
+            write_jsonl(path, [{"candidate_id": "reserved", "task": "microtext"}])
+
+            rows = read_row_payload(path)
+
+        self.assertEqual(["reserved"], [row["candidate_id"] for row in rows])
+
+    def test_floor_selection_excludes_rows_without_release_split(self) -> None:
+        rows = [
+            {
+                "candidate_id": "unassigned",
+                "category": "equipment_tag",
+                "reserved_split": "",
+            },
+            {
+                "candidate_id": "reserved",
+                "category": "equipment_tag",
+                "reserved_split": "test",
+            },
+        ]
+
+        selected, shortages = select_floor_rows(rows, {"equipment_tag": 1})
+
+        self.assertEqual(["reserved"], [row["candidate_id"] for row in selected])
+        self.assertEqual({}, shortages)
+
     def test_deduplicates_lanes_and_selects_minimum_floor_closure(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
