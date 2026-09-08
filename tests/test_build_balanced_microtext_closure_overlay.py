@@ -305,7 +305,7 @@ class BalancedMicrotextClosureOverlayTest(unittest.TestCase):
                         "candidate_id": "candidate-pin",
                         "category": "pin_label",
                         "bbox": [165, 10, 190, 30],
-                        "proposed_text": "GPIO1",
+                        "proposed_text": "PIN_AUX",
                     },
                 ]
             )
