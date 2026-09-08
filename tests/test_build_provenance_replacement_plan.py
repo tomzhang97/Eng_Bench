@@ -31,6 +31,62 @@ def write_jsonl(path: Path, rows: list[dict]) -> None:
 
 
 class ProvenanceReplacementPlanTests(unittest.TestCase):
+    def test_supplemental_capacity_closes_gap_without_mutating_canonical_pool(self):
+        mod = load_module()
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            write_jsonl(root / "manifest.jsonl", [])
+            write_jsonl(
+                root / "eng_bench.jsonl",
+                [
+                    {
+                        "id": "active",
+                        "task": "microtext",
+                        "split": "dev",
+                        "metadata": {"doc_id": "blocked", "category": "pin_label"},
+                    }
+                ],
+            )
+            (root / "SOURCE_INVENTORY.csv").write_text(
+                "doc_id,task,public_status\nopen,microtext,public_domain_candidate\n",
+                encoding="utf-8-sig",
+            )
+            (root / "provenance.json").write_text(
+                json.dumps({"documents": [{"doc_id": "blocked", "paper_ready": False}]}),
+                encoding="utf-8",
+            )
+            write_jsonl(root / "current.jsonl", [])
+            write_jsonl(root / "future.jsonl", [])
+            write_jsonl(
+                root / "supplemental.jsonl",
+                [
+                    {
+                        "candidate_id": "supplemental",
+                        "task": "microtext",
+                        "doc_id": "open",
+                        "category": "pin_label",
+                        "reserved_split": "dev",
+                        "source_public_status": "public_domain_candidate",
+                        "safe_to_merge_gold": False,
+                    }
+                ],
+            )
+
+            summary, _, selected, _ = mod.build_plan(
+                root=root,
+                provenance_report=root / "provenance.json",
+                current_assignment=root / "current.jsonl",
+                future_capacity=root / "future.jsonl",
+                additional_capacity=[root / "supplemental.jsonl"],
+                date_label="fixture",
+                max_per_source=50,
+            )
+
+            self.assertEqual([row["candidate_id"] for row in selected], ["supplemental"])
+            self.assertEqual(selected[0]["replacement_origin_phase"], "supplemental_capacity")
+            self.assertEqual(summary["new_human_review_priority_rows"], 1)
+            self.assertEqual(summary["remaining_replacement_gap"], 0)
+
     def test_excluded_preferred_candidate_is_replaced_without_missing_error(self):
         mod = load_module()
         with tempfile.TemporaryDirectory() as temp_dir:

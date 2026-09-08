@@ -36,6 +36,14 @@ HUMAN_DECISION_FIELDS = {
     "human_status",
     "reviewed_by",
 }
+NON_DECISION_STATUSES = {
+    "",
+    "awaiting_review",
+    "needs_review",
+    "not_reviewed",
+    "pending",
+    "unassigned",
+}
 
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -80,7 +88,15 @@ def index_rows(rows: list[dict[str, Any]], label: str) -> dict[str, dict[str, An
 
 
 def has_human_decision(row: dict[str, Any]) -> bool:
-    return any(str(row.get(field) or "").strip() for field in HUMAN_DECISION_FIELDS)
+    for field in HUMAN_DECISION_FIELDS:
+        value = str(row.get(field) or "").strip()
+        if not value:
+            continue
+        normalized = value.lower().replace(" ", "_")
+        if field in {"human_review_status", "human_status"} and normalized in NON_DECISION_STATUSES:
+            continue
+        return True
+    return False
 
 
 def overlay_pending_rows(

@@ -4,6 +4,24 @@ from tools.overlay_review_queue_decisions import overlay_pending_rows
 
 
 class OverlayReviewQueueDecisionsTests(unittest.TestCase):
+    def test_unassigned_human_status_does_not_block_machine_overlay(self):
+        output, held, report = overlay_pending_rows(
+            [
+                {
+                    "pair_id": "pending",
+                    "human_review_status": "unassigned",
+                    "review_status": "needs_machine_review",
+                    "description": "generic",
+                }
+            ],
+            [{"pair_id": "pending", "description": "curated"}],
+            [],
+        )
+
+        self.assertEqual(output[0]["description"], "curated")
+        self.assertEqual(held, [])
+        self.assertEqual(report["totals"]["overlay_rows_applied"], 1)
+
     def test_overlays_pending_rows_and_holds_selected_rows(self) -> None:
         base = [
             {"pair_id": "a", "description": "TODO", "review_status": "needs_review"},

@@ -300,15 +300,21 @@ def build_report(
     preferred_available_value = plan.get("preferred_issued_available")
     preferred_selected = int(plan.get("preferred_issued_selected") or 0)
     preferred_retired_active = int(plan.get("preferred_issued_retired_active_gold") or 0)
+    preferred_excluded = int(plan.get("preferred_issued_excluded") or 0)
     preferred_missing = int(plan.get("preferred_issued_missing") or 0)
     preferred_summary_issues: dict[str, Any] = {}
     if preferred_available_value is not None:
         preferred_available = int(preferred_available_value or 0)
-        partition_total = preferred_available + preferred_retired_active + preferred_missing
+        partition_total = (
+            preferred_available
+            + preferred_retired_active
+            + preferred_excluded
+            + preferred_missing
+        )
         if partition_total != preferred_requested:
             preferred_summary_issues["requested_partition"] = {
                 "requested": preferred_requested,
-                "available_plus_retired_plus_missing": partition_total,
+                "available_plus_retired_plus_excluded_plus_missing": partition_total,
             }
         if preferred_selected > preferred_available:
             preferred_summary_issues["selected_exceeds_available"] = {

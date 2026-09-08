@@ -104,16 +104,20 @@ def filter_rows(
 
         if category in {"addition+text", "deletion+text", "text"}:
             keep, reason = semantic_text_signal(row)
-        elif category == "symbol":
+        elif category in {"symbol", "addition", "deletion"}:
             try:
                 metrics = crop_ink_metrics(root, row, threshold=ink_threshold)
                 keep = (
                     float(metrics["ink_asymmetry"]) >= min_symbol_asymmetry
                     and float(metrics["maximum_ink_ratio"]) >= min_symbol_ink_ratio
                 )
-                reason = "one_sided_symbol_signal" if keep else "weak_or_two_sided_symbol_signal"
+                reason = (
+                    "one_sided_graphic_signal"
+                    if keep
+                    else "weak_or_two_sided_graphic_signal"
+                )
             except (OSError, TypeError, ValueError) as exc:
-                reason = f"invalid_symbol_evidence:{exc}"
+                reason = f"invalid_graphic_evidence:{exc}"
         else:
             reason = "unsupported_change_type"
 
@@ -129,7 +133,7 @@ def filter_rows(
         dispositions[reason] += 1
         if keep:
             row["machine_qa_status"] = "review_signal_passing"
-            row["review_status"] = "needs_human_review"
+            row["review_status"] = "needs_review"
             passing.append(row)
         else:
             row["machine_qa_status"] = "machine_held_low_review_signal"

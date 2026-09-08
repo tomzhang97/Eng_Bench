@@ -23,6 +23,7 @@ class FilterVisualDiffReviewSignalTest(unittest.TestCase):
         self.assertEqual(held, [])
         self.assertEqual(report["passing_rows"], 3)
         self.assertTrue(all(row["safe_to_merge_gold"] is False for row in passing))
+        self.assertTrue(all(row["review_status"] == "needs_review" for row in passing))
 
     def test_holds_inconsistent_text_relation(self) -> None:
         passing, held, _ = filter_rows(
@@ -57,6 +58,46 @@ class FilterVisualDiffReviewSignalTest(unittest.TestCase):
             self.assertEqual(held, [])
             self.assertEqual(passing[0]["review_signal_filter"]["ink_asymmetry"], 1.0)
 
+    def test_keeps_one_sided_addition_and_deletion_ink(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            blank = root / "blank.png"
+            marked = root / "marked.png"
+            Image.new("RGB", (40, 40), "white").save(blank)
+            image = Image.new("RGB", (40, 40), "white")
+            ImageDraw.Draw(image).rectangle((10, 10, 29, 29), fill="black")
+            image.save(marked)
+            rows = [
+                {
+                    "pair_id": "addition",
+                    "change_type": "addition",
+                    "image_old": str(blank),
+                    "image_new": str(marked),
+                    "bbox_old": [10, 10, 30, 30],
+                    "bbox_new": [10, 10, 30, 30],
+                },
+                {
+                    "pair_id": "deletion",
+                    "change_type": "deletion",
+                    "image_old": str(marked),
+                    "image_new": str(blank),
+                    "bbox_old": [10, 10, 30, 30],
+                    "bbox_new": [10, 10, 30, 30],
+                },
+            ]
+
+            passing, held, _ = filter_rows(root, rows)
+
+            self.assertEqual([row["pair_id"] for row in passing], ["addition", "deletion"])
+            self.assertEqual(held, [])
+            self.assertTrue(
+                all(
+                    row["review_signal_filter"]["reason"]
+                    == "one_sided_graphic_signal"
+                    for row in passing
+                )
+            )
+
     def test_holds_two_sided_symbol_ink(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
@@ -87,7 +128,7 @@ class FilterVisualDiffReviewSignalTest(unittest.TestCase):
         )
 
         self.assertEqual(passing, [])
-        self.assertIn("invalid_symbol_evidence", held[0]["review_signal_filter"]["reason"])
+        self.assertIn("invalid_graphic_evidence", held[0]["review_signal_filter"]["reason"])
 
 
 if __name__ == "__main__":

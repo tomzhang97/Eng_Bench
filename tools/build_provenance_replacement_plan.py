@@ -308,6 +308,7 @@ def build_plan(
     max_per_source: int,
     preferred_issued: list[Path] | None = None,
     excluded_candidate_ids: set[str] | None = None,
+    additional_capacity: list[Path] | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
     load_rgb_image.cache_clear()
     provenance = read_json(provenance_report)
@@ -365,7 +366,14 @@ def build_plan(
     candidate_rows: list[dict[str, Any]] = []
     rejected_candidates: Counter[str] = Counter()
     seen_identities: set[str] = set()
-    for phase, path in (("current_assignment", current_assignment), ("future_capacity", future_capacity)):
+    capacity_sources = [
+        ("current_assignment", current_assignment),
+        ("future_capacity", future_capacity),
+    ]
+    capacity_sources.extend(
+        ("supplemental_capacity", path) for path in (additional_capacity or [])
+    )
+    for phase, path in capacity_sources:
         for row in read_jsonl(path):
             identity = candidate_identity(row)
             if not identity or identity in seen_identities:
@@ -408,7 +416,11 @@ def build_plan(
                 }
             )
 
-    phase_rank = {"current_assignment": 0, "future_capacity": 1}
+    phase_rank = {
+        "current_assignment": 0,
+        "future_capacity": 1,
+        "supplemental_capacity": 2,
+    }
 
     def candidate_rank(row: dict[str, Any]) -> tuple[Any, ...]:
         reservoir_rank = row.get("reservoir_rank")
@@ -566,7 +578,7 @@ def build_plan(
             row["replacement_origin_phase"] == "current_assignment" for row in selected
         ),
         "new_human_review_priority_rows": sum(
-            row["replacement_origin_phase"] == "future_capacity" for row in selected
+            row["replacement_origin_phase"] != "current_assignment" for row in selected
         ),
         "selected_replacement_candidates_by_task_split": {
             f"{task}:{split}": count
@@ -610,6 +622,16 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--provenance-report", type=Path, required=True)
     parser.add_argument("--current-assignment", type=Path, required=True)
     parser.add_argument("--future-capacity", type=Path, required=True)
+    parser.add_argument(
+        "--additional-capacity",
+        type=Path,
+        action="append",
+        default=[],
+        help=(
+            "Additional release-safe capacity JSONL evaluated after the canonical future pool; "
+            "repeat for independently generated supplemental reservoirs."
+        ),
+    )
     parser.add_argument("--date-label", required=True)
     parser.add_argument("--max-per-source", type=int, default=50)
     parser.add_argument(
@@ -653,6 +675,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.max_per_source <= 0:
         raise ValueError("--max-per-source must be positive")
     excluded_paths = [resolve(root, path) for path in args.exclude_candidates]
+    additional_capacity_paths = [resolve(root, path) for path in args.additional_capacity]
     excluded_candidate_ids = {
         identity
         for path in excluded_paths
@@ -667,7 +690,15 @@ def main(argv: list[str] | None = None) -> int:
         max_per_source=args.max_per_source,
         preferred_issued=[resolve(root, path) for path in args.preferred_issued],
         excluded_candidate_ids=excluded_candidate_ids,
+        additional_capacity=additional_capacity_paths,
     )
+    summary["additional_capacity_sources"] = [
+        {
+            "path": path.as_posix(),
+            "rows": len(read_jsonl(path)),
+        }
+        for path in additional_capacity_paths
+    ]
     summary["excluded_candidate_sources"] = [
         {
             "path": path.as_posix(),
@@ -688,7 +719,7 @@ def main(argv: list[str] | None = None) -> int:
             [
                 row
                 for row in candidates
-                if row.get("replacement_origin_phase") == "future_capacity"
+                if row.get("replacement_origin_phase") != "current_assignment"
             ],
         )
     if args.already_assigned_candidates_jsonl:

@@ -163,6 +163,32 @@ class ProvenanceMigrationReadinessTest(unittest.TestCase):
                 {issue["code"] for issue in report["structural_issues"]},
             )
 
+    def test_excluded_preferred_rows_complete_requested_partition(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            plan, affected, candidates, _ = self.build_fixture(root)
+            payload = json.loads(plan.read_text(encoding="utf-8"))
+            payload.update(
+                {
+                    "preferred_issued_requested": 2,
+                    "preferred_issued_available": 1,
+                    "preferred_issued_selected": 1,
+                    "preferred_issued_retired_active_gold": 0,
+                    "preferred_issued_excluded": 1,
+                    "preferred_issued_missing": 0,
+                }
+            )
+            write_json(plan, payload)
+
+            report = auditor.build_report(
+                root=root,
+                plan_path=plan,
+                affected_path=affected,
+                candidates_path=candidates,
+            )
+
+            self.assertTrue(report["plan_structurally_ready"], report["structural_issues"])
+
     def test_all_accepted_review_rows_can_complete_readiness(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
