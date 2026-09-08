@@ -50,6 +50,34 @@ class VisualDiffReleaseDescriptionAuditTest(unittest.TestCase):
             self.assertEqual("visual", queue[0]["pair_id"])
             self.assertEqual("human_semantic_confirmation", queue[0]["machine_lane"])
 
+    def test_uses_unified_images_when_pair_paths_are_absent(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            pairs = self.make_root(root)
+            pair = {
+                "pair_id": "todo", "split": "train", "change_desc_gt": "TODO",
+                "bbox_old": [1, 2, 3, 4], "bbox_new": [5, 6, 7, 8],
+            }
+            pairs.write_text(json.dumps(pair) + "\n", encoding="utf-8")
+            for name in ("old.png", "new.png"):
+                (root / name).write_bytes(b"not-decoded-by-this-audit")
+            unified = {
+                "id": "q_todo", "task": "visualdiff",
+                "images": ["old.png", "new.png"],
+                "metadata": {"pair_id": "todo"},
+            }
+            (root / "eng_bench.jsonl").write_text(
+                json.dumps(unified) + "\n", encoding="utf-8"
+            )
+            report = build_queue(root, root / "derived/quality/queue")
+            self.assertEqual(1, report["evidence_ready_rows"])
+            self.assertEqual(0, report["missing_evidence_rows"])
+            queue = json.loads(
+                (root / report["queue_jsonl"]).read_text(encoding="utf-8").strip()
+            )
+            self.assertEqual("old.png", queue["image_old"])
+            self.assertEqual("new.png", queue["image_new"])
+
     def test_output_must_be_new_and_under_quality(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

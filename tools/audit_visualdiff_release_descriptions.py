@@ -74,13 +74,28 @@ def read_jsonl(path: Path) -> list[dict[str, Any]]:
         return [json.loads(line) for line in handle if line.strip()]
 
 
-def remediation_row(row: dict[str, Any]) -> dict[str, Any] | None:
+def remediation_row(
+    row: dict[str, Any],
+    unified: dict[str, Any] | None = None,
+) -> dict[str, Any] | None:
     issue = description_release_issue(row)
     if not issue:
         return None
     reason = issue["reason"]
     lane, action, human_required = LANES[reason]
     split = str(row.get("split") or "unknown")
+    unified = unified or {}
+    images = unified.get("images") if isinstance(unified.get("images"), list) else []
+    evidence = (
+        unified.get("evidence")
+        if isinstance(unified.get("evidence"), list) else []
+    )
+
+    def evidence_bbox(index: int) -> Any:
+        if index >= len(evidence) or not isinstance(evidence[index], dict):
+            return None
+        return evidence[index].get("bbox")
+
     return {
         "priority": {"test": 1, "dev": 2, "train": 3}.get(split, 4),
         "pair_id": str(row.get("pair_id") or row.get("id") or ""),
@@ -92,12 +107,12 @@ def remediation_row(row: dict[str, Any]) -> dict[str, Any] | None:
         "current_description": str(row.get("change_desc_gt") or ""),
         "target_old": issue.get("target_old", ""),
         "target_new": issue.get("target", ""),
-        "image_old": str(row.get("image_old") or ""),
-        "image_new": str(row.get("image_new") or ""),
+        "image_old": str(row.get("image_old") or (images[0] if images else "")),
+        "image_new": str(row.get("image_new") or (images[1] if len(images) > 1 else "")),
         "page_index_old": row.get("page_index_old"),
         "page_index_new": row.get("page_index_new"),
-        "bbox_old": row.get("bbox_old"),
-        "bbox_new": row.get("bbox_new"),
+        "bbox_old": row.get("bbox_old") or evidence_bbox(0),
+        "bbox_new": row.get("bbox_new") or evidence_bbox(1),
         "machine_lane": lane,
         "human_required": human_required,
         "recommended_action": action,
@@ -133,8 +148,34 @@ def build_queue(root: Path, output_dir: Path) -> dict[str, Any]:
 
     before = {path: file_hash(root / path) for path in ACTIVE_PATHS}
     pairs_path = root / "visualdiff" / "annotations" / "visualdiff_pairs.jsonl"
-    rows = [item for item in (remediation_row(row) for row in read_jsonl(pairs_path)) if item]
+    unified_by_pair_id = {
+        str(row.get("metadata", {}).get("pair_id") or ""): row
+        for row in read_jsonl(root / "eng_bench.jsonl")
+        if row.get("task") == "visualdiff" and isinstance(row.get("metadata"), dict)
+    }
+    rows = [
+        item
+        for item in (
+            remediation_row(row, unified_by_pair_id.get(str(row.get("pair_id") or "")))
+            for row in read_jsonl(pairs_path)
+        )
+        if item
+    ]
     rows.sort(key=lambda row: (row["priority"], row["reason"], row["pair_id"]))
+
+    for row in rows:
+        row["image_old_exists"] = bool(
+            row["image_old"] and (root / row["image_old"]).is_file()
+        )
+        row["image_new_exists"] = bool(
+            row["image_new"] and (root / row["image_new"]).is_file()
+        )
+        row["bbox_old_present"] = bool(row["bbox_old"])
+        row["bbox_new_present"] = bool(row["bbox_new"])
+        row["evidence_ready"] = all((
+            row["image_old_exists"], row["image_new_exists"],
+            row["bbox_old_present"], row["bbox_new_present"],
+        ))
 
     output_dir.mkdir(parents=True)
     jsonl_path = output_dir / "visualdiff_description_remediation_queue.jsonl"
@@ -158,6 +199,8 @@ def build_queue(root: Path, output_dir: Path) -> dict[str, Any]:
         "human_requirement": dict(
             sorted(Counter(row["human_required"] for row in rows).items())
         ),
+        "evidence_ready_rows": sum(row["evidence_ready"] for row in rows),
+        "missing_evidence_rows": sum(not row["evidence_ready"] for row in rows),
         "queue_jsonl": jsonl_path.relative_to(root).as_posix(),
         "queue_csv": csv_path.relative_to(root).as_posix(),
         "queue_jsonl_sha256": file_hash(jsonl_path),
@@ -198,7 +241,8 @@ def main() -> int:
         for key in (
             "status", "total_active_visualdiff_rows", "release_final_rows",
             "nonfinal_rows", "by_reason", "by_split", "by_lane",
-            "human_requirement", "active_gold_modified",
+            "human_requirement", "evidence_ready_rows", "missing_evidence_rows",
+            "active_gold_modified",
         )
     }, indent=2))
     return 1 if report["status"] == "FAIL" else 0
