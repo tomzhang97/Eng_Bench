@@ -127,7 +127,9 @@ def review_status(row: dict[str, Any]) -> str:
 
 def description(row: dict[str, Any]) -> str:
     return str(
-        row.get("localized_human_description")
+        row.get("machine_reconciled_description")
+        or row.get("machine_final_description")
+        or row.get("localized_human_description")
         or row.get("human_description")
         or row.get("description")
         or row.get("change_desc_gt")
@@ -288,6 +290,8 @@ def normalize_reviewed_pair(
     human_notes = str(row.get("human_review_notes") or row.get("human_notes") or "").strip()
     source_path = str(row.get("human_completion_source_path") or "").replace("\\", "/")
     localized_description = str(row.get("localized_human_description") or "").strip()
+    machine_final_description = str(row.get("machine_final_description") or "").strip()
+    machine_reconciled_description = str(row.get("machine_reconciled_description") or "").strip()
     normalized = {
         "pair_id": pair_id,
         "project_id": project_id,
@@ -321,7 +325,15 @@ def normalize_reviewed_pair(
         "desc_source": (
             "human_semantics_machine_localized"
             if localized_description
-            else "human"
+            else (
+                "human_semantics_machine_visual_reconciled"
+                if machine_reconciled_description
+                else (
+                    "human_semantics_machine_epistemic_normalized"
+                    if machine_final_description
+                    else "human"
+                )
+            )
         ),
         "review_confidence": "high",
         "review_status": status,
@@ -334,8 +346,14 @@ def normalize_reviewed_pair(
             "original_human_description": row.get("original_human_description")
             or row.get("human_description"),
             "localized_human_description": localized_description,
+            "machine_final_description": machine_final_description,
+            "machine_reconciled_description": machine_reconciled_description,
             "localization_method": row.get("localization_method"),
             "reconciliation_evidence_sheet": row.get("reconciliation_evidence_sheet"),
+            "description_finalization": row.get("description_finalization"),
+            "independent_audit_support": row.get("independent_audit_support"),
+            "localization_provenance": row.get("localization_provenance"),
+            "semantic_reconciliation": row.get("semantic_reconciliation"),
             "image_old": image_old,
             "image_new": image_new,
         },

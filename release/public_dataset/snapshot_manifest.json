@@ -14,11 +14,11 @@
     "blocked_source_docs": 9,
     "dev": 373,
     "excluded_rows": 1430,
-    "published_rows": 3130,
-    "release_ready_source_docs": 201,
-    "required_images": 357,
-    "source_rows": 4560,
-    "test_inputs": 742,
+    "published_rows": 3152,
+    "release_ready_source_docs": 204,
+    "required_images": 360,
+    "source_rows": 4582,
+    "test_inputs": 764,
     "train": 2015
   },
   "date_label": "2026-09-08",
@@ -43,7 +43,7 @@
     },
     "test": {
       "path": "release/public_dataset/eng_bench_test_inputs.jsonl",
-      "sha256": "a10656f225a3bb47e46e108b98b14d135f59e27fe1338b7cfe2257d3aefd3ab3"
+      "sha256": "3bef160da40e42029a361b7fc4778435224d1cecfbb3cbdf7b7e8d65e0aa4892"
     },
     "train": {
       "path": "release/public_dataset/eng_bench_train.jsonl",
@@ -86,9 +86,12 @@
     "derived/pages_300dpi/adafruit_feather_rp2040_rev_b_sch/page_000.png",
     "derived/pages_300dpi/adafruit_huzzah32_esp32_feather_pinout/page_000.png",
     "derived/pages_300dpi/adafruit_huzzah32_esp32_feather_sch/page_000.png",
+    "derived/pages_300dpi/adafruit_itsybitsy_32u4_3v_2018/page_000.png",
     "derived/pages_300dpi/adafruit_itsybitsy_32u4_3v_2025/page_000.png",
     "derived/pages_300dpi/adafruit_metro_m0_express_2017/page_000.png",
     "derived/pages_300dpi/adafruit_metro_m0_express_2019/page_000.png",
+    "derived/pages_300dpi/adafruit_nrf52840_feather_express_rev_d/page_000.png",
+    "derived/pages_300dpi/adafruit_nrf52840_feather_express_rev_e/page_000.png",
     "derived/pages_300dpi/arch_012_1_13_third_floor_plan_second_floor_plan_first_floor_plan_grou/page_000.png",
     "derived/pages_300dpi/arch_012_1_first_floor_plan_attic_floor_plan_second_floor_plan_section/page_000.png",
     "derived/pages_300dpi/arch_012_1_first_floor_plan_second_floor_plan_basement_floor_plan_sout/page_000.png",
@@ -415,5 +418,5 @@
     "images/wikimedia_pump_with_tank_pid_en__commons/page_0000.png"
   ],
   "source": "eng_bench.jsonl",
-  "source_sha256": "4c4444f869404410c6d364eb0955c205ec3fee2a6d6c00c7a5e4ba4594ec2de4"
+  "source_sha256": "95c36699394903518718b46aac4b1bcfced917f301d392e6afc583bc2fcd185b"
 }

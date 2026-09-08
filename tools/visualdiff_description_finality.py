@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import re
+import json
 from collections import Counter
 from typing import Any
 
@@ -27,6 +28,20 @@ def tentative_description_details(description: str) -> dict[str, str] | None:
     if text == GRAPHIC_TEMPLATE:
         return {"kind": "graphic_uncertain", "target": ""}
     return None
+
+
+def definitive_description(details: dict[str, str]) -> str:
+    """Remove only template uncertainty while preserving the reviewed tokens."""
+    kind = details.get("kind")
+    if kind == "text_added":
+        return f"The engineering text {json.dumps(details['target'], ensure_ascii=False)} was added."
+    if kind == "text_removed":
+        return f"The engineering text {json.dumps(details['target'], ensure_ascii=False)} was removed."
+    if kind == "text_changed":
+        old = json.dumps(details["target_old"], ensure_ascii=False)
+        new = json.dumps(details["target_new"], ensure_ascii=False)
+        return f"The engineering text changed from {old} to {new}."
+    raise ValueError(f"unsupported tentative description kind: {kind}")
 
 
 def visualdiff_description_finality(pairs: list[dict[str, Any]]) -> dict[str, Any]:

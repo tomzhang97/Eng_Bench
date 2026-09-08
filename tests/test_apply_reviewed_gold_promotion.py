@@ -113,6 +113,77 @@ class ApplyReviewedGoldPromotionTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "description_not_human"):
             validate_prepared_rows([], [row])
 
+    def machine_epistemic_visualdiff_row(self) -> dict:
+        row = self.localized_visualdiff_row()
+        row["change_desc_gt"] = 'The engineering text changed from "SCLK" to "SCK".'
+        row["desc_source"] = "human_semantics_machine_epistemic_normalized"
+        row["review_evidence"] = {
+            "original_human_description": "Localized text may have changed from 'SCLK' to 'SCK'.",
+            "machine_final_description": row["change_desc_gt"],
+            "description_finalization": {
+                "method": "machine_epistemic_normalization",
+                "basis": "Exact tokens and independently reviewed semantics.",
+                "source_input_sha256": "d" * 64,
+                "evidence_artifacts": [
+                    {"path": "derived/quality/evidence.png", "sha256": "e" * 64}
+                ],
+            },
+            "independent_audit_support": {
+                "decision_code": "1",
+                "assignment_payload_sha256": "a" * 64,
+                "evidence_sha256": "b" * 64,
+                "source_workbook_sha256": "c" * 64,
+            },
+        }
+        return row
+
+    def test_machine_epistemic_normalization_requires_exact_provenance(self) -> None:
+        validate_prepared_rows([], [self.machine_epistemic_visualdiff_row()])
+
+        row = self.machine_epistemic_visualdiff_row()
+        row["review_evidence"]["machine_final_description"] = "A different claim."
+        with self.assertRaisesRegex(ValueError, "machine_epistemic_final_invalid"):
+            validate_prepared_rows([], [row])
+
+        row = self.machine_epistemic_visualdiff_row()
+        del row["review_evidence"]["independent_audit_support"]["evidence_sha256"]
+        with self.assertRaisesRegex(ValueError, "machine_epistemic_evidence_sha256_invalid"):
+            validate_prepared_rows([], [row])
+
+    def machine_reconciled_visualdiff_row(self) -> dict:
+        row = self.localized_visualdiff_row()
+        row["change_desc_gt"] = "The TP1 test-point connection was removed."
+        row["change_type"] = ["deletion"]
+        row["desc_source"] = "human_semantics_machine_visual_reconciled"
+        row["review_evidence"] = {
+            "machine_reconciled_description": row["change_desc_gt"],
+            "semantic_reconciliation": {
+                "method": "machine_visual_reconciliation",
+                "original_human_description": "A localized graphic or schematic-symbol difference may be present.",
+                "source_input_sha256": "d" * 64,
+                "evidence_artifact": {
+                    "path": "derived/quality/evidence.png",
+                    "sha256": "e" * 64,
+                },
+                "independent_audit_support": {
+                    "decision_code": "1",
+                    "assignment_payload_sha256": "a" * 64,
+                    "evidence_sha256": "b" * 64,
+                    "source_workbook_sha256": "c" * 64,
+                },
+                "machine_visual_reconciliation": "TP1 is present only in the old image.",
+            },
+        }
+        return row
+
+    def test_machine_visual_reconciliation_requires_exact_provenance(self) -> None:
+        validate_prepared_rows([], [self.machine_reconciled_visualdiff_row()])
+
+        row = self.machine_reconciled_visualdiff_row()
+        row["review_evidence"]["semantic_reconciliation"]["method"] = "freeform"
+        with self.assertRaisesRegex(ValueError, "machine_reconciliation_method_invalid"):
+            validate_prepared_rows([], [row])
+
     def test_visualdiff_split_addition_uses_project_family(self) -> None:
         temp, root, _report_path, _report_hash = self.fixture()
         self.addCleanup(temp.cleanup)

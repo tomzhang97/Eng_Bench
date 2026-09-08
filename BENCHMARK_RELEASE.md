@@ -350,3 +350,25 @@ imaging/PDF runtime. This is infrastructure evidence only and does not convert
 unreviewed candidates, unresolved audits, or rights-blocked records into Gold.
 Legacy, strict unified, and split-leakage validation pass after the suite, and
 all six active release-data hashes remain unchanged.
+
+## 10. Reviewed VisualDiff Finalization Checkpoint (2026-09-08)
+
+Active Gold now contains 4,582 rows: 1,596 VisualDiff and 2,986 MicroText,
+split 2,015 train, 932 dev, and 1,635 test. This machine-side pass promoted 22
+rows that already had final primary review and hash-complete independent audit
+support. It used separate provenance contracts for deterministic uncertainty
+removal, English localization of human semantics, and three visually explicit
+semantic descriptions. No unreviewed row was promoted.
+
+The current formal state remains **5/9 Gold v2.0 Global gates PASS**. Active
+scale, frozen challenge scale, formal agreement, and complete source rights are
+still open. Seven ambiguous supported VisualDiff rows, 23 extra pin-label rows,
+and one duplicate component-value row remain held rather than inflating Gold.
+The full 1,334-test suite and all release validators pass.
+
+The authoritative gate report is
+`derived/quality/v2_0_gate_audit_2026-09-08-wave2078-reviewed-visualdiff-current.md`.
+The current exact evidence package for 49 active audit flags is
+`derived/quality/active_audit_evidence_2026-09-08-wave2079-current49/`.
+The 614-row Wave2080 evaluation view remains internal-only and is not the full
+publishable benchmark.

@@ -36,7 +36,7 @@ import leakage_check
 import unify_dataset
 import validate_engbench_v2
 import visualdiff_merge
-from visualdiff_description_finality import tentative_description_details
+from visualdiff_description_finality import definitive_description, tentative_description_details
 from candidate_evidence_holds import evidence_hold_ids, is_evidence_held
 from preview_reviewed_gold_promotion import (
     ACTIVE_PATHS,
@@ -60,6 +60,10 @@ ANNOTATION_ARTIFACTS = {
     "combined_visualdiff_questions": "visualdiff/annotations/visualdiff_questions.jsonl",
     "unified": "eng_bench.jsonl",
 }
+MACHINE_EPISTEMIC_DESC_SOURCE = "human_semantics_machine_epistemic_normalized"
+MACHINE_EPISTEMIC_METHOD = "machine_epistemic_normalization"
+MACHINE_RECONCILED_DESC_SOURCE = "human_semantics_machine_visual_reconciled"
+MACHINE_RECONCILIATION_METHOD = "machine_visual_reconciliation"
 MUTABLE_PATHS = (
     *ANNOTATION_ARTIFACTS.values(),
     "splits/microtext_train.txt",
@@ -279,6 +283,127 @@ def validate_prepared_rows(
                     issues.append(f"visualdiff:{identity}:localized_method_invalid")
                 if not sheet:
                     issues.append(f"visualdiff:{identity}:localized_evidence_sheet_missing")
+                provenance = evidence.get("localization_provenance")
+                if provenance is not None:
+                    if not isinstance(provenance, dict):
+                        issues.append(f"visualdiff:{identity}:localized_provenance_invalid")
+                    else:
+                        source_hash = str(provenance.get("source_input_sha256") or "").lower()
+                        artifact = provenance.get("evidence_artifact")
+                        support = provenance.get("independent_audit_support")
+                        if provenance.get("method") != LOCALIZED_HUMAN_METHOD:
+                            issues.append(f"visualdiff:{identity}:localized_provenance_method_invalid")
+                        if len(source_hash) != 64 or any(char not in "0123456789abcdef" for char in source_hash):
+                            issues.append(f"visualdiff:{identity}:localized_provenance_source_hash_invalid")
+                        if not isinstance(artifact, dict):
+                            issues.append(f"visualdiff:{identity}:localized_provenance_artifact_missing")
+                        else:
+                            path = str(artifact.get("path") or "")
+                            digest = str(artifact.get("sha256") or "").lower()
+                            if not path.startswith("derived/quality/") or len(digest) != 64 or any(
+                                char not in "0123456789abcdef" for char in digest
+                            ):
+                                issues.append(f"visualdiff:{identity}:localized_provenance_artifact_invalid")
+                        if not isinstance(support, dict) or support.get("decision_code") != "1":
+                            issues.append(f"visualdiff:{identity}:localized_provenance_audit_missing")
+                        else:
+                            for field in (
+                                "assignment_payload_sha256",
+                                "evidence_sha256",
+                                "source_workbook_sha256",
+                            ):
+                                value = str(support.get(field) or "").lower()
+                                if len(value) != 64 or any(char not in "0123456789abcdef" for char in value):
+                                    issues.append(f"visualdiff:{identity}:localized_provenance_{field}_invalid")
+        elif desc_source == MACHINE_RECONCILED_DESC_SOURCE:
+            evidence = row.get("review_evidence")
+            reconciliation = evidence.get("semantic_reconciliation") if isinstance(evidence, dict) else None
+            original = str((reconciliation or {}).get("original_human_description") or "").strip()
+            final = str((evidence or {}).get("machine_reconciled_description") or "").strip()
+            support = (reconciliation or {}).get("independent_audit_support")
+            artifact = (reconciliation or {}).get("evidence_artifact")
+            source_hash = str((reconciliation or {}).get("source_input_sha256") or "").lower()
+            if not isinstance(evidence, dict) or not isinstance(reconciliation, dict):
+                issues.append(f"visualdiff:{identity}:machine_reconciliation_evidence_missing")
+            else:
+                details = tentative_description_details(original)
+                if not details or details.get("kind") != "graphic_uncertain":
+                    issues.append(f"visualdiff:{identity}:machine_reconciliation_original_invalid")
+                if not final or tentative_description_details(final) or final != str(row.get("change_desc_gt") or "").strip():
+                    issues.append(f"visualdiff:{identity}:machine_reconciliation_final_invalid")
+                if reconciliation.get("method") != MACHINE_RECONCILIATION_METHOD:
+                    issues.append(f"visualdiff:{identity}:machine_reconciliation_method_invalid")
+                if not str(reconciliation.get("machine_visual_reconciliation") or "").strip():
+                    issues.append(f"visualdiff:{identity}:machine_reconciliation_basis_missing")
+                if len(source_hash) != 64 or any(char not in "0123456789abcdef" for char in source_hash):
+                    issues.append(f"visualdiff:{identity}:machine_reconciliation_source_hash_invalid")
+                if not isinstance(artifact, dict):
+                    issues.append(f"visualdiff:{identity}:machine_reconciliation_artifact_missing")
+                else:
+                    path = str(artifact.get("path") or "")
+                    digest = str(artifact.get("sha256") or "").lower()
+                    if not path.startswith("derived/quality/") or len(digest) != 64 or any(
+                        char not in "0123456789abcdef" for char in digest
+                    ):
+                        issues.append(f"visualdiff:{identity}:machine_reconciliation_artifact_invalid")
+                if not isinstance(support, dict) or support.get("decision_code") != "1":
+                    issues.append(f"visualdiff:{identity}:machine_reconciliation_audit_missing")
+                else:
+                    for field in (
+                        "assignment_payload_sha256",
+                        "evidence_sha256",
+                        "source_workbook_sha256",
+                    ):
+                        value = str(support.get(field) or "").lower()
+                        if len(value) != 64 or any(char not in "0123456789abcdef" for char in value):
+                            issues.append(f"visualdiff:{identity}:machine_reconciliation_{field}_invalid")
+        elif desc_source == MACHINE_EPISTEMIC_DESC_SOURCE:
+            evidence = row.get("review_evidence")
+            if not isinstance(evidence, dict):
+                issues.append(f"visualdiff:{identity}:machine_epistemic_evidence_missing")
+            else:
+                original = str(evidence.get("original_human_description") or "").strip()
+                final = str(evidence.get("machine_final_description") or "").strip()
+                details = tentative_description_details(original)
+                finalization = evidence.get("description_finalization")
+                support = evidence.get("independent_audit_support")
+                if not details or details.get("kind") == "graphic_uncertain":
+                    issues.append(f"visualdiff:{identity}:machine_epistemic_original_invalid")
+                elif final != definitive_description(details) or final != str(row.get("change_desc_gt") or "").strip():
+                    issues.append(f"visualdiff:{identity}:machine_epistemic_final_invalid")
+                if not isinstance(finalization, dict):
+                    issues.append(f"visualdiff:{identity}:machine_epistemic_record_missing")
+                else:
+                    if str(finalization.get("method") or "") != MACHINE_EPISTEMIC_METHOD:
+                        issues.append(f"visualdiff:{identity}:machine_epistemic_method_invalid")
+                    if not str(finalization.get("basis") or "").strip():
+                        issues.append(f"visualdiff:{identity}:machine_epistemic_basis_missing")
+                    source_hash = str(finalization.get("source_input_sha256") or "").lower()
+                    if len(source_hash) != 64 or any(char not in "0123456789abcdef" for char in source_hash):
+                        issues.append(f"visualdiff:{identity}:machine_epistemic_source_hash_invalid")
+                    artifacts = finalization.get("evidence_artifacts")
+                    if not isinstance(artifacts, list) or not artifacts:
+                        issues.append(f"visualdiff:{identity}:machine_epistemic_artifacts_missing")
+                    else:
+                        for artifact in artifacts:
+                            path = str(artifact.get("path") or "") if isinstance(artifact, dict) else ""
+                            digest = str(artifact.get("sha256") or "").lower() if isinstance(artifact, dict) else ""
+                            if not path.startswith("derived/quality/") or len(digest) != 64 or any(
+                                char not in "0123456789abcdef" for char in digest
+                            ):
+                                issues.append(f"visualdiff:{identity}:machine_epistemic_artifact_invalid")
+                                break
+                if not isinstance(support, dict) or support.get("decision_code") != "1":
+                    issues.append(f"visualdiff:{identity}:machine_epistemic_audit_support_missing")
+                else:
+                    for field in (
+                        "assignment_payload_sha256",
+                        "evidence_sha256",
+                        "source_workbook_sha256",
+                    ):
+                        value = str(support.get(field) or "").lower()
+                        if len(value) != 64 or any(char not in "0123456789abcdef" for char in value):
+                            issues.append(f"visualdiff:{identity}:machine_epistemic_{field}_invalid")
         elif desc_source != "human":
             issues.append(f"visualdiff:{identity}:description_not_human")
         if str(row.get("review_confidence") or "").strip().lower() != "high":
