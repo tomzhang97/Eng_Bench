@@ -40,7 +40,7 @@ challenge scale, formal agreement, and complete provenance are still open. See
 All nine blocked active documents now have dated, authoritative-policy,
 hash-bound rights decisions covering 2,333 active source references. Every
 decision remains a hold, so this evidence closes ambiguity rather than the
-provenance gate. Wave2453 is the current formal gate report.
+provenance gate. Wave2468 is the current formal gate report.
 The corrected non-pin machine audit reuses 88 exact calibration decisions and
 identifies 799 non-pin train MicroText rows that pass every strict forecast gate
 but remain outside Gold until the remaining 212-row calibration is complete.
@@ -54,7 +54,12 @@ and held 214 fragments, stamps, title-block text, captions, overlaps, and
 taxonomy mismatches. All 84 retained rows have complete crop evidence and zero
 active-Gold, assignment-history, payload-alias, or near-region collision, but
 remain outside Gold pending human review. That tranche is now included in the
-current 6,547-row all-staged upper bound, not the current Gold count. The
+current staged ledger, not the current Gold count. A later train/dev pass
+visually inspected 295 additional non-pin candidates, held ten invalid,
+duplicate, or active-overlap rows, and retained 285 split-safe rows. Clean
+staged capacity is now 1,138 rows and the all-staged upper bound is 6,832.
+At full staged acceptance, dimension and instrument floors close; the remaining
+projected gaps are 53 pipe-line tags, 48 process values, and 46 tolerances. The
 source-conversion readiness ledger
 now recognizes all machine-held, duplicate-held, superseded, and explicitly
 excluded review rows. This removes 39,201 stale or already resolved

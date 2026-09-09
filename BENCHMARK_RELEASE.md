@@ -13,7 +13,7 @@ provenance (298/307 paper-ready documents) remain OPEN. Six MicroText category
 floors, 336 machine-detectable nonfinal VisualDiff descriptions, 526 BBB rows
 with corrected geometry but unverified semantics, and 49 unresolved active audit
 flags also block release. Current gate:
-`results/health/v2_0_gate_audit_2026-09-09-wave2453-semantic-precedence-final.json`.
+`results/health/v2_0_gate_audit_2026-09-09-wave2468-train-dev-capacity-and-primary-noop.json`.
 The 29 counted baseline reports remain bound to the existing 1,600-row frozen
 challenge. Active test now contains 1,784 rows, so the 184 rows outside that
 freeze are not yet part of the public/private challenge or its baseline scores.
@@ -56,6 +56,22 @@ shortfalls are dimension value 194, equipment tag 72, instrument tag 222,
 pipe/line tag 69, process value 91, and tolerance value 78. No VisualDiff row
 from the returned primary workbook was promoted because its alignment evidence
 requires correction or rereview.
+
+The latest capacity pass does not change those active-Gold measurements. It
+visually audited 295 additional train/dev non-pin candidates and held ten for
+running prose, partial labels, repeated visual payloads, active-Gold overlap,
+or source-payload alias collision. The remaining 285 rows are reserved 232
+train and 53 dev with `safe_to_merge_gold=false`. Clean staged capacity is now
+1,138 rows, giving a 6,832-row all-staged upper bound. Full staged acceptance
+would close the dimension and instrument floors; projected shortfalls remain
+53 pipe-line tags, 48 process values, and 46 tolerances.
+
+The latest supplied 1,500-row primary workbook is an exact duplicate of the
+return processed on 2026-08-26 and was not counted twice. Reviewer feedback
+about mismatched OLD/NEW regions and red-box-only differences is enforced in
+the current 533-action handoff. Its 254 corrected-evidence VisualDiff rows must
+compare `OLD aligned at NEW` with `NEW crop`; red-box placement alone is no
+engineering change, and non-corresponding evidence remains a context hold.
 
 The existing 1600-row challenge export is a historical freeze, not evidence of
 current release eligibility. New export generation now refuses known unresolved
